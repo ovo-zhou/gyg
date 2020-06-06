@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div class="selectbar"><span @click="toHome">主页版式一</span><span @click="toHome1">主页版式二</span></div>
+    <div class="selectbar"><span @click="toHome">主页版式一</span><span @click="toHome1">主页版式二</span></div>
     <div class="top">
       <div class="top_contain">
         <div>
@@ -18,8 +18,8 @@
         </div>
       </div>
     </div>
-    <div class="back_img"  :style="{backgroundImage: 'url(' + curimg + ')' }">
-      <div class="menu_tab">
+    <div class="tabbar">
+      <div class="contain"   :style="{backgroundImage: 'url(' + curimg + ')' }">
         <div class="menu_contain">
           <div>
             <img class="icon3" src="../../assets/图层6.png" />
@@ -57,6 +57,45 @@
         </div>
       </div>
     </div>
+    <!-- <div class="back_img"  :style="{backgroundImage: 'url(' + curimg + ')' }">
+      <div class="menu_tab">
+        <div class="menu_contain">
+          <div>
+            <img class="icon3" src="../../assets/图层6.png" />
+          </div>
+          <div class="tab">
+            <div class="tab_item">
+              <h3>首页</h3>
+              <h4>home</h4>
+            </div>
+            <div class="tab_item">
+              <h3>行业动态</h3>
+              <h4>Dynamic</h4>
+            </div>
+            <div class="tab_item">
+              <h3>电子商务</h3>
+              <h4>e-Commerce</h4>
+            </div>
+            <div class="tab_item">
+              <h3>业务流程</h3>
+              <h4>Business</h4>
+            </div>
+            <div class="tab_item">
+              <h3>车辆预约</h3>
+              <h4>Vehicle</h4>
+            </div>
+            <div class="tab_item">
+              <h3>客户查询</h3>
+              <h4>Query</h4>
+            </div>
+            <div class="tab_item">
+              <h3>联系我们</h3>
+              <h4>Contact us</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -78,7 +117,7 @@ export default {
      var i=Math.floor(Math.random()*3);
      this.curimg=this.img[i];
    },
-    toHome(){
+   toHome(){
      this.$router.push('/homepage')
    },
    toHome1(){
@@ -117,6 +156,7 @@ export default {
 .contain_right {
   display: flex;
   flex-direction: row;
+  margin-right: 30px;
 }
 .span1 {
   line-height: 50px;
@@ -124,6 +164,7 @@ export default {
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: rgba(88, 88, 88, 1);
+  margin-left: 30px;
 }
 .span2 {
   line-height: 50px;
@@ -152,6 +193,60 @@ export default {
 .tel {
   margin-right: 30px;
 }
+.tabbar{
+   width: 100%;
+  height: 550px;
+}
+.contain{
+  width: 1080px;
+  height: 550px;
+  margin: 0px auto;
+  background-image: url(../../assets/culture.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+}
+.menu_contain {
+  width: 1080px;
+  height: 87px;
+  background: rgba(14, 104, 177, 1);
+  margin: 0px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.icon3 {
+  margin-top: 23px;
+  margin-left: 30px;
+}
+.tab {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+.tab_item {
+  background: rgba(14, 104, 177, 1);
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.tab_item h3 {
+  text-align: center;
+  font-size: 18px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+.tab_item h4 {
+  text-align: center;
+
+  font-size: 14px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+/* 下面的样式暂时弃用 
 .back_img {
   width: 100%;
   height: 550px;
@@ -168,7 +263,6 @@ export default {
 .menu_contain {
   width: 1080px;
   height: 87px;
-  /* background:rgba(14,104,177,1); */
   background: rgba(14, 104, 177, 1);
   margin: 0px auto;
   display: flex;
@@ -203,5 +297,5 @@ export default {
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
-}
+}*/
 </style>
