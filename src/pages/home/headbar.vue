@@ -1,6 +1,5 @@
 <template>
   <div>
-     <div class="selectbar"><span @click="toHome">主页版式一</span><span @click="toHome1">主页版式二</span></div>
     <div class="top">
       <div class="top_contain">
         <div>
@@ -18,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="back_img"  :style="{backgroundImage: 'url(' + curimg + ')' }">
+    <div class="back_img" :style="{backgroundImage: 'url(' + curimg + ')' }">
       <div class="menu_tab">
         <div class="menu_contain">
           <div>
@@ -60,44 +59,38 @@
   </div>
 </template>
 <script>
-import img1 from '../../assets/back1.jpg'
-import img2 from '../../assets/back2.jpg'
-import img3 from '../../assets/culture.png'
+import img1 from "../../assets/back1.jpg";
+import img2 from "../../assets/back2.jpg";
+import img3 from "../../assets/culture.png";
 export default {
   created() {
-    window.setInterval(this.change,3000)
+    window.setInterval(this.change, 3000);
   },
   data() {
     return {
-      img:[img1,img2,img3],
-      curimg:img1
+      img: [img1, img2, img3],
+      curimg: img1
     };
   },
   methods: {
-   change(){
-     var i=Math.floor(Math.random()*3);
-     this.curimg=this.img[i];
-   },
-    toHome(){
-     this.$router.push('/homepage')
-   },
-   toHome1(){
-     this.$router.push('/homepage1')
-   },
+    change() {
+      var i = Math.floor(Math.random() * 3);
+      this.curimg = this.img[i];
+    }
   }
 };
 </script>
 <style scoped>
-.selectbar{
+.selectbar {
   width: 1080px;
-  margin:  0px auto;
+  margin: 0px auto;
 }
-.selectbar span{
+.selectbar span {
   color: red;
   margin-right: 50px;
   font-size: 3em;
 }
-.selectbar span:hover{
+.selectbar span:hover {
   cursor: pointer;
 }
 .top {
