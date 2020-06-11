@@ -1,7 +1,7 @@
 <template>
   <div class="funbar">
     <div class="funcontain">
-      <div class="item">
+      <div class="item" @mouseover="changeline(1)" @mouseleave="leave(1)">
         <div class="title">
           <h1>电子商务</h1>
           <p>
@@ -14,8 +14,8 @@
           <img src="../../assets/组17.png" alt />
         </div>
       </div>
-      <div class="item">
-        <div class="title">
+      <div class="item" @mouseover="changeline(2)" @mouseleave="leave(2)">
+        <div class="title" >
           <h1>车辆预约</h1>
           <p>
            FASTER VEHICLE ONLINE<br/>BOOKING
@@ -26,7 +26,7 @@
           <img src="../../assets/组19.png" alt />
         </div>
       </div>
-      <div class="item">
+      <div class="item" @mouseover="changeline(3)" @mouseleave="leave(3)">
         <div class="title">
           <h1>线上查询</h1>
           <p>
@@ -43,13 +43,27 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods:{
+    changeline(e){
+     var line=document.getElementsByClassName("line")
+        line[e-1].style.width=300+'px';
+        line[e-1].style.marginLeft=15+'px';
+    },
+    leave(e){
+      var line=document.getElementsByClassName("line")
+        line[e-1].style.width=100+'px';
+        line[e-1].style.marginLeft=115+'px';
+    }
+  }
+};
 </script>
 <style scoped>
 .funbar {
   width: 100%;
   height: 500px;
   background: #fcfcfc;
+  margin-top: 80px;
 }
 .funcontain {
   width: 1080px;
@@ -66,6 +80,7 @@ export default {};
   margin-top: 25px;
   border-radius: 25px;
   background: #ffffff;
+  cursor: pointer;
 }
 .title {
   width: 100%;
@@ -75,8 +90,8 @@ export default {};
   font-size: 28px;
   font-family: Microsoft YaHei;
   font-weight: bold;
-  color: #24a9e6;
-  border-left: 9px solid #24a9e6;
+  color: #1367AA;
+  border-left: 9px solid #1367AA;
   padding-left: 20px;
   line-height: 30px;
   position: relative;
@@ -89,7 +104,7 @@ export default {};
 }
 .line {
   margin-top: 10px;
-  border: 1px solid #24a9e6;
+  border: 1px solid #1367AA;
   width: 100px;
   margin-left: 115px;
 }
@@ -100,6 +115,6 @@ export default {};
 .image img {
   width: 100%;
   height: 300px;
-  border-radius: 25px;
+  border-radius: 0px 0px 25px 25px;
 }
 </style>

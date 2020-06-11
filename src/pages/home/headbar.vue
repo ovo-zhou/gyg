@@ -25,8 +25,8 @@
           </div>
           <div class="tab">
             <div class="tab_item">
-              <h3>首页</h3>
-              <h4>home</h4>
+              <h3>简介</h3>
+              <h4>Co-profile</h4>
             </div>
             <div class="tab_item">
               <h3>行业动态</h3>
@@ -133,6 +133,7 @@ export default {
   font-weight: 400;
   color: rgba(0, 64, 110, 1);
   margin-left: 5px;
+  cursor: pointer;
 }
 .icon1 {
   display: inline-block;
@@ -181,6 +182,10 @@ export default {
   padding-top: 20px;
   padding-left: 10px;
   padding-right: 10px;
+}
+.tab_item:hover{
+  cursor: pointer;
+  background:rgba(0,56,88,1);
 }
 .tab_item h3 {
   text-align: center;

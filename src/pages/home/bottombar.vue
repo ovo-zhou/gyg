@@ -3,25 +3,59 @@
     <div class="line"></div>
     <div class="bar">
       <div class="b-contain">
-        <div class="fun">
-          <span>首页</span>
-          <span>车辆预约</span>
-          <span>行业动态</span>
-          <span>客户查询</span>
-          <span>业务流程</span>
-          <span>联系我们</span>
+        <div class="c-link">
+          <h1>常用链接</h1>
+          <div class="fun">
+            <div class="fun_list">
+              <img src="../../assets/shouye.png" alt />
+              <span>首页</span>
+            </div>
+            <div class="fun_list">
+              <img src="../../assets/clyy.png" alt />
+              <span>车辆预约</span>
+            </div>
+            <div class="fun_list">
+              <img src="../../assets/hydt.png" alt />
+              <span>行业动态</span>
+            </div>
+            <div class="fun_list">
+              <img src="../../assets/khcx.png" alt />
+              <span>客户查询</span>
+            </div>
+            <div class="fun_list">
+              <img src="../../assets/ywlc.png" alt />
+              <span>业务流程</span>
+            </div>
+            <div class="fun_list">
+              <img src="../../assets/lxwm.png" alt />
+              <span>联系我们</span>
+            </div>
+          </div>
         </div>
+
         <div class="info">
           <img src="../../assets/图层6.png" alt />
-          <h1 class="tel">电话：023-80888008</h1>
-          <h1>地址：重庆市江北区鱼嘴镇东风路146号</h1>
         </div>
+
         <div class="code">
-          <img class="code1" src="../../assets/qrcode.png" alt />
-          <img src="../../assets/qrcode.png" alt />
+          <h1>关注我们</h1>
+          <div class="focus">
+            <div class="f-item">
+              <img src="../../assets/wx.png" alt=""><span>官方微信</span>
+            </div>
+            <div class="f-item">
+              <img src="../../assets/wb.png" alt=""><span>官方微博</span>
+            </div>
+            <div class="f-item">
+              <img src="../../assets/yj.png" alt=""><span>电子邮件</span>
+            </div>
+            <div class="f-item">
+              <img src="../../assets/gw.png" alt=""><span>网站地图</span>
+            </div>
+          </div>
         </div>
       </div>
-      <h1 class="record">渝ICP备18002813号</h1>
+      <h1 class="record">Copyright &copy; 2019 - 2020 重庆果园集装箱码头有限公司 版权所有</h1>
     </div>
   </div>
 </template>
@@ -32,6 +66,7 @@ export default {};
 .bottombar {
   width: 100%;
   height: 300px;
+  margin-top: 50px;
 }
 .line {
   width: 100%;
@@ -46,7 +81,6 @@ export default {};
 .b-contain {
   width: 1080px;
   height: 250px;
-
   margin: 0px auto;
   display: flex;
   flex-direction: row;
@@ -60,54 +94,84 @@ export default {};
   text-align: center;
   margin-top: 10px;
 }
+.c-link{
+  margin-top: 50px;
+  width: 500px;
+  /* background: chartreuse; */
+}
+.c-link h1{
+  margin-bottom: 20px;
+  color: rgba(234, 234, 234, 1);
+
+}
 .fun {
-  width: 360px;
-  height: 150px;
+  width: 400px;
+  height: 100px;
+  /* background: aqua; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
-  margin-top: 50px;
+}
+.fun_list {
+  height: 30px;
+  line-height: 30px;
+  width: 130px;
+  /* background: chartreuse; */
+}
+.fun img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
 }
 .fun span {
-  width: 100px;
-  height: 50px;
-  margin-left: 80px;
-  font-size: 14px;
+  font-size: 18px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: rgba(234, 234, 234, 1);
+  margin-left: 10px;
+  line-height: 30px;
 }
 .info {
   width: 360px;
   height: 150px;
-  margin-top: 50px;
+  margin-top: 100px;
+  /* background: chartreuse; */
 }
 .info img {
-  margin-left: 130px;
-}
-.info h1 {
-  font-size: 14px;
-  font-family: Microsoft YaHei;
-  font-weight: 400;
-  color: rgba(234, 234, 234, 1);
-  text-align: center;
-}
-.tel {
-  margin-top: 40px;
+  margin-left: 80px;
 }
 .code {
   width: 360px;
   height: 150px;
   margin-top: 50px;
+  /* background: chartreuse; */
 }
-.code img {
-  width: 80px;
-  height: 80px;
-  margin-top: 30px;
-  margin-right: 10px;
+.code h1{
+  color: rgba(234, 234, 234, 1);
+  margin-bottom: 20px;
 }
-.code1 {
-  margin-left: 95px;
+.focus{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100px;
+}
+.f-item{
+   height: 30px;
+  line-height: 30px;
+  width: 150px;
+}
+.f-item img{
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+.f-item span{
+  font-size: 18px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: rgba(234, 234, 234, 1);
+  margin-left: 10px;
+  line-height: 30px;
 }
 </style>

@@ -6,14 +6,14 @@
               <img src="../../assets/组17.png" alt="">
           </div>
           <div class="new1_title">
-              <h1>攀枝花市政协副主席、民进市委主委周治端一行到果园港参观考察</h1>
-              <h4>行业动态·2020-6-1</h4>
+              <h1>欢迎某某领导实地考察欢迎某某领导实地考察欢迎某某领导实地考察欢迎某某领导实地考察</h1>
+              <h4>2020-6-1</h4>
           </div>
       </div>
       <div class="new2">
           <div class="new2_title">
               <h1>重大新闻</h1>
-              <h4>行业动态·2020-6-10</h4>
+              <h4>2020-6-10</h4>
               <p>哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈</p>
           </div>
           <div class="new2_title_img">
@@ -25,8 +25,8 @@
               <img src="../../assets/组17.png" alt="">
           </div>
           <div class="new3_title">
-              <h1>果集司与果园港国际物流枢纽公司共商走访园区客户</h1>
-              <h4>行业动态·2020-6-1</h4>
+              <h1>欢迎某某领导实地考察欢迎某某领导实地考察欢迎某某领导实地考察欢迎某某领导实地考察</h1>
+              <h4>2020-6-1</h4>
           </div>
       </div>
     </div>
@@ -52,9 +52,6 @@ export default {};
     justify-content: flex-start;
     margin-bottom: 40px;
 }
-.new1:hover{
-    box-shadow: rgba(0,0,0,.2) 0 1px 5px 0px;
-}
 .new1_title_img{
     width: 220px;
     height: 200px;
@@ -73,13 +70,11 @@ export default {};
     /* background: tomato; */
     margin-left: 100px;
     padding-top: 40px;
-    cursor: pointer;
 }
 .new1_title h1{
     font-size: 30px;
     color: #2a2e2e;
     margin-bottom: 10px;
-    font-weight: normal;
 }
 .new1_title h4{
     font-size: 16px;
@@ -93,20 +88,15 @@ export default {};
     justify-content: space-between;
     margin-bottom: 40px;
 }
-.new2:hover{
-    box-shadow: rgba(0,0,0,.2) 0 1px 5px 0px;
-}
 .new2_title{
     width: 400px;
     padding-top: 100px;
     margin-left: 50px;
-    cursor: pointer;
 }
 .new2_title h1{
     font-size: 30px;
     color: #2a2e2e;
     margin-bottom: 10px;
-    font-weight: normal;
 }
 .new2_title h4{
     font-size: 16px;
@@ -136,10 +126,6 @@ export default {};
     flex-direction: row;
     justify-content: flex-start;
 }
-.new3:hover{
-    box-shadow: rgba(0,0,0,.2) 0 1px 5px 0px;
-
-}
 .new3_title_img{
     width: 220px;
     height: 200px;
@@ -158,13 +144,11 @@ export default {};
     /* background: tomato; */
     margin-left: 100px;
     padding-top: 40px;
-    cursor: pointer;
 }
 .new3_title h1{
     font-size: 30px;
     color: #2a2e2e;
     margin-bottom: 10px;
-    font-weight: normal;
 }
 .new3_title h4{
     font-size: 16px;

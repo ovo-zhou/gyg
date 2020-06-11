@@ -2,10 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 import homepage from './pages/home/homepage'
+// import home from './pages/test/home'
 
 const routes=[
     //这里配置路由
-    {path: '/', component: homepage}
+    {path: '/', component: homepage},
+    // {path: '/', component: home}
+
 ]
 const router = new VueRouter({
     routes
