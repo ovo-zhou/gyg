@@ -28,7 +28,7 @@
             <h4>home</h4>
           </div>
           <div class="tab_item" @click="toProfile">
-            <h3>公司简介</h3>
+            <h3>企业简介</h3>
             <h4>Co-profile</h4>
           </div>
           <div class="tab_item">
