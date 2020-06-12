@@ -1,33 +1,43 @@
 <template>
   <div class="news">
     <div class="news_contain">
-      <div class="new1">
-          <div class="new1_title_img">
-              <img src="../../assets/组17.png" alt="">
-          </div>
-          <div class="new1_title">
-              <h1>攀枝花市政协副主席、民进市委主委周治端一行到果园港参观考察</h1>
-              <h4>行业动态·2020-6-1</h4>
-          </div>
+      <div class="post_head">
+        <span class="post_title">行业动态</span>
+        <span class="more">全部动态</span>
       </div>
-      <div class="new2">
-          <div class="new2_title">
-              <h1>重大新闻</h1>
-              <h4>行业动态·2020-6-10</h4>
-              <p>哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈哈哈哈啊哈哈哈</p>
-          </div>
-          <div class="new2_title_img">
-              <img src="../../assets/组19.png" alt="">
-          </div>
-      </div>
-      <div class="new3">
-          <div class="new3_title_img">
-              <img src="../../assets/组17.png" alt="">
-          </div>
-          <div class="new3_title">
-              <h1>果集司与果园港国际物流枢纽公司共商走访园区客户</h1>
-              <h4>行业动态·2020-6-1</h4>
-          </div>
+      <div class="news_list">
+        <div class="first">
+          <img src="../../assets/组17.png" alt />
+          <p>新冠肺炎疫情防控专题网站</p>
+          <span>2020-6-11</span>
+        </div>
+        <div class="other">
+          <!-- <img src="" alt /> -->
+          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
+          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
+          <span>2020-6-12</span>
+        </div>
+        <div class="other">
+          <!-- <img src="" alt /> -->
+          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
+          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
+          <span>2020-6-12</span>
+        </div><div class="other">
+          <img src="../../assets/组17.png" alt />
+          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
+          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
+          <span>2020-6-12</span>
+        </div><div class="other">
+          <img src="../../assets/组17.png" alt />
+          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
+          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
+          <span>2020-6-12</span>
+        </div><div class="other">
+          <img src="../../assets/组17.png" alt />
+          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
+          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
+          <span>2020-6-12</span>
+        </div>
       </div>
     </div>
   </div>
@@ -36,138 +46,89 @@
 export default {};
 </script>
 <style scoped>
-.news{
-    width: 100%;
-    /* background: yellow; */
-    margin-top: 80px;
+.news {
+  width: 100%;
+  height: 772px;
+  /* background: aquamarine; */
 }
-.news_contain{
-    width: 1080px;
-    margin: 0px auto;
-    overflow: hidden;
+.news_contain {
+  width: 1080px;
+  height: 772px;
+  /* background: blueviolet; */
+  margin: 0px auto;
 }
-.new1{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-bottom: 40px;
+.post_head {
+  width: 100%;
+  height: 56px;
+  /* background: yellow; */
 }
-.new1:hover{
-    box-shadow: rgba(0,0,0,.2) 0 1px 5px 0px;
+.post_title {
+  line-height: 56px;
+  font-size: 22px;
+  font-weight: normal;
+  color: #272727;
 }
-.new1_title_img{
-    width: 220px;
-    height: 200px;
-    transform:skew(-10deg,0deg);
-    overflow: hidden;
-    margin-left: -20px;
-    /* background: turquoise; */
+.more {
+  line-height: 30px;
+  font-size: 14px;
+  color: #fff;
+  background: #1367aa;
+  float: right;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  margin-right: 20px;
+  width: 100px;
+  text-align: center;
 }
-.new1_title_img img{
-    width: 240px;
-    height: 200px;
-    transform:skew(10deg,0deg);
+.news_list {
+  width: 100%;
+  height: 716px;
+  /* background: blueviolet; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.new1_title{
-    width: 750px;
-    /* background: tomato; */
-    margin-left: 100px;
-    padding-top: 40px;
-    cursor: pointer;
+.first {
+  width: 307px;
+  height: 358px;
+  /* background: tomato; */
+  border-top: 3px solid #1367aa;
 }
-.new1_title h1{
-    font-size: 30px;
-    color: #2a2e2e;
-    margin-bottom: 10px;
-    font-weight: normal;
+.first img {
+  width: 307px;
+  height: 194px;
 }
-.new1_title h4{
-    font-size: 16px;
-    color: #5f6464;
+.first p {
+  font-size: 16px;
 }
-.new2{
-    width: 1040px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 40px;
+.first span {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #1367aa;
 }
-.new2:hover{
-    box-shadow: rgba(0,0,0,.2) 0 1px 5px 0px;
+.other {
+  width: 307px;
+  height: 358px;
+  /* background: tomato; */
+  border-top: 3px solid #1367aa;
 }
-.new2_title{
-    width: 400px;
-    padding-top: 100px;
-    margin-left: 50px;
-    cursor: pointer;
+.other img {
+  width: 307px;
+  height: 144px;
 }
-.new2_title h1{
-    font-size: 30px;
-    color: #2a2e2e;
-    margin-bottom: 10px;
-    font-weight: normal;
+.p1 {
+  font-size: 16px;
+  margin-top: 10px;
 }
-.new2_title h4{
-    font-size: 16px;
-    color: #5f6464;
-    margin-bottom: 30px;
+.p2 {
+  font-size: 12px;
+  color: #717171;
+  margin-top: 15px;
 }
-.new2_title p{
-    font-size: 20px;
-    color: #5f6464;
-}
-.new2_title_img{
-    width: 500px;
-    height: 400px;
-    overflow: hidden;
-    transform:skew(-10deg,0deg);
-    /* background: violet; */
-    margin-right: -40px;
-}
-.new2_title_img img{
-    width: 540px;
-    height: 400px;
-    transform:skew(10deg,0deg);
-    margin-left: -40px;
-}
-.new3{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-.new3:hover{
-    box-shadow: rgba(0,0,0,.2) 0 1px 5px 0px;
-
-}
-.new3_title_img{
-    width: 220px;
-    height: 200px;
-    transform:skew(-10deg,0deg);
-    overflow: hidden;
-    margin-left: -20px;
-    /* background: turquoise; */
-}
-.new3_title_img img{
-    width: 240px;
-    height: 200px;
-    transform:skew(10deg,0deg);
-}
-.new3_title{
-    width: 750px;
-    /* background: tomato; */
-    margin-left: 100px;
-    padding-top: 40px;
-    cursor: pointer;
-}
-.new3_title h1{
-    font-size: 30px;
-    color: #2a2e2e;
-    margin-bottom: 10px;
-    font-weight: normal;
-}
-.new3_title h4{
-    font-size: 16px;
-    color: #5f6464;
+.other span {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #1367aa;
 }
 </style>

@@ -12,46 +12,48 @@
           </div>
           <div>
             <img class="icon2" src="../../assets/1.png" />
-            <span class="span3">客户登录</span>
+            <span class="span3" @click="login">客户登录</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="back_img" :style="{backgroundImage: 'url(' + curimg + ')' }">
-      <div class="menu_tab">
-        <div class="menu_contain">
-          <div>
-            <img class="icon3" src="../../assets/图层6.png" />
+    <div class="menu_tab">
+      <div class="menu_contain">
+        <div>
+          <img class="icon3" src="../../assets/图层6.png" />
+        </div>
+        <div class="tab">
+          <div class="tab_item" @click="toHomepage">
+            <h3>首页</h3>
+            <h4>home</h4>
           </div>
-          <div class="tab">
-            <div class="tab_item">
-              <h3>简介</h3>
-              <h4>Co-profile</h4>
-            </div>
-            <div class="tab_item">
-              <h3>行业动态</h3>
-              <h4>Dynamic</h4>
-            </div>
-            <div class="tab_item">
-              <h3>电子商务</h3>
-              <h4>e-Commerce</h4>
-            </div>
-            <div class="tab_item">
-              <h3>业务流程</h3>
-              <h4>Business</h4>
-            </div>
-            <div class="tab_item">
-              <h3>车辆预约</h3>
-              <h4>Vehicle</h4>
-            </div>
-            <div class="tab_item">
-              <h3>客户查询</h3>
-              <h4>Query</h4>
-            </div>
-            <div class="tab_item">
-              <h3>联系我们</h3>
-              <h4>Contact us</h4>
-            </div>
+          <div class="tab_item" @click="toProfile">
+            <h3>公司简介</h3>
+            <h4>Co-profile</h4>
+          </div>
+          <div class="tab_item">
+            <h3>行业动态</h3>
+            <h4>Dynamic</h4>
+          </div>
+          <div class="tab_item">
+            <h3>电子商务</h3>
+            <h4>e-Commerce</h4>
+          </div>
+          <div class="tab_item">
+            <h3>业务流程</h3>
+            <h4>Business</h4>
+          </div>
+          <div class="tab_item">
+            <h3>车辆预约</h3>
+            <h4>Vehicle</h4>
+          </div>
+          <div class="tab_item">
+            <h3>客户查询</h3>
+            <h4>Query</h4>
+          </div>
+          <div class="tab_item">
+            <h3>联系我们</h3>
+            <h4>Contact us</h4>
           </div>
         </div>
       </div>
@@ -59,23 +61,17 @@
   </div>
 </template>
 <script>
-import img1 from "../../assets/back1.jpg";
-import img2 from "../../assets/back2.jpg";
-import img3 from "../../assets/culture.png";
 export default {
-  created() {
-    window.setInterval(this.change, 3000);
-  },
-  data() {
-    return {
-      img: [img1, img2, img3],
-      curimg: img1
-    };
-  },
   methods: {
-    change() {
-      var i = Math.floor(Math.random() * 3);
-      this.curimg = this.img[i];
+    login() {
+      this.$router.push("/login");
+    },
+    toHomepage(){
+      this.$router.push("/homepage")
+
+    },
+    toProfile(){
+      this.$router.push("/profile")
     }
   }
 };
@@ -146,14 +142,6 @@ export default {
 .tel {
   margin-right: 30px;
 }
-.back_img {
-  width: 100%;
-  height: 550px;
-  background-image: url(../../assets/culture.png);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-}
 .menu_tab {
   width: 100%;
   height: 87px;
@@ -183,9 +171,9 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
 }
-.tab_item:hover{
+.tab_item:hover {
   cursor: pointer;
-  background:rgba(0,56,88,1);
+  background: rgba(0, 56, 88, 1);
 }
 .tab_item h3 {
   text-align: center;

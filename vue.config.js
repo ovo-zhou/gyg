@@ -1,9 +1,9 @@
 module.exports = {
     devServer: {
-        host: "172.16.199.97",
-        port: 9473 
-        // host: "192.168.1.8",
-        // port: 8080
+        // host: "172.16.199.97",
+        // port: 9473 
+        host: "192.168.1.8",
+        port: 8088
     },
 };
 //实验室服务器IP：port
