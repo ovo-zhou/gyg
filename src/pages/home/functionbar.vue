@@ -63,7 +63,8 @@ export default {
   width: 100%;
   height: 500px;
   background: #fcfcfc;
-  margin-top: 80px;
+  padding-top: 20px;
+  margin-top: 20px;
 }
 .funcontain {
   width: 1080px;

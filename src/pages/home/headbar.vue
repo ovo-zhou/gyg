@@ -39,7 +39,7 @@
             <h3>电子商务</h3>
             <h4>e-Commerce</h4>
           </div>
-          <div class="tab_item">
+          <div class="tab_item" @click="business">
             <h3>业务流程</h3>
             <h4>Business</h4>
           </div>
@@ -51,7 +51,7 @@
             <h3>客户查询</h3>
             <h4>Query</h4>
           </div>
-          <div class="tab_item">
+          <div class="tab_item" @click="contactus">
             <h3>联系我们</h3>
             <h4>Contact us</h4>
           </div>
@@ -72,6 +72,12 @@ export default {
     },
     toProfile(){
       this.$router.push("/profile")
+    },
+    contactus(){
+      this.$router.push("/contactus")
+    },
+    business(){
+      this.$router.push("/business")
     }
   }
 };

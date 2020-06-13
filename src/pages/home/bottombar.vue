@@ -4,7 +4,7 @@
     <div class="bar">
       <div class="b-contain">
         <div class="c-link">
-          <h1>常用链接</h1>
+          <h3>常用链接</h3>
           <div class="fun">
             <div class="fun_list">
               <img src="../../assets/shouye.png" alt />
@@ -38,7 +38,7 @@
         </div>
 
         <div class="code">
-          <h1>关注我们</h1>
+          <h3>关注我们</h3>
           <div class="focus">
             <div class="f-item">
               <img src="../../assets/wx.png" alt=""><span>官方微信</span>
@@ -76,7 +76,8 @@ export default {};
 .bar {
   width: 100%;
   height: 287px;
-  background: rgba(0, 53, 96, 1);
+  background: url("../../assets/footer2.png");
+  background-size: 100% 100%;
 }
 .b-contain {
   width: 1080px;
@@ -99,10 +100,9 @@ export default {};
   width: 500px;
   /* background: chartreuse; */
 }
-.c-link h1{
+.c-link h3{
   margin-bottom: 20px;
   color: rgba(234, 234, 234, 1);
-
 }
 .fun {
   width: 400px;
@@ -124,7 +124,7 @@ export default {};
   vertical-align: middle;
 }
 .fun span {
-  font-size: 18px;
+  font-size: 16px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: rgba(234, 234, 234, 1);
@@ -146,7 +146,7 @@ export default {};
   margin-top: 50px;
   /* background: chartreuse; */
 }
-.code h1{
+.code h3{
   color: rgba(234, 234, 234, 1);
   margin-bottom: 20px;
 }
@@ -157,7 +157,7 @@ export default {};
   height: 100px;
 }
 .f-item{
-   height: 30px;
+  height: 30px;
   line-height: 30px;
   width: 150px;
 }
@@ -167,7 +167,7 @@ export default {};
   vertical-align: middle;
 }
 .f-item span{
-  font-size: 18px;
+  font-size: 16px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   color: rgba(234, 234, 234, 1);

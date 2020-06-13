@@ -4,10 +4,7 @@
     <div class="pro-title">
       <div class="pro-contain">
         <div class="span-text"><a href="#jianjie">企业简介</a></div>
-        <div class="span-text"><a href="#lichen">发展历程</a></div>
         <div class="span-text"><a href="#jiagou">企业架构</a></div>
-        <div class="span-text"><a>管理团队</a></div>
-        <div class="span-text"><a>企业文化</a></div>
       </div>
     </div>
     <div class="info" id="jianjie">
@@ -20,18 +17,12 @@
         </div>
       </div>
     </div>
-    <div class="licheng" id="lichen">
-      <div class="li-contain">
-        <h1>发展历程</h1>
-      </div>
-    </div>
     <div class="framework" id="jiagou"> 
       <div class="f-contain">
         <h1>企业架构</h1>
         <img src="../../assets/jiagou.jpg" alt="">
       </div>
-    </div>
-    
+    </div> 
   </div>
 </template>
 <script>
@@ -91,30 +82,14 @@ export default {};
   width: 450px;
   height: 360px;
   float: right;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 .text h2{
   margin-bottom: 10px;
 }
 .text p{
   text-indent:2em;
-}
-.licheng {
-  width: 100%;
-  height: 384px;
-  margin-top: 50px;
-}
-.li-contain{
-  background: url("../../assets/banner.jpg") no-repeat; 
-background-size: 100% 100%;
-  width: 1080px;
-  height: 384px;
-  margin: 0px auto;
-}
-.li-contain h1{
-  line-height: 384px;
-  text-align: center;
-  color: #fbfbfb;
+  line-height: 25px;
 }
 .framework{
 width: 100%;
@@ -130,6 +105,7 @@ width: 1080px;
 }
 .f-contain h1{
   border-bottom: 2px solid #0e68b1;
+  font-family: Avenir, Helvetica, Arial, sans-serif, microsoft yahei;
 } 
 .f-contain img{
   width: 100%;

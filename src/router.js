@@ -6,13 +6,26 @@ import homepage from './pages/home/homepage';
 import login from './pages/login/login'
 import admin from './components/common/admin'
 import profile from './pages/profile/profile'
+import contactus from './pages/contactus/contactus'
+import contactInfo from './pages/contactus/contactInfo'
+import feedback from './pages/contactus/feedback'
+import business from './pages/business/business'
+
 const routes = [
     //这里配置路由
     {
-        path: '/', component: home,redirect:'/homepage',
+        path: '/', component: home, redirect: '/homepage',
         children: [
             { path: "homepage", component: homepage },
             { path: "profile", component: profile },
+            {
+                path: "contactus", component: contactus, redirect: '/contactus/contactInfo',
+                children: [
+                    { path: 'contactInfo', component: contactInfo },
+                    { path: 'feedback', component: feedback }
+                ]
+            },
+            { path: "business", component: business},
         ]
     },
     { path: '/login', component: login },

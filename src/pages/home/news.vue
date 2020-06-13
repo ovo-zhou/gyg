@@ -2,8 +2,11 @@
   <div class="news">
     <div class="news_contain">
       <div class="post_head">
-        <span class="post_title">行业动态</span>
-        <span class="more">全部动态</span>
+          <p>
+            <span class="post_title">行业动态</span>
+            <span class="more">全部动态</span>
+          </p>
+          <p><span class="En_title">News information</span></p>
       </div>
       <div class="news_list">
         <div class="first">
@@ -49,6 +52,7 @@ export default {};
 .news {
   width: 100%;
   height: 772px;
+  margin-top: 40px;
   /* background: aquamarine; */
 }
 .news_contain {
@@ -63,10 +67,18 @@ export default {};
   /* background: yellow; */
 }
 .post_title {
-  line-height: 56px;
-  font-size: 22px;
-  font-weight: normal;
-  color: #272727;
+  /*line-height: 50px;*/
+  color: #1367AA;
+  border-left: 9px solid #1367AA;
+  padding-left: 20px;
+  padding-bottom: 15px;
+  font-size: 28px;
+  font-weight: bold;
+}
+.En_title{
+  color: #1367AA;
+  font-size: 16px;
+  padding-left: 30px;
 }
 .more {
   line-height: 30px;
@@ -88,6 +100,7 @@ export default {};
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 10px;
 }
 .first {
   width: 307px;
@@ -104,7 +117,6 @@ export default {};
 }
 .first span {
   font-size: 12px;
-  margin-top: 5px;
   color: #1367aa;
 }
 .other {
@@ -125,10 +137,12 @@ export default {};
   font-size: 12px;
   color: #717171;
   margin-top: 15px;
+  margin-bottom: 10px;
+  line-height: 25px;
 }
 .other span {
   font-size: 12px;
-  margin-top: 5px;
   color: #1367aa;
+  /* background: blueviolet; */
 }
 </style>
