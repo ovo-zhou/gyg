@@ -16,6 +16,9 @@
             </el-select>
           </el-form-item>
           <el-form-item>
+            <slider></slider>
+          </el-form-item>
+          <el-form-item>
             <div class="btn_login" @click="login">登录</div>
           </el-form-item>
         </el-form>
@@ -25,6 +28,7 @@
 </template>
 
 <script>
+import slider from "./slider";
 export default {
   data() {
     return {
@@ -35,9 +39,12 @@ export default {
       }
     };
   },
-  methods:{
-    login(){
-      this.$router.push("/admin")
+  components: {
+    slider
+  },
+  methods: {
+    login() {
+      this.$router.push("/admin");
     }
   }
 };
@@ -50,23 +57,21 @@ export default {
   background: url("../../assets/login_back1.jpg") no-repeat;
   background-size: 100% 100%;
   background-attachment: fixed;
- 
 }
 .border {
-  background:#ffffff;
   width: 300px;
   padding-top: 30px;
   padding-bottom: 30px;
   border-radius: 5px;
-  background-color:rgba(0,0,0,0.5);
-   position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: relative;
   left: 40%;
   top: 30%;
 }
 .login_box {
   width: 200px;
   color: #ffffff;
-  margin-left: 45px ;
+  margin-left: 45px;
 }
 .btn_login {
   width: 100%;
