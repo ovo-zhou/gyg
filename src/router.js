@@ -8,14 +8,14 @@ import login from './pages/login/login'
 import admin from './layout/admin/admin'
 import profile from './pages/profile/profile'
 import contactus from './pages/contactus/contactus'
-import contactInfo from './pages/contactus/contactInfo'
-import feedback from './pages/contactus/feedback'
 import business from './pages/business/business'
 import details from './components/dynamic/details'
 import dynamic from './pages/dynamic/dynamic'
 //后台管理页面
 import dmanage from "./pages/admin/dynamic/d_manage";
-import drelease from './components/tinymce/tinymce-editor'
+import drelease from './pages/admin/dynamic/d_release'
+import bmanage from './pages/admin/business/b_manage'
+import brelease from './pages/admin/business/b_release'
 const routes = [
     //这里配置路由
     {
@@ -23,13 +23,7 @@ const routes = [
         children: [
             { path: "homepage", component: homepage },
             { path: "profile", component: profile },
-            {
-                path: "contactus", component: contactus, redirect: '/contactus/contactInfo',
-                children: [
-                    { path: 'contactInfo', component: contactInfo },
-                    { path: 'feedback', component: feedback }
-                ]
-            },
+            {path: "contactus", component: contactus,},
             { path: "business", component: business },
             { path: "details", component: details },
             { path: 'dynamic', component: dynamic }
@@ -41,12 +35,14 @@ const routes = [
         children: [
             { path: 'dmanage', component: dmanage },
             { path: 'drelease', component: drelease },
-
+            { path: 'bmanage', component: bmanage },
+            { path: 'brelease', component: brelease },
         ]
     },
 
 ]
 const router = new VueRouter({
+    mode: 'history',
     routes
 })
 //路由守卫，做页面权限控制，后台管理页面会用到，暂时注释

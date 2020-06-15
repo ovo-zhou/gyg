@@ -1,5 +1,6 @@
 <template>
   <div class="business">
+    <img src="../../assets/business process.png" alt="">
     <div class="b-contain">
       <flowchart></flowchart>
       <flowchart></flowchart>
@@ -22,6 +23,9 @@ export default {
 
 <style scoped>
 .business{
+width: 100%;
+}
+.business img{
 width: 100%;
 }
 .b-contain{

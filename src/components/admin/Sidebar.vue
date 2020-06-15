@@ -30,8 +30,8 @@
           <span>业务流程</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">流程发布</el-menu-item>
-          <el-menu-item index="2-2">流程管理</el-menu-item>
+          <el-menu-item index="/admin/brelease">流程发布</el-menu-item>
+          <el-menu-item index="/admin/bmanage">流程管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="3">

@@ -16,6 +16,7 @@
 import bus from '../../components/admin/bus'
 import vHead from "../../components/admin/Header";
 import vSidebar from  '../../components/admin/Sidebar'
+
 export default {
   data() {
     return {
@@ -38,3 +39,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+@import "../../assets/css/main.css"; 
+</style>
