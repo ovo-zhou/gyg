@@ -13,6 +13,7 @@ export default {
 </script>
 
 <style>
+@import "./assets/css/main.css";
 *{
     margin: 0px;
     padding: 0px;

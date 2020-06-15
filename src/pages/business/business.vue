@@ -2,6 +2,8 @@
   <div class="business">
     <div class="b-contain">
       <flowchart></flowchart>
+      <flowchart></flowchart>
+      <flowchart></flowchart>
       <vodeoplayer></vodeoplayer>
     </div>
   </div>

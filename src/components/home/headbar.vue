@@ -31,7 +31,7 @@
             <h3>企业简介</h3>
             <h4>Co-profile</h4>
           </div>
-          <div class="tab_item">
+          <div class="tab_item" @click="toDynamic">
             <h3>行业动态</h3>
             <h4>Dynamic</h4>
           </div>
@@ -78,6 +78,9 @@ export default {
     },
     business(){
       this.$router.push("/business")
+    },
+    toDynamic(){
+      this.$router.push("/dynamic")
     }
   }
 };

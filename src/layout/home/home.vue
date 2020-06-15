@@ -7,8 +7,8 @@
   </div>
 </template>
 <script>
-import headbar from "../../pages/home/headbar";
-import bottombar from "../../pages/home/bottombar";
+import headbar from "../../components/home/headbar";
+import bottombar from "../../components/home/bottombar";
 export default {
   components: {
     headbar,

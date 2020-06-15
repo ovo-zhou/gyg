@@ -5,9 +5,7 @@
     <div class="content-box" :class="{'content-collapse':collapse}">
       <div class="content">
         <transition name="move" mode="out-in">
-          <keep-alive :include="tagsList">
             <router-view></router-view>
-          </keep-alive>
         </transition>
       </div>
     </div>
@@ -15,12 +13,13 @@
 </template>
 
 <script>
-import vHead from "./Header.vue";
-import vSidebar from  './Sidebar'
+import bus from '../../components/admin/bus'
+import vHead from "../../components/admin/Header";
+import vSidebar from  '../../components/admin/Sidebar'
 export default {
   data() {
     return {
-      
+       collapse: false,
   }},
   computed: {
   
@@ -33,7 +32,9 @@ export default {
  vSidebar
   },
   created() {
-   
+    bus.$on("collapse", msg => {
+      this.collapse = msg;
+    });
   }
 };
 </script>

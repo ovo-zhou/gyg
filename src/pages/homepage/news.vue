@@ -9,7 +9,7 @@
           <p><span class="En_title">News information</span></p>
       </div>
       <div class="news_list">
-        <div class="first">
+        <div class="first" @click="toDetails">
           <img src="../../assets/组17.png" alt />
           <p>新冠肺炎疫情防控专题网站</p>
           <span>2020-6-11</span>
@@ -46,7 +46,13 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods:{
+    toDetails(){
+      this.$router.push('/details')
+    }
+  }
+};
 </script>
 <style scoped>
 .news {
