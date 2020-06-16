@@ -10,7 +10,7 @@
       unique-opened
       router
     >
-     <el-menu-item index="5">
+     <el-menu-item index="/admin/adminhome">
         <i class="el-icon-phone"></i>
         <span slot="title">首页</span>
       </el-menu-item>
@@ -34,10 +34,6 @@
           <el-menu-item index="/admin/bmanage">流程管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="3">
-        <i class="el-icon-phone"></i>
-        <span slot="title">联系我们</span>
-      </el-menu-item>
     </el-menu>
   </div>
 </template>

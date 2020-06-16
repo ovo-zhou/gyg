@@ -4,19 +4,20 @@
       <div class="login_box">
         <el-form label-width="0px" :model="userform">
           <el-form-item>
-            <el-input v-model="userform.username" placeholder="用户名"></el-input>
+            <el-input v-model="userform.Account" placeholder="用户名"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="userform.password" placeholder="密码" show-password></el-input>
+            <el-input v-model="userform.PassWord" placeholder="密码" show-password></el-input>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="userform.identity" placeholder="请选择">
-              <el-option label="员工" value="shanghai"></el-option>
-              <el-option label="管理员" value="beijing"></el-option>
+            <el-select v-model="userform.DLFS" placeholder="请选择">
+              <el-option label="员工登录" value="员工登录"></el-option>
+              <el-option label="后台管理" value="后台管理"></el-option>
+              <el-option label="客户登录" value="客户登录"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <slider></slider>
+            <slider ref="slider"></slider>
           </el-form-item>
           <el-form-item>
             <div class="btn_login" @click="login">登录</div>
@@ -29,13 +30,15 @@
 
 <script>
 import slider from "./slider";
+import host from '../../libs/utils'
+import {post} from '../../service/http'
 export default {
   data() {
     return {
       userform: {
-        username: "",
-        password: "",
-        identity: ""
+        Account: "admin",
+        PassWord: "sdic818",
+        DLFS: "后台管理"
       }
     };
   },
@@ -43,8 +46,39 @@ export default {
     slider
   },
   methods: {
+    check() {
+      if (this.userform.Account === "") {
+        this.$message.error("请输入用户名");
+        return false;
+      }
+      if (this.userform.PassWord === "") {
+        this.$message.error("请输入密码");
+        return false;
+      }
+      if (this.userform.DLFS === "") {
+        this.$message.error("请选择登录方式");
+        return false;
+      }
+      if (this.$refs["slider"]) {
+        if (!this.$refs["slider"].confirmSuccess) {
+          this.$message.error("请拖动滑块验证");
+          return false;
+        }
+      }
+      return true;
+    },
     login() {
-      this.$router.push("/admin");
+      if (!this.check()) {
+        return;
+      }
+      if(this.userform.DLFS==="客户登录"){
+        alert("等待完善")
+      }else{
+        let url=host.host1+'login.ashx';
+        post(url,this.userform).then(res=>{
+          console.log(res)
+        })
+      }
     }
   }
 };

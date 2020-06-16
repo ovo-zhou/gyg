@@ -7,15 +7,17 @@ import homepage from './pages/homepage/homepage';
 import login from './pages/login/login'
 import admin from './layout/admin/admin'
 import profile from './pages/profile/profile'
-import contactus from './pages/contactus/contactus'
+import contactus from './pages/contactus/contactInfo'
 import business from './pages/business/business'
 import details from './components/dynamic/details'
 import dynamic from './pages/dynamic/dynamic'
 //后台管理页面
+import adminhome from './pages/admin/adminhome'
 import dmanage from "./pages/admin/dynamic/d_manage";
 import drelease from './pages/admin/dynamic/d_release'
 import bmanage from './pages/admin/business/b_manage'
 import brelease from './pages/admin/business/b_release'
+
 const routes = [
     //这里配置路由
     {
@@ -33,6 +35,7 @@ const routes = [
     {
         path: '/admin', component: admin,
         children: [
+            { path: 'adminhome', component: adminhome },
             { path: 'dmanage', component: dmanage },
             { path: 'drelease', component: drelease },
             { path: 'bmanage', component: bmanage },

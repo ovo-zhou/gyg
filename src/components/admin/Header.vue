@@ -4,7 +4,7 @@
     <div class="collapse-btn" @click="collapseChage">
       <i class="el-icon-menu"></i>
     </div>
-    <div class="logo">后台管理系统</div>
+    <div class="logo" @click="toHome">回到主页</div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 用户名下拉菜单 -->
@@ -36,6 +36,9 @@ export default {
     collapseChage() {
       this.collapse = !this.collapse;
       bus.$emit("collapse", this.collapse);
+    },
+    toHome(){
+      this.$router.push('/')
     }
   },
   mounted() {
@@ -62,6 +65,7 @@ export default {
   float: left;
   width: 250px;
   line-height: 70px;
+  cursor: pointer;
 }
 .header-right {
   float: right;
