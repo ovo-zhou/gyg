@@ -8,7 +8,7 @@
         <el-form-item label="封面图">
           <el-upload
             class="avatar-uploader"
-            action="http://localhost:44309/Handler/Admin/SaveIcon.ashx"
+            :action="imgUpLoadUrl"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
           >
@@ -20,7 +20,7 @@
     </div>
     <Editor id="tinymce" v-model="tinymceHtml" :init="init"></Editor>
     <div class="btn">
-      <el-button type="primary">发布</el-button>
+      <el-button type="primary" @click="release">发布</el-button>
     </div>
   </div>
 </template>
@@ -30,7 +30,6 @@ import tinymce from "tinymce/tinymce";
 import "tinymce/themes/silver/theme";
 import Editor from "@tinymce/tinymce-vue";
 import "tinymce/icons/default/icons.min.js";
-
 //插件
 import "tinymce/plugins/image"; // 插入上传图片插件
 import "tinymce/plugins/media"; // 插入视频插件
@@ -60,14 +59,19 @@ import "tinymce/plugins/nonbreaking";
 import "tinymce/plugins/autosave";
 import "tinymce/plugins/fullpage";
 import "tinymce/plugins/toc";
+//post请求和请求地址
+// import {post} from '../../../service/http'
+import host from "../../../libs/utils";
+import { post } from '../../../service/http';
 export default {
   data() {
     return {
-      imageUrl: "",
       form: {
         title: ""
       },
       tinymceHtml: "",
+      imageUrl: "",
+      imgUpLoadUrl: "",
       init: {
         language_url: "/tinymce/langs/zh_CN.js",
         language: "zh_CN",
@@ -85,12 +89,10 @@ export default {
         images_upload_handler: function(blobInfo, success) {
           let xhr = new XMLHttpRequest();
           xhr.withCredentials = false;
-          xhr.open(
-            "POST",
-            "http://localhost:44309/Handler/Admin/SaveIcon.ashx"
-          );
+          xhr.open("POST", host.host2 + "upload.ashx");
           xhr.onload = function() {
-            success(xhr.responseText);
+            let url = JSON.parse(xhr.responseText).url;
+            success(url);
           };
           let formData = new FormData();
           formData.append("file", blobInfo.blob(), blobInfo.filename());
@@ -101,6 +103,7 @@ export default {
   },
   mounted() {
     tinymce.init({});
+    this.imgUpLoadUrl = host.host2 + "upload.ashx";
   },
   components: {
     Editor
@@ -108,7 +111,28 @@ export default {
   methods: {
     handleAvatarSuccess(res) {
       console.log(res);
-      this.imageUrl = res;
+      this.imageUrl = res.url;
+    },
+    release() {
+      let data = {
+        LM: "行业动态",
+        XWBT: "",
+        XWNR: "",
+        FBRBH: "",
+        FBRXM: "",
+        SHRBH: "",
+        SHRXM: "",
+        COVER_IMG:''
+      };
+      data.XWBT = this.form.title;
+      data.XWNR=this.tinymceHtml;
+      data.FBRBH =JSON.parse(sessionStorage.getItem("user")).Yhbh;
+      data.FBRXM =JSON.parse(sessionStorage.getItem("user")).XM;
+      data.COVER_IMG=this.imageUrl
+      console.log(data)
+      post(host.host2+"AddNews.ashx",data).then(res=>{
+        console.log(res)
+      })
     }
   }
 };

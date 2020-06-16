@@ -30,8 +30,8 @@
 
 <script>
 import slider from "./slider";
-import host from '../../libs/utils'
-import {post} from '../../service/http'
+import host from "../../libs/utils";
+import { post } from "../../service/http";
 export default {
   data() {
     return {
@@ -71,13 +71,60 @@ export default {
       if (!this.check()) {
         return;
       }
-      if(this.userform.DLFS==="客户登录"){
-        alert("等待完善")
-      }else{
-        let url=host.host1+'login.ashx';
-        post(url,this.userform).then(res=>{
-          console.log(res)
-        })
+      if (this.userform.DLFS === "客户登录") {
+        alert("等待完善");
+      } else {
+        let url = host.host1 + "login.ashx";
+        post(url, this.userform).then(res => {
+          if (res.errCode === "SUCCESS") {
+            console.log(res);
+            let user = {
+              DeptId: "",
+              DeptName: "",
+              Yhbh: "",
+              XM: "",
+              UserIdentity: []
+            };
+            user.DeptId = res.data[0]["DeptId"];
+            user.DeptName = res.data[0]["DeptName"];
+            user.Yhbh = res.data[0]["Yhbh"];
+            user.XM = res.data[0]["XM"];
+            for (var i = 0; i < res.data.length; i++) {
+              user.UserIdentity.push(res.data[i]["Jsmc"]);
+            }
+            sessionStorage.setItem("user", JSON.stringify(user));
+            sessionStorage.setItem("isLogin", "true");
+            if (this.userform.DLFS === "员工登录" || this.userform.DLFS === "后台管理") {
+              if (
+                JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+                  "货主"
+                ) >= 0 &&
+                JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+                  "系统管理员"
+                ) === -1
+              ) {
+                this.$message.error("不是内部员工");
+              }
+            }
+            if (this.userform.DLFS === "后台管理") {
+              if (
+                JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+                  "系统管理员"
+                ) >= 0
+              ) {
+                this.$router.push({ path: "/admin" });
+                return;
+              } else {
+                this.$message.error("不是系统管理员");
+                return;
+              }
+            } else {
+              this.$router.push({ path: "/workspace" });
+            }
+          } else if (res.errCode === "FAIL") {
+            this.$message.error(res.errStr);
+          }
+        });
       }
     }
   }

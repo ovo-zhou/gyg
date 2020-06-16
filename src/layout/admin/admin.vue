@@ -60,7 +60,6 @@ export default {
     transition: left .3s ease-in-out;
     background: #f0f0f0;
 }
-
 .content {
     width: auto;
     height: 100%;
@@ -68,7 +67,6 @@ export default {
     overflow-y: scroll;
     box-sizing: border-box;
 }
-
 .content-collapse {
     left: 65px;
 }
