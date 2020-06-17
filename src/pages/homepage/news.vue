@@ -2,55 +2,59 @@
   <div class="news">
     <div class="news_contain">
       <div class="post_head">
-          <p>
-            <span class="post_title">行业动态</span>
-            <span class="more">全部动态</span>
-          </p>
-          <p><span class="En_title">News information</span></p>
+        <p>
+          <span class="post_title">行业动态</span>
+          <span class="more">全部动态</span>
+        </p>
+        <p>
+          <span class="En_title">News information</span>
+        </p>
       </div>
       <div class="news_list">
-        <div class="first" @click="toDetails">
+        <!-- <div class="first" @click="toDetails">
           <img src="../../assets/组17.png" alt />
           <p>新冠肺炎疫情防控专题网站</p>
           <span>2020-6-11</span>
+        </div>-->
+        <template v-for="(item,index) in newsdata">
+          <div class="other" :key="index" @click="toDetail(item)">
+          <template v-if="item.COVER_IMG"> <img :src="item.COVER_IMG" alt /></template> 
+          <p class="p1">{{item.XWBT}}</p>
+          <p class="p2" v-html="item.XWNR"></p>
+          <span>{{item.FBSJ}}</span>
         </div>
-        <div class="other">
-          <!-- <img src="" alt /> -->
-          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
-          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
-          <span>2020-6-12</span>
-        </div>
-        <div class="other">
-          <!-- <img src="" alt /> -->
-          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
-          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
-          <span>2020-6-12</span>
-        </div><div class="other">
-          <img src="../../assets/组17.png" alt />
-          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
-          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
-          <span>2020-6-12</span>
-        </div><div class="other">
-          <img src="../../assets/组17.png" alt />
-          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
-          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
-          <span>2020-6-12</span>
-        </div><div class="other">
-          <img src="../../assets/组17.png" alt />
-          <p class="p1">第六届“互联网+”大学生创新创业大赛参赛动员会召开</p>
-          <p class="p2">6月10日，我校线上召开第六届“广东工研院杯”创新创业大赛暨中国国际“互联网+”大学生创新创业大赛参赛动员会</p>
-          <span>2020-6-12</span>
-        </div>
+        </template>
       </div>
     </div>
   </div>
 </template>
 <script>
+import host from "../../libs/utils";
+import { post } from "../../service/http";
 export default {
-  methods:{
-    toDetails(){
-      this.$router.push('/details')
+  data() {
+    return {
+      newsdata: []
+    };
+  },
+  methods: {
+    toDetail(item) {
+      this.$router.push({ path: '/details', query: { newdata: item }});
+    },
+    querynew() {
+      post(host.host2 + "QueryNews.ashx", { page: 1, LM: "行业动态" }).then(
+        res => {
+          if (res.errCode === "SUCCESS") {
+            this.newsdata = res.data;
+            this.newsdata=this.newsdata.slice(0,6);
+            console.log(this.newsdata);
+          }
+        }
+      );
     }
+  },
+  mounted() {
+    this.querynew()
   }
 };
 </script>
@@ -74,15 +78,15 @@ export default {
 }
 .post_title {
   /*line-height: 50px;*/
-  color: #1367AA;
-  border-left: 9px solid #1367AA;
+  color: #1367aa;
+  border-left: 9px solid #1367aa;
   padding-left: 20px;
   padding-bottom: 15px;
   font-size: 28px;
   font-weight: bold;
 }
-.En_title{
-  color: #1367AA;
+.En_title {
+  color: #1367aa;
   font-size: 16px;
   padding-left: 30px;
 }
@@ -134,6 +138,7 @@ export default {
 .other img {
   width: 307px;
   height: 144px;
+  cursor: pointer;
 }
 .p1 {
   font-size: 16px;
@@ -145,6 +150,13 @@ export default {
   margin-top: 15px;
   margin-bottom: 10px;
   line-height: 25px;
+  display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+  width: 100%;
+  height: 70px;
+  overflow:hidden
 }
 .other span {
   font-size: 12px;

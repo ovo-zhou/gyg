@@ -114,6 +114,15 @@ export default {
       this.imageUrl = res.url;
     },
     release() {
+      if(this.form.title==="")
+      {
+        this.$message.error("标题不能为空")
+        return
+      }
+      if(this.tinymceHtml==="")
+      {
+        this.$message.error("请填写内容")
+      }
       let data = {
         LM: "行业动态",
         XWBT: "",
@@ -132,6 +141,15 @@ export default {
       console.log(data)
       post(host.host2+"AddNews.ashx",data).then(res=>{
         console.log(res)
+        if(res.errCode==="SUCCESS"){
+          this.$message({
+          message: '发布成功',
+          type: 'success'
+        });
+        this.form.title=""
+        this.imageUrl=""
+        this.tinymceHtml=""
+        }
       })
     }
   }
