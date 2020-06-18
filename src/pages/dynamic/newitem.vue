@@ -42,7 +42,6 @@ export default {
   margin-bottom: 10px;
 }
 .item p {
-  text-indent: 2em;
   line-height: 30px;
    display: -webkit-box;
 	-webkit-box-orient: vertical;

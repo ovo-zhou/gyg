@@ -19,9 +19,11 @@
       </el-form>
     </div>
     <Editor id="tinymce" v-model="tinymceHtml" :init="init"></Editor>
-    <div class="btn">
-      <el-button type="primary" @click="release">发布</el-button>
-    </div>
+    <template v-if="show">
+      <div class="btn">
+        <el-button type="primary" @click="handleClick">{{btnMessage}}</el-button>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -32,7 +34,7 @@ import Editor from "@tinymce/tinymce-vue";
 // import "tinymce/icons/default/icons.min.js";
 import "tinymce/icons/default";
 //插件
-import '../../../assets/tinymce/plugins/lineheight/plugin'
+import "../../../assets/tinymce/plugins/lineheight/plugin";
 import "tinymce/plugins/image"; // 插入上传图片插件
 import "tinymce/plugins/media"; // 插入视频插件
 import "tinymce/plugins/table"; // 插入表格插件
@@ -64,7 +66,7 @@ import "tinymce/plugins/toc";
 //post请求和请求地址
 // import {post} from '../../../service/http'
 import host from "../../../libs/utils";
-import { post } from '../../../service/http';
+import { post } from "../../../service/http";
 export default {
   data() {
     return {
@@ -74,6 +76,9 @@ export default {
       tinymceHtml: "",
       imageUrl: "",
       imgUpLoadUrl: "",
+      show: true,
+      btnMessage: "发布",
+      flag: "发布",
       init: {
         language_url: "/tinymce/langs/zh_CN.js",
         language: "zh_CN",
@@ -107,6 +112,23 @@ export default {
     tinymce.init({});
     this.imgUpLoadUrl = host.host2 + "upload.ashx";
   },
+  created() {
+    if (this.$route.query.flag === "查看") {
+      this.flag = "查看";
+      this.form.title = this.$route.query.new.XWBT;
+      this.imageUrl = this.$route.query.new.COVER_IMG;
+      this.tinymceHtml = this.$route.query.new.XWNR;
+      this.show = false;
+    }
+    if (this.$route.query.flag === "编辑") {
+      this.flag = "编辑";
+      this.form.title = this.$route.query.new.XWBT;
+      this.imageUrl = this.$route.query.new.COVER_IMG;
+      this.tinymceHtml = this.$route.query.new.XWNR;
+      this.show = true;
+      this.btnMessage = "确认修改";
+    }
+  },
   components: {
     Editor
   },
@@ -115,15 +137,61 @@ export default {
       console.log(res);
       this.imageUrl = res.url;
     },
-    release() {
-      if(this.form.title==="")
-      {
-        this.$message.error("标题不能为空")
-        return
+    handleClick() {
+      if (this.flag === "发布") {
+        this.handleRelease();
+      } else if (this.flag === "编辑") {
+        this.handleEdit();
       }
-      if(this.tinymceHtml==="")
-      {
-        this.$message.error("请填写内容")
+    },
+    handleEdit() {
+      if (this.form.title === "") {
+        this.$message.error("标题不能为空");
+        return;
+      }
+      if (this.tinymceHtml === "") {
+        this.$message.error("请填写内容");
+        return;
+      }
+      let data = {
+        ID:"",
+        LM: "行业动态",
+        XWBT: "",
+        XWNR: "",
+        FBRBH: "",
+        FBRXM: "",
+        SHRBH: "",
+        SHRXM: "",
+        COVER_IMG: ""
+      };
+      data.ID=this.$route.query.new.ID
+      data.XWBT = this.form.title;
+      data.XWNR = this.tinymceHtml;
+      data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
+      data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
+      data.COVER_IMG = this.imageUrl;
+      console.log(data)
+      post(host.host2+"UpdateNews.ashx",data).then(res=>{
+        if(res.errCode==="SUCCESS"){
+          this.$message({
+            message: "修改成功",
+            type: "success"
+          });
+          this.form.title=""
+          this.imageUrl=""
+          this.tinymceHtml=""
+          this.$router.push("/admin/dmanage")
+        }
+      })
+    },
+    handleRelease() {
+      if (this.form.title === "") {
+        this.$message.error("标题不能为空");
+        return;
+      }
+      if (this.tinymceHtml === "") {
+        this.$message.error("请填写内容");
+        return;
       }
       let data = {
         LM: "行业动态",
@@ -133,26 +201,38 @@ export default {
         FBRXM: "",
         SHRBH: "",
         SHRXM: "",
-        COVER_IMG:''
+        COVER_IMG: ""
       };
       data.XWBT = this.form.title;
-      data.XWNR=this.tinymceHtml;
-      data.FBRBH =JSON.parse(sessionStorage.getItem("user")).Yhbh;
-      data.FBRXM =JSON.parse(sessionStorage.getItem("user")).XM;
-      data.COVER_IMG=this.imageUrl
-      console.log(data)
-      post(host.host2+"AddNews.ashx",data).then(res=>{
-        console.log(res)
-        if(res.errCode==="SUCCESS"){
+      data.XWNR = this.tinymceHtml;
+      data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
+      data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
+      data.COVER_IMG = this.imageUrl;
+      console.log(data);
+      post(host.host2 + "AddNews.ashx", data).then(res => {
+        console.log(res);
+        if (res.errCode === "SUCCESS") {
           this.$message({
-          message: '发布成功',
-          type: 'success'
-        });
-        this.form.title=""
-        this.imageUrl=""
-        this.tinymceHtml=""
+            message: "发布成功",
+            type: "success"
+          });
+          this.form.title = "";
+          this.imageUrl = "";
+          this.tinymceHtml = "";
         }
-      })
+      });
+    }
+  },
+  watch: {
+    $route(to, from) {
+      if (to.query.flag != from.query.flag) {
+        this.flag = "发布";
+        this.form.title = "";
+        this.imageUrl = "";
+        this.tinymceHtml = "";
+        this.show = true;
+        this.btnMessage = "发布";
+      }
     }
   }
 };

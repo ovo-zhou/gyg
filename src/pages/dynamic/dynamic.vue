@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      total: 105,
+      total: 0,
       newsdata: []
     };
   },
