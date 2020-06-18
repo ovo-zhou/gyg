@@ -1,8 +1,10 @@
 <template>
   <div class="homepage">
     <headbar></headbar>
-    <router-view>
-    </router-view>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
     <bottombar></bottombar>
   </div>
 </template>

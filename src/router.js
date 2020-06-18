@@ -23,12 +23,12 @@ const routes = [
     {
         path: '/', component: home, redirect: '/homepage',
         children: [
-            { path: "homepage", component: homepage },
+            { path: "homepage", component: homepage ,meta:{keepAlive:true}},
             { path: "profile", component: profile },
             {path: "contactus", component: contactus,},
             { path: "business", component: business },
             { path: "details", component: details },
-            { path: 'dynamic', component: dynamic }
+            { path: 'dynamic', component: dynamic ,meta:{keepAlive:true}}
         ]
     },
     { path: '/login', component: login },

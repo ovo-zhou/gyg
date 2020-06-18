@@ -29,8 +29,10 @@
 import tinymce from "tinymce/tinymce";
 import "tinymce/themes/silver/theme";
 import Editor from "@tinymce/tinymce-vue";
-import "tinymce/icons/default/icons.min.js";
+// import "tinymce/icons/default/icons.min.js";
+import "tinymce/icons/default";
 //插件
+import '../../../assets/tinymce/plugins/lineheight/plugin'
 import "tinymce/plugins/image"; // 插入上传图片插件
 import "tinymce/plugins/media"; // 插入视频插件
 import "tinymce/plugins/table"; // 插入表格插件
@@ -77,10 +79,10 @@ export default {
         language: "zh_CN",
         skin_url: "/tinymce/skins/ui/oxide",
         plugins:
-          "lists image media table wordcount code fullscreen help  toc fullpage autosave nonbreaking insertdatetime visualchars visualblocks searchreplace spellchecker pagebreak link charmap paste print preview hr anchor",
+          "lineheight lists image media table wordcount code fullscreen help  toc fullpage autosave nonbreaking insertdatetime visualchars visualblocks searchreplace spellchecker pagebreak link charmap paste print preview hr anchor",
 
         toolbar: [
-          "newdocument undo redo | formatselect visualaid|cut copy paste selectall| bold italic underline strikethrough |codeformat blockformats| superscript subscript  | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent |  removeformat ",
+          "newdocument undo redo | formatselect visualaid|cut copy paste selectall| bold italic underline strikethrough lineheight|codeformat blockformats| superscript subscript  | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent |  removeformat ",
 
           "code  bullist numlist | lists image media table link |fullscreen help toc fullpage restoredraft nonbreaking insertdatetime visualchars visualblocks searchreplace spellchecker pagebreak anchor charmap  pastetext print preview hr"
         ],
