@@ -3,73 +3,29 @@
     <video id="vid" controls :src="videourl" type="video/mp4">
     </video>
     <div class="vlist">
-      <template v-for="listitem in videolist">
-        <div class="item" :key="listitem.name" @click="changeUrl(listitem.url)">{{listitem.name}}</div>
+      <template v-for="item in data">
+         <template  v-for="url in item.SP">
+        <div class="item" :key="url" @click="changeUrl(url)">{{item.YWMC}}.mp4</div>
       </template>
+      </template>
+     
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      videourl:
-        "http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4",
-      videolist: [
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319125415785691.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4",
-          name: "某某某某某某业务流程.mp4"
-        },
-        {
-          url:
-            "http://vfx.mtime.cn/Video/2019/03/14/mp4/190314223540373995.mp4",
-          name: "某某某某某某业务流程.mp4"
-        }
-      ]
-    };
-  },
+ props:{
+   data:{
+     type:Array,
+     required:true
+   }
+ },
+ data(){
+   return{
+     videourl:""
+   }
+ },
   methods: {
     changeUrl(url) {
       this.videourl=url

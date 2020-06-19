@@ -4,7 +4,7 @@
       <div class="post_head">
         <p>
           <span class="post_title">行业动态</span>
-          <span class="more">全部动态</span>
+          <span class="more" @click="toAll">全部动态</span>
         </p>
         <p>
           <span class="En_title">News information</span>
@@ -18,11 +18,13 @@
         </div>-->
         <template v-for="(item,index) in newsdata">
           <div class="other" :key="index" @click="toDetail(item)">
-          <template v-if="item.COVER_IMG"> <img :src="item.COVER_IMG" alt /></template> 
-          <p class="p1">{{item.XWBT}}</p>
-          <p class="p2" v-html="item.XWNR"></p>
-          <span>{{item.FBSJ}}</span>
-        </div>
+            <template v-if="item.COVER_IMG">
+              <img :src="item.COVER_IMG" alt />
+            </template>
+            <p class="p1">{{item.XWBT}}</p>
+            <p class="p2" v-html="computedTxt(item.XWNR)"></p>
+            <span>{{item.FBSJ}}</span>
+          </div>
         </template>
       </div>
     </div>
@@ -37,16 +39,31 @@ export default {
       newsdata: []
     };
   },
+  computed: {
+    computedTxt() {
+      return function(val) {
+        return this.getText(val);
+      };
+    }
+  },
   methods: {
+    toAll() {
+      this.$router.push("/dynamic");
+    },
+    getText(val) {
+      var pattern = /<img[^>]+>|<\s*\/>/gi;
+      return val.replace(pattern, "");
+    },
     toDetail(item) {
-      this.$router.push({ path: '/details', query: { newdata: item }});
+      this.$router.push({ path: "/details", query: { newdata: item } });
+      document.body.scrollIntoView()
     },
     querynew() {
       post(host.host2 + "QueryNews.ashx", { page: 1, LM: "行业动态" }).then(
         res => {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;
-            this.newsdata=this.newsdata.slice(0,6);
+            this.newsdata = this.newsdata.slice(0, 6);
             console.log(this.newsdata);
           }
         }
@@ -54,7 +71,7 @@ export default {
     }
   },
   mounted() {
-    this.querynew()
+    this.querynew();
   }
 };
 </script>
@@ -101,6 +118,7 @@ export default {
   margin-right: 20px;
   width: 100px;
   text-align: center;
+  cursor: pointer;
 }
 .news_list {
   width: 100%;
@@ -151,12 +169,11 @@ export default {
   margin-bottom: 10px;
   line-height: 25px;
   display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 3;
-	overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
   width: 100%;
-  height: 70px;
-  overflow:hidden
+  height: 65px;
 }
 .other span {
   font-size: 12px;

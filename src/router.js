@@ -26,7 +26,7 @@ const routes = [
             { path: "homepage", component: homepage, meta: { keepAlive: true } },
             { path: "profile", component: profile },
             { path: "contactus", component: contactus, },
-            { path: "business", component: business },
+            { path: "business", component: business , meta: { keepAlive: true } },
             { path: "details", component: details },
             { path: 'dynamic', component: dynamic, meta: { keepAlive: true } }
         ]

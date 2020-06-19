@@ -2,21 +2,15 @@
   <div class="Article">
     <div class="a-contain">
       <div class="text">
-        <h1>{{this.$route.query.newdata.XWBT}}</h1>
-        <p class="releasedate">{{this.$route.query.newdata.FBSJ}}</p>
-        <p v-html="this.$route.query.newdata.XWNR">
-         
-        </p>
+        <h1>{{curnew.XWBT}}</h1>
+        <p class="releasedate">{{curnew.FBSJ}}</p>
+        <p v-html="curnew.XWNR"></p>
       </div>
       <div class="top">
         <h1>最新发布</h1>
-        <a href="#">文章标题文章标题文章标题文章标题</a>
-        <a href="#">文章标题文章标题文章标题文章标题</a>
-        <a href="#">文章标题文章标题文章标题文章标题</a>
-        <a href="#">文章标题文章标题文章标题文章标题</a>
-        <a href="#">文章标题文章标题文章标题文章标题</a>
-        <a href="#">文章标题文章标题文章标题文章标题</a>
-        <a href="#">文章标题文章标题文章标题文章标题</a>
+        <template v-for="(item,index) in news">
+          <a href="#" :key="index" @click="toDetail(index)">{{item.XWBT}}</a>
+        </template>
       </div>
       <div class="date">
         <Calendar ref="Calendar" :markDate="arr2" v-on:changeMonth="changeDate"></Calendar>
@@ -27,9 +21,34 @@
 
 <script>
 import Calendar from "vue-calendar-component";
+import host from "../../libs/utils";
+import { post } from "../../service/http";
 export default {
+  data() {
+    return {
+      news: [],
+      curnew:""
+    };
+  },
+  created() {
+    this.curnew=this.$route.query.newdata
+    post(host.host2 + "QueryNews.ashx", { page: 1, LM: "行业动态" }).then(
+      res => {
+        if (res.errCode === "SUCCESS") {
+          this.news = res.data;
+          this.news = this.news.slice(0, 7);
+          console.log(this.newsdata);
+        }
+      }
+    );
+  },
   components: {
     Calendar
+  },
+  methods:{
+    toDetail(index){
+      this.curnew=this.news[index]
+    }
   }
 };
 </script>
@@ -84,6 +103,11 @@ export default {
   text-decoration: none;
   display: block;
   padding-left: 15px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 250px;
+  text-overflow: ellipsis;
 }
 .date {
   width: 280px;

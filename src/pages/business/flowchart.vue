@@ -1,46 +1,27 @@
 <template>
   <div class="flowchart">
-    <h1>装货业务流程</h1>
-    <el-image
+    <h1>{{ywlc.YWMC}}</h1>
+    <template v-for="(item,index) in ywlc.LCT">
+      <el-image
+      :key="index"
       style="width: 360px; height: 250px"
-      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+      :src="item"
       fit="contain"
-      :preview-src-list="srcList"
+      :preview-src-list=" ywlc.LCT"
     ></el-image>
-    <el-image
-      style="width: 360px; height: 250px"
-      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-      fit="contain"
-      :preview-src-list="srcList"
-    ></el-image>
-    <el-image
-      style="width: 360px; height: 250px"
-      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-      fit="contain"
-      :preview-src-list="srcList"
-    ></el-image>
-     <el-image
-      style="width: 360px; height: 250px"
-      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-      fit="contain"
-      :preview-src-list="srcList"
-    ></el-image>
+    </template>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      url:
-        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      srcList: [
-        "https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg",
-        "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      ]
-    };
+  props:{
+    ywlc:{
+      type:Object,
+      required:true
+    }
   }
-};
+}
 </script>
 
 <style scoped>

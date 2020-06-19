@@ -11,6 +11,7 @@
             :action="imgUpLoadUrl"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
+            accept="image/jpeg, image/jpg, image/png"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -134,7 +135,7 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res) {
-      console.log(res);
+      // console.log(res);
       this.imageUrl = res.url;
     },
     handleClick() {
@@ -153,8 +154,12 @@ export default {
         this.$message.error("请填写内容");
         return;
       }
+      if (this.form.title.length > 200) {
+        this.$message.error("标题过长");
+        return;
+      }
       let data = {
-        ID:"",
+        ID: "",
         LM: "行业动态",
         XWBT: "",
         XWNR: "",
@@ -164,25 +169,34 @@ export default {
         SHRXM: "",
         COVER_IMG: ""
       };
-      data.ID=this.$route.query.new.ID
+      data.ID = this.$route.query.new.ID;
       data.XWBT = this.form.title;
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
       data.COVER_IMG = this.imageUrl;
-      console.log(data)
-      post(host.host2+"UpdateNews.ashx",data).then(res=>{
-        if(res.errCode==="SUCCESS"){
-          this.$message({
-            message: "修改成功",
-            type: "success"
-          });
-          this.form.title=""
-          this.imageUrl=""
-          this.tinymceHtml=""
-          this.$router.push("/admin/dmanage")
+      // console.log(data);
+      this.$alert("确认修改？", "提示", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            post(host.host2 + "UpdateNews.ashx", data).then(res => {
+              if (res.errCode === "SUCCESS") {
+                this.$message({
+                  message: "修改成功",
+                  type: "success"
+                });
+                this.form.title = "";
+                this.imageUrl = "";
+                this.tinymceHtml = "";
+                this.$router.push("/admin/dmanage");
+              }else{
+                this.$message.error("出现了一点问题，请联系技术人员")
+              }
+            });
+          }
         }
-      })
+      });
     },
     handleRelease() {
       if (this.form.title === "") {
@@ -193,6 +207,10 @@ export default {
         this.$message.error("请填写内容");
         return;
       }
+      if (this.form.title.length > 200) {
+        this.$message.error("标题过长");
+        return;
+      }
       let data = {
         LM: "行业动态",
         XWBT: "",
@@ -208,17 +226,26 @@ export default {
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
       data.COVER_IMG = this.imageUrl;
-      console.log(data);
-      post(host.host2 + "AddNews.ashx", data).then(res => {
-        console.log(res);
-        if (res.errCode === "SUCCESS") {
-          this.$message({
-            message: "发布成功",
-            type: "success"
-          });
-          this.form.title = "";
-          this.imageUrl = "";
-          this.tinymceHtml = "";
+      // console.log(data);
+      this.$alert("确认发布？", "提示", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            post(host.host2 + "AddNews.ashx", data).then(res => {
+              // console.log(res);
+              if (res.errCode === "SUCCESS") {
+                this.$message({
+                  message: "发布成功",
+                  type: "success"
+                });
+                this.form.title = "";
+                this.imageUrl = "";
+                this.tinymceHtml = "";
+              }else{
+                this.$message.error("出现了一点问题，请联系技术人员")
+              }
+            });
+          }
         }
       });
     }

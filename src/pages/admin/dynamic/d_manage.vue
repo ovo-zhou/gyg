@@ -7,7 +7,7 @@
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
           <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -40,7 +40,7 @@ export default {
     queryTotal() {
       post(host.host2 + "QueryNews.ashx", { page: 0, LM: "行业动态" }).then(
         res => {
-          console.log(res);
+          // console.log(res);
           if (res.errCode === "SUCCESS") {
             this.total = res.data[0].datanum;
           }
@@ -52,42 +52,51 @@ export default {
         res => {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;
-            console.log(this.newsdata);
+            // console.log(this.newsdata);
           }
         }
       );
     },
     handleLook(row) {
-      console.log(row);
+      // console.log(row);
       this.$router.push({
-        path:'/admin/drelease',
-        query:{
-          flag:"查看",
-          new:row
+        path: "/admin/drelease",
+        query: {
+          flag: "查看",
+          new: row
         }
-      })
+      });
     },
     handleEdit(row) {
-      console.log(row);
+      // console.log(row);
       this.$router.push({
-        path:'/admin/drelease',
-        query:{
-          flag:"编辑",
-          new:row
+        path: "/admin/drelease",
+        query: {
+          flag: "编辑",
+          new: row
         }
-      })
+      });
     },
-    handleDelete(row) {
-      console.log(row.ID)
-      post(host.host2+"DeleteNews.ashx",{ID:row.ID}).then(res=>{
-        if(res.errCode==="SUCCESS"){
-          this.$message({
-            message: "删除成功",
-            type: "success"
-          });
-          this.queryNews(1);
+    handleDelete(index,row) {
+      // console.log(row.ID)
+      this.$alert("删除操作不可逆，确认删除？", "警告", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            post(host.host2 + "DeleteNews.ashx", { ID: row.ID }).then(res => {
+              if (res.errCode === "SUCCESS") {
+                this.$message({
+                  message: "删除成功",
+                  type: "success"
+                });
+                this.newsdata.splice(index,1)
+              }else{
+                this.$message.error("出现了一点问题，请联系技术人员")
+              }
+            });
+          }
         }
-      })
+      });
     }
   },
   mounted() {
