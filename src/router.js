@@ -38,7 +38,7 @@ const routes = [
             { path: 'adminhome', component: adminhome},
             { path: 'dmanage', component: dmanage , meta: { keepAlive: true }},
             { path: 'drelease', component: drelease },
-            { path: 'bmanage', component: bmanage},
+            { path: 'bmanage', component: bmanage , meta: { keepAlive: true }},
             { path: 'brelease', component: brelease },
         ]
     },
