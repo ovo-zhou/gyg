@@ -6,11 +6,11 @@
       <div class="content">
         <!-- <transition name="move" mode="out-in">
           <router-view></router-view>
-        </transition> -->
+        </transition>-->
         <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+          <router-view v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
       </div>
     </div>
   </div>

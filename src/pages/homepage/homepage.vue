@@ -26,9 +26,6 @@ export default {
     };
   },
   methods: {
-    login() {
-      this.$router.push("/login");
-    },
     change() {
       var i = Math.floor(Math.random() * 3);
       this.curimg = this.img[i];

@@ -10,6 +10,8 @@
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-success="handleSuccess1"
+          accept="image/jpeg, image/jpg, image/png"
+          :file-list="imgList"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -18,9 +20,15 @@
         </el-dialog>
       </el-form-item>
       <el-form-item label="视频">
-        <el-upload class="upload-demo" :action="videoUploadUrl" :on-success="handleSuccess2">
+        <el-upload
+          class="upload-demo"
+          :action="videoUploadUrl"
+          :on-success="handleSuccess2"
+          accept="video/mp4"
+          :file-list="videoList"
+        >
           <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          <div slot="tip" class="el-upload__tip">只能上传mp4文件</div>
         </el-upload>
       </el-form-item>
       <el-form-item>
@@ -32,7 +40,7 @@
 
 <script>
 import host from "../../../libs/utils";
-import {post} from '../../../service/http'
+import { post } from "../../../service/http";
 export default {
   created() {
     this.videoUploadUrl = host.host3 + "UpLoadVideo.ashx";
@@ -48,7 +56,9 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       imgfilelist: [],
-      videofileList: []
+      videofileList: [],
+      imgList: [],
+      videoList: []
     };
   },
   methods: {
@@ -69,22 +79,44 @@ export default {
       // console.log(this.videofileList)
     },
     release() {
-        if(this.form.name===""){
-          this.$message.error("业务名称不能为空")
-          return
+      if (this.form.name === "") {
+        this.$message.error("业务名称不能为空");
+        return;
+      }
+      if (this.form.name.length > 50) {
+        this.$message.error("名称长度过长");
+        return;
+      }
+      let data = {
+        YWMC: "",
+        LCT: [],
+        SP: []
+      };
+      data.YWMC = this.form.name;
+      data.LCT = this.imgfilelist;
+      data.SP = this.videofileList;
+      // console.log(data);
+      this.$alert("确认发布？", "提示", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            post(host.host3 + "AddYWLC.ashx", data).then(res => {
+              // console.log(res)
+              if (res.errCode === "SUCCESS") {
+                this.$message({
+                  message: "发布成功",
+                  type: "success"
+                });
+                this.form.name = "";
+                this.imgList = [];
+                this.videoList = [];
+              }else{
+                this.$message.error("出现了一点问题，请联系技术人员")
+              }
+            });
+          }
         }
-        let data = {
-          YWMC: "",
-          LCT: [],
-          SP: []
-        };
-        data.YWMC = this.form.name;
-        data.LCT = this.imgfilelist;
-        data.SP = this.videofileList;
-        console.log(data);
-        post(host.host3+"AddYWLC.ashx",data).then(res=>{
-          console.log(res)
-        })
+      });
     }
   }
 };

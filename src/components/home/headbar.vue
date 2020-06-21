@@ -47,10 +47,10 @@
             <h3>车辆预约</h3>
             <h4>Vehicle</h4>
           </div>
-          <div class="tab_item">
+          <div class="tab_item" @click="toQuery">
             <h3>客户查询</h3>
             <h4>Query</h4>
-          </div>
+          </div> 
           <div class="tab_item" @click="contactus">
             <h3>联系我们</h3>
             <h4>Contact us</h4>
@@ -66,21 +66,23 @@ export default {
     login() {
       this.$router.push("/login");
     },
-    toHomepage(){
-      this.$router.push("/homepage")
-
+    toHomepage() {
+      this.$router.push("/homepage");
     },
-    toProfile(){
-      this.$router.push("/profile")
+    toProfile() {
+      this.$router.push("/profile");
     },
-    contactus(){
-      this.$router.push("/contactus")
+    contactus() {
+      this.$router.push("/contactus");
     },
-    business(){
-      this.$router.push("/business")
+    business() {
+      this.$router.push("/business");
     },
-    toDynamic(){
-      this.$router.push("/dynamic")
+    toDynamic() {
+      this.$router.push("/dynamic");
+    },
+    toQuery(){
+      this.$router.push("/clientlogin");
     }
   }
 };

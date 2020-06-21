@@ -11,6 +11,12 @@ import contactus from './pages/contactus/contactInfo'
 import business from './pages/business/business'
 import details from './components/dynamic/details'
 import dynamic from './pages/dynamic/dynamic'
+import query from './pages/query/query'
+import dckc from './pages/query/dckc'
+import zxfjf from './pages/query/zxfjf'
+import dcjf from './pages/query/dcjf'
+import jhjzx from './pages/query/jhjzx'
+import clientlogin from './pages/query/login'
 //后台管理页面
 import adminhome from './pages/admin/adminhome'
 import dmanage from "./pages/admin/dynamic/d_manage";
@@ -26,19 +32,29 @@ const routes = [
             { path: "homepage", component: homepage, meta: { keepAlive: true } },
             { path: "profile", component: profile },
             { path: "contactus", component: contactus, },
-            { path: "business", component: business , meta: { keepAlive: true } },
+            { path: "business", component: business, meta: { keepAlive: true } },
             { path: "details", component: details },
-            { path: 'dynamic', component: dynamic, meta: { keepAlive: true } }
+            { path: 'dynamic', component: dynamic, meta: { keepAlive: true } },
+            {
+                path: 'query', component: query, redirect: '/query/dckc', meta: { keepAlive: true },
+                children: [
+                    { path: 'dckc', component: dckc },
+                    { path: 'zxfjf', component: zxfjf },
+                    { path: 'dcjf', component: dcjf },
+                    { path: 'jhjzx', component: jhjzx },
+                ]
+            },
+            {path:'clientlogin',component:clientlogin}
         ]
     },
     { path: '/login', component: login },
     {
         path: '/admin', component: admin,
         children: [
-            { path: 'adminhome', component: adminhome},
-            { path: 'dmanage', component: dmanage , meta: { keepAlive: true }},
+            { path: 'adminhome', component: adminhome },
+            { path: 'dmanage', component: dmanage, meta: { keepAlive: true } },
             { path: 'drelease', component: drelease },
-            { path: 'bmanage', component: bmanage , meta: { keepAlive: true }},
+            { path: 'bmanage', component: bmanage, meta: { keepAlive: true } },
             { path: 'brelease', component: brelease },
         ]
     },

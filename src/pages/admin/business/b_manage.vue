@@ -22,7 +22,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -30,10 +30,7 @@
       <video id="play" :src="curVideo" width="440" height="240" controls></video>
     </el-dialog>
     <el-dialog title="图像预览" :visible.sync="dialogVisible2" width="30%">
-      <el-image 
-    style="width: 440px; height: 240px"
-    :src="curImg" >
-  </el-image>
+      <el-image style="width: 440px; height: 240px" :src="curImg"></el-image>
     </el-dialog>
     <el-dialog title="编辑" :visible.sync="dialogVisible1" width="40%" :before-close="handleClose1">
       <el-form ref="form" :model="curRow" label-width="100px">
@@ -41,7 +38,13 @@
           <el-input v-model="curRow.YWMC"></el-input>
         </el-form-item>
         <el-form-item label="已有流程图">
-          <el-tag v-for="item in curRow.LCT" :key="item" closable @click="showImg(item)" @close="deleteImg(item)">点击查看</el-tag>
+          <el-tag
+            v-for="item in curRow.LCT"
+            :key="item"
+            closable
+            @click="showImg(item)"
+            @close="deleteImg(item)"
+          >点击查看</el-tag>
         </el-form-item>
         <el-form-item label="新增流程图">
           <el-upload
@@ -49,6 +52,7 @@
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-success="handleSuccess1"
+            accept="image/jpeg, image/jpg, image/png"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -57,18 +61,24 @@
           </el-dialog>
         </el-form-item>
         <el-form-item label="已有视频">
-          <el-tag v-for="item in curRow.SP" :key="item" closable @click="showVideo(item)" @close="deleteVideo(item)">点击查看</el-tag>
+          <el-tag
+            v-for="item in curRow.SP"
+            :key="item"
+            closable
+            @click="showVideo(item)"
+            @close="deleteVideo(item)"
+          >点击查看</el-tag>
         </el-form-item>
         <el-form-item label="新增视频">
-          <el-upload class="upload-demo" :action="videoUploadUrl" :on-success="handleSuccess2">
+          <el-upload class="upload-demo" :action="videoUploadUrl" :on-success="handleSuccess2" accept="video/mp4">
             <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">只能上传MP4文件</div>
           </el-upload>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible1 = false">取 消</el-button>
-        <el-button type="primary" @click="handleModify">确 定</el-button>
+        <el-button type="primary" @click="handleModify">提 交</el-button>
       </span>
     </el-dialog>
   </div>
@@ -85,9 +95,9 @@ export default {
       tableData: [],
       dialogVisible: false,
       dialogVisible1: false,
-      dialogVisible2:false,
+      dialogVisible2: false,
       curVideo: "",
-      curImg:'',
+      curImg: "",
       curRow: "",
       form: {
         name: ""
@@ -121,15 +131,23 @@ export default {
       this.curRow = row;
       this.dialogVisible1 = true;
     },
-    handleDelete(row) {
-      console.log(row.ID);
-      post(host.host3 + "DeleteYWLC.ashx", { ID: row.ID }).then(res => {
-        console.log(res);
-        if (res.errCode === "SUCCESS") {
-          this.$message({
-            message: "删除成功",
-            type: "success"
-          });
+    handleDelete(index, row) {
+      // console.log(row.ID);
+      this.$alert("删除操作不可逆，确认删除？", "警告", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            post(host.host3 + "DeleteYWLC.ashx", { ID: row.ID }).then(res => {
+              // console.log(res);
+              if (res.errCode === "SUCCESS") {
+                this.$message({
+                  message: "删除成功",
+                  type: "success"
+                });
+                this.tableData.splice(index, 1);
+              }
+            });
+          }
         }
       });
     },
@@ -141,46 +159,67 @@ export default {
       done();
     },
     handleSuccess1(res) {
-      this.curRow.LCT.push(res.url)
-      console.log(this.curRow)
+      this.curRow.LCT.push(res.url);
+      // console.log(this.curRow);
     },
     handleSuccess2(res) {
-      this.curRow.SP.push(res.url)
-      console.log(this.curRow)
+      this.curRow.SP.push(res.url);
+      // console.log(this.curRow);
     },
-    handleModify(){
-     post(host.host3+'UpdateYWLC.ashx',this.curRow).then(res=>{
-       if(res.errCode==="SUCCESS"){
-         this.$message({
-           message:"修改成功",
-           type:'success'
-         })
-         this.curRow=""
-       }
-     })
+    handleModify() {
+      this.$alert("确认修改？", "提示", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            post(host.host3 + "UpdateYWLC.ashx", this.curRow).then(res => {
+              if (res.errCode === "SUCCESS") {
+                this.$message({
+                  message: "修改成功",
+                  type: "success"
+                });
+                this.curRow = "";
+              }
+            });
+          }
+        }
+      });
     },
-    showImg(item){
-      this.curImg=item;
-      this.dialogVisible2=true
+    showImg(item) {
+      this.curImg = item;
+      this.dialogVisible2 = true;
     },
-    showVideo(item){
-      this.curVideo=item;
-      this.dialogVisible=true
+    showVideo(item) {
+      this.curVideo = item;
+      this.dialogVisible = true;
     },
-    getIndex(item,arr){
+    getIndex(item, arr) {
       for (let index = 0; index < arr.length; index++) {
-        if(arr[index]==item){
+        if (arr[index] == item) {
           return index;
         }
       }
     },
-    deleteImg(item){
-      let index= this.getIndex(item,this.curRow.LCT)
-      this.curRow.LCT.splice(index, 1); 
+    deleteImg(item) {
+      this.$alert("删除后记得提交哦", "提示", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            let index = this.getIndex(item, this.curRow.LCT);
+            this.curRow.LCT.splice(index, 1);
+          }
+        }
+      });
     },
-    deleteVideo(item){
-      let index= this.getIndex(item,this.curRow.SP)
-      this.curRow.SP.splice(index, 1); 
+    deleteVideo(item) {
+      this.$alert("删除后记得提交哦", "提示", {
+        confirmButtonText: "确定",
+        callback: action => {
+          if (action === "confirm") {
+            let index = this.getIndex(item, this.curRow.SP);
+            this.curRow.SP.splice(index, 1);
+          }
+        }
+      });
     }
   }
 };

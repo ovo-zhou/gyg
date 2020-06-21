@@ -65,12 +65,14 @@ export default {
             this.newsdata = res.data;
             this.newsdata = this.newsdata.slice(0, 6);
             console.log(this.newsdata);
+          }else{
+            console.log(res.errCode)
           }
         }
       );
     }
   },
-  mounted() {
+  created() {
     this.querynew();
   }
 };
