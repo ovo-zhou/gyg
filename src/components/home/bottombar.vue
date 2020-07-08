@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <h1 class="record">Copyright &copy; 2019 - 2020 重庆果园集装箱码头有限公司 版权所有</h1>
+      <h1 class="record">Copyright &copy; 2019 - 2020 重庆果园港部有限公司 重庆果园集装箱码头有限公司 版权所有</h1>
     </div>
   </div>
 </template>

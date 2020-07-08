@@ -119,7 +119,8 @@ export default {
                 return;
               }
             } else {
-              this.$router.push({ path: "/workspace" });
+              // this.$router.push({ path: "/workspace" });
+              alert("等待完善")
             }
           } else if (res.errCode === "FAIL") {
             this.$message.error(res.errStr);

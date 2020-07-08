@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       form: {
-        Account: "shanggang",
-        PassWord: "gy888"
+        Account: "",
+        PassWord: ""
       }
     };
   },

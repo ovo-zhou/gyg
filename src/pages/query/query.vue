@@ -1,6 +1,6 @@
 <template>
   <div class="query">
-    <!-- <div>图片预留区</div> -->
+    <img src="../../assets/query.png" alt="">
     <div class="function">
       <div class="f-contain">
         <div class="span-text" @click="toDckc">
@@ -46,6 +46,9 @@ export default {
 .query{
   background: #fbfbfb;
 
+}
+.query img{
+  width: 100%;
 }
 .function {
   width: 100%;

@@ -40,10 +40,10 @@
      margin-bottom: 50px;
  }
     .bulletin ul{
-        padding-left: 15px;
+        padding-left: 12px;
     }
     .bulletin h1 {
-        margin-bottom: 12px;
+        margin-bottom: 15px;
         margin-top: 5px;
         font-size: 16px;
         background: #0088b5;
@@ -53,11 +53,14 @@
     }
 
     .bulletin li {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         list-style-type:none;
-        font-size: 14px;
+        font-size: 16px;
     }
-
+ .bulletin li a{
+     padding-left: 3px;
+     margin-right: 3px;
+ }
     a:link {
         color: #005982;
     }
@@ -67,6 +70,6 @@
     }
 
     a:hover {
-        color: rgb(0, 148, 224);
+        color: #0E68B1;
     }
 </style>

@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top_contain">
         <div>
-          <span class="span1">欢迎来到重庆果园港件散货码头有限公司！</span>
+          <span class="span1">欢迎来到重庆果园港部有限公司、重庆果园港件散货码头有限公司！</span>
         </div>
         <div class="contain_right">
           <div class="tel">
