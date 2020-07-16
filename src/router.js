@@ -23,7 +23,9 @@ import dmanage from "./pages/admin/dynamic/d_manage";
 import drelease from './pages/admin/dynamic/d_release'
 import bmanage from './pages/admin/business/b_manage'
 import brelease from './pages/admin/business/b_release'
-
+import nrelease from './pages/admin/notice/n_release'
+import nmanage from './pages/admin/notice/n_manage'
+ 
 const routes = [
     //这里配置路由
     {
@@ -56,6 +58,8 @@ const routes = [
             { path: 'drelease', component: drelease },
             { path: 'bmanage', component: bmanage, meta: { keepAlive: true } },
             { path: 'brelease', component: brelease },
+            { path: 'nrelease', component: nrelease },
+            { path: 'nmanage', component: nmanage ,meta: { keepAlive: true }},
         ]
     },
 

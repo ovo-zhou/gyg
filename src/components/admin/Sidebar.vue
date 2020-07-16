@@ -10,7 +10,7 @@
       unique-opened
       router
     >
-     <el-menu-item index="/admin/adminhome">
+      <el-menu-item index="/admin/adminhome">
         <i class="el-icon-phone"></i>
         <span slot="title">首页</span>
       </el-menu-item>
@@ -25,6 +25,16 @@
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="2">
+        <template slot="title">
+          <i class="el-icon-s-claim"></i>
+          <span>通知公告</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/admin/nrelease">公告发布</el-menu-item>
+          <el-menu-item index="/admin/nmanage">公告管理</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-s-claim"></i>
           <span>业务流程</span>

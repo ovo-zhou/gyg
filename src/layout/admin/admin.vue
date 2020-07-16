@@ -4,9 +4,6 @@
     <v-sidebar></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
       <div class="content">
-        <!-- <transition name="move" mode="out-in">
-          <router-view></router-view>
-        </transition>-->
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive"></router-view>
         </keep-alive>

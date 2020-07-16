@@ -11,11 +11,6 @@
         </p>
       </div>
       <div class="news_list">
-        <!-- <div class="first" @click="toDetails">
-          <img src="../../assets/组17.png" alt />
-          <p>新冠肺炎疫情防控专题网站</p>
-          <span>2020-6-11</span>
-        </div>-->
         <template v-for="(item,index) in newsdata">
           <div class="other" :key="index" @click="toDetail(item)">
             <template v-if="item.COVER_IMG">
