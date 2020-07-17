@@ -43,7 +43,7 @@
             <h3>业务流程</h3>
             <h4>Business</h4>
           </div>
-          <div class="tab_item">
+          <div class="tab_item" @click="toVehicle">
             <h3>车辆预约</h3>
             <h4>Vehicle</h4>
           </div>
@@ -83,6 +83,9 @@ export default {
     },
     toQuery(){
       this.$router.push("/clientlogin");
+    },
+    toVehicle(){
+      this.$router.push("/vehicle");
     }
   }
 };

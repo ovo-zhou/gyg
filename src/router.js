@@ -17,6 +17,8 @@ import zxfjf from './pages/query/zxfjf'
 import dcjf from './pages/query/dcjf'
 import jhjzx from './pages/query/jhjzx'
 import clientlogin from './pages/query/login'
+import vehicle from './pages/vehicleReservation/index'
+import ZHCLYY from "./pages/vehicleReservation/ZHCLYYQuery";
 //后台管理页面
 import adminhome from './pages/admin/adminhome'
 import dmanage from "./pages/admin/dynamic/d_manage";
@@ -46,6 +48,11 @@ const routes = [
                     { path: 'jhjzx', component: jhjzx },
                 ]
             },
+            {path:'vehicle',component:vehicle,
+            children:[
+                {path:'ZHCLYY',component:ZHCLYY}
+            ]
+        },
             {path:'clientlogin',component:clientlogin}
         ]
     },
