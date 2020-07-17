@@ -1,11 +1,4 @@
 <template>
-  <!-- <el-main> -->
-  <!-- <div class="posin" align="left">
-          当前位置：
-          <router-link :to="{name:'vehicleResHome'}">后台首页</router-link>>
-          <router-link :to="{name:'ZHCLYYQuery'}">货车装货车辆预约</router-link>
-  </div>-->
-
   <div class="table-style">
     <el-table
       v-loading="loading"
@@ -38,20 +31,6 @@
         </template>
       </el-table-column>
     </el-table>
-<!--    <div class="box" v-show="isShow">-->
-<!--      <div class="loader">-->
-<!--        <div class="loading-3">-->
-<!--          <i></i>-->
-<!--          <i></i>-->
-<!--          <i></i>-->
-<!--          <i></i>-->
-<!--          <i></i>-->
-<!--          <i></i>-->
-<!--          <i></i>-->
-<!--          <i></i>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
     <div>
       <br>
       <br>
@@ -68,11 +47,10 @@
     </div>
     <label class="tishi">提示：根据果件司规定，超过15天的提货指令将自动失效。因此，如您有超过15天的提货指令，请联系受理室重新办理。</label>
   </div>
-  <!-- </el-main> -->
 </template>
 <script>
 import { post } from "../../service/http.js";
-import config from "../../service/utils/config.js";
+import host from "../../libs/utils";
 export default {
   name:"XHCLYYQuery",
   data() {
@@ -85,46 +63,20 @@ export default {
       loading: true
     };
   },
-//前台分页
-// el-table设置:data="body_data.slice((currentPage-1)*pagesize,currentPage*pagesize)"
   mounted:function() {
-    // 添加请求拦截器
-    // axios.interceptors.request.use(
-    //   config => {
-    //     console.log(config);
-    //     this.loading = true;
-    //     return config;
-    //   },
-    //   function(error) {
-    //     return Promise.reject(error);
-    //   }
-    // );
-    // // 添加响应拦截器
-    // axios.interceptors.response.use(
-    //   response => {
-    //     // 对响应数据做点什么
-    //     console.log(response);
-    //     this.loading = false;
-    //     return response;
-    //   },
-    //   function(error) {
-    //     // 对响应错误做点什么
-    //     return Promise.reject(error);
-    //   }
-    // );
-    // this.count = 0;
-    // this.body_data = [];
-    var hz = JSON.parse(localStorage.getItem("clientUser")).YHBH;
-    var url = config.baseurl + config.CLYYQuery;
+    var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
+    var url =host.host6 + "VehicleResvationWebTrans.ashx";
     var data = {
       LX: "XHCLYYQuery",
       HZ: hz,
       page: this.currentPage,
       pagesize: this.pagesize
     };
+    console.log(data)
     var promise = post(url, data);
     promise.then(v => {
       if(v.errCode === "FAIL"){
+        console.log(v)
         this.loading=false;
         this.$alert(v.errStr, '提示', {
           confirmButtonText: '确定',
@@ -133,18 +85,10 @@ export default {
       }else if (v.errCode === "SUCCESS") {
         console.log("************lp",v.data);
         this.count = v.data.count;
-        // if (this.count > 0) {
+       
           this.currentPage=1;
           this.body_data =JSON.parse(v.data.data) ;
           console.log(this.body_data);
-
-        // }else{
-        //   this.loading=false;
-        //   this.$alert(v.errStr, '提示', {
-        //     confirmButtonText: '确定',
-        //     type: "info"
-        //   })
-        // }
       }
     });
   },
@@ -156,22 +100,11 @@ export default {
     }
   },
   methods: {
-    // check(index) {
-    //   // 先取消所有选中项
-    //   this.radios.forEach(item => {
-    //     item.isChecked = false;
-    //   });
-    //   //再设置当前点击项选中
-    //   this.radio = this.radios[index].value;
-    //   // 设置值，以供传递
-    //   this.radios[index].isChecked = true;
-    //   console.log(this.radio);
-    // },
     handleSizeChange: function(size) {
       this.currentPage = 1;
       this.pagesize = size;
-      var url = config.baseurl + config.CLYYQuery;
-      var hz = JSON.parse(localStorage.getItem("clientUser")).YHBH;
+      var url =host.host6 + "VehicleResvationWebTrans.ashx";
+      var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
       var data = {
         LX: "XHCLYYQuery",
         HZ: hz,
@@ -190,8 +123,8 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = config.baseurl + config.CLYYQuery;
-        var hz = JSON.parse(localStorage.getItem("clientUser")).YHBH;
+        var url = host.host6 + "VehicleResvationWebTrans.ashx";
+        var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
         var data = {
           LX: "XHCLYYQuery",
           HZ: hz,
@@ -219,11 +152,24 @@ export default {
         SFZF: row.SFJK,
         TAG: "ht"
       };
-      this.$router.push({ name: "AppointmentEdit", query: redata });
+      // this.$router.push({ name: "AppointmentEdit", query: redata });
+      this.$router.push({path:'/vehicle/appointmentEdit', query: redata });
     }
   }
 };
 </script>
-<style>
-@import "../../assets/css/vehicleRescss/content.css";
+<style scoped>
+.tishi {
+  color: #cc0000;
+  font-size: x-large;
+  width: 100%;
+}
+.rb-style {
+  text-align: left;
+  margin-top: -30px;
+}
+.table-style {
+  margin-top: 10px;
+  margin-left: 10px;
+}
 </style>

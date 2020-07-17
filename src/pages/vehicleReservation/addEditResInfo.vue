@@ -72,10 +72,9 @@
   </div>
 </template>
 <script>
-import { post } from "../../../service/http.js";
-import config from "../../../service/utils/config.js";
-import {dateToString} from "../../../assets/vehicleResJs/common.js"
-
+import { post } from "../../service/http.js";
+import host from "../../libs/utils";
+import { dateToString } from "../../assets/vehicleResJs/common.js";
 export default {
   data() {
     var validateSJXM = (rule, value, callback) => {
@@ -178,7 +177,7 @@ export default {
   methods: {
     //查询车辆预约信息
     QueryCLYYXX(bh, index, pagesize) {
-      var url = config.baseurl + config.CLYYQuery;
+      var url = host.host6 + "VehicleResvationWebTrans.ashx";
       var data = {
         LX: "CLYYXX",
         TAG: this.form.TAG,
@@ -209,8 +208,8 @@ export default {
      **/
     getXTRZBean() {
       var xtrz = {
-        YHZH: JSON.parse(localStorage.getItem("clientUser")).YHBH,
-        YHMC: JSON.parse(localStorage.getItem("clientUser")).KHQC
+        YHZH: JSON.parse(sessionStorage.getItem("clientUser")).YHBH,
+        YHMC: JSON.parse(sessionStorage.getItem("clientUser")).KHQC
       }
       return xtrz;
     },
@@ -223,7 +222,7 @@ export default {
       var SaveTag = this.SaveTag;
       if (SaveTag === 1){
         // alert("123" + this.form.MTZYJXS + "***");
-        var time = JSON.parse(localStorage.getItem("clientUser")).LOGINTIME; //取当前时间
+        var time = JSON.parse(sessionStorage.getItem("clientUser")).LOGINTIME; //取当前时间
         console.log("LoginTime",time)
         time = time
           .replace(/-/g, "")
@@ -303,7 +302,7 @@ export default {
               });
             } else {
               SaveTag = 0;
-              var url = config.baseurl + config.CLYYQuery;
+              var url = host.host6 + "VehicleResvationWebTrans.ashx";
               var data = {
                 LX: "addEditResInfo",
                 test:this.test,
@@ -414,7 +413,7 @@ export default {
         this.$message("请至少输入四位车牌号");
       }else {
         CPH=CPH.toUpperCase();
-        var url = config.baseurl + config.CLYYQuery;
+        var url = host.host6 + "VehicleResvationWebTrans.ashx";
         var data = {
           LX: "QueDriverInfo",
           CPH: CPH

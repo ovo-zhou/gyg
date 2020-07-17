@@ -6,19 +6,19 @@
         <div class="span-text" @click="toZH">
           <a>装货车辆预约</a>
         </div>
-        <div class="span-text" >
+        <div class="span-text" @click="toXH">
           <a>卸货车辆预约</a>
         </div>
-        <div class="span-text" >
+        <div class="span-text" @click="toLSJGCL">
           <a>历史进港车辆</a>
-        </div>
-        <div class="span-text" >
-          <a>进港车辆清单</a>
         </div>
       </div>
     </div>
     <div class="show">
-      <router-view></router-view>
+      <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
   </div>
 </template>
@@ -28,6 +28,12 @@ export default {
     methods:{
         toZH(){
             this.$router.push("/vehicle/ZHCLYY")
+        },
+        toXH(){
+            this.$router.push("/vehicle/XHCLYY")
+        },
+        toLSJGCL(){
+            this.$router.push("/vehicle/LSJGCL")
         }
     }
 };
@@ -36,7 +42,6 @@ export default {
 <style scoped>
 .query{
   background: #fbfbfb;
-
 }
 .query img{
   width: 100%;
@@ -73,7 +78,7 @@ export default {
   cursor: pointer;
 }
 .show {
-  width: 1080px;
+  width: 1250px;
   /* height: 600px; */
   /* background: yellow; */
   margin: 0px auto;

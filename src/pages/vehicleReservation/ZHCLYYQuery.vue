@@ -151,7 +151,8 @@ export default {
         SFZF: row.SFZF,
         TAG: "tyd"
       };
-      this.$router.push({ name: "AppointmentEdit", query: redata });
+      // this.$router.push({ name: "AppointmentEdit", query: redata });
+      this.$router.push({path:'/vehicle/appointmentEdit', query: redata });
     }
   }
 };

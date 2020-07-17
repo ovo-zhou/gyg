@@ -1,6 +1,4 @@
 <template>
-  <!-- <el-main> -->
-    <!--表格显示区-->
     <div>
       <div class="table-style">
         <el-table
@@ -42,13 +40,10 @@
         ></el-pagination>
       </div>
     </div>
-  <!-- </el-main> -->
 </template>
 <script>
 import { post } from "../../service/http.js";
-import config from "../../service/utils/config.js";
-import axios from "axios";
-import { Promise } from "q";
+import host from "../../libs/utils";
 export default {
   data() {
     return {
@@ -70,31 +65,7 @@ export default {
     this.BH = this.BT_data.BH;
     this.TAG = this.BT_data.TAG;
     console.log(this.BH);
-    // 添加请求拦截器
-    axios.interceptors.request.use(
-      config => {
-        console.log(config);
-        this.loading = true;
-        return config;
-      },
-      function(error) {
-        return Promise.reject(error);
-      }
-    );
-    // 添加响应拦截器
-    axios.interceptors.response.use(
-      response => {
-        // 对响应数据做点什么
-        console.log(response);
-        this.loading = false;
-        return response;
-      },
-      function(error) {
-        // 对响应错误做点什么
-        return Promise.reject(error);
-      }
-    );
-    var url = config.baseurl + config.CLYYQuery;
+    var url = host.host6 + "VehicleResvationWebTrans.ashx";
     var data = {
       LX: "InboundVehicleList",
       TAG: this.TAG,
@@ -125,7 +96,7 @@ export default {
     //改变每页显示数据条数时执行
     handleSizeChange: function(size) {
       this.pagesize = size;
-      var url = config.baseurl + config.CLYYQuery;
+      var url = host.host6 + "VehicleResvationWebTrans.ashx";
       var data = {
         LX: "InboundVehicleList",
         TAG: this.TAG,
@@ -146,7 +117,7 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = config.baseurl + config.CLYYQuery;
+        var url = host.host6 + "VehicleResvationWebTrans.ashx";
         var data = {
           LX: "InboundVehicleList",
           TAG: this.TAG,

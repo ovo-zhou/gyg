@@ -20,6 +20,8 @@
 <script>
 import { post } from "../../service/http";
 import host from "../../libs/utils";
+import {dateToString} from "../../assets/vehicleResJs/common.js"
+
 export default {
   data() {
     return {
@@ -40,15 +42,18 @@ export default {
       var promise = post(url, data);
       promise.then(v => {
         if (v.errCode === "SUCCESS") {
-          console.log("denglu", v);
+          console.log("客户登录", v);
           let KHQC = v.data[0]["KHQC"];
           let YHBH = v.data[0]["Yhbh"];
+          let LOGINTIME=dateToString(new Date())
           let clientuser={
               KHQC:'',
-              YHBH:''
+              YHBH:'',
+              LOGINTIME:""
           }
           clientuser.KHQC=KHQC;
           clientuser.YHBH=YHBH;
+          clientuser.LOGINTIME=LOGINTIME
             sessionStorage.setItem(
               "clientUser",
               JSON.stringify(clientuser)

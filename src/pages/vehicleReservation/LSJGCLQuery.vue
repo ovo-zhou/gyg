@@ -107,10 +107,8 @@
   </el-main>
 </template>
 <script>
-import { get, post } from "../../service/http.js";
-import config from "../../service/utils/config.js";
-import axios from "axios";
-import { Promise } from "q";
+import { post } from "../../service/http.js";
+import host from "../../libs/utils";
 export default {
   name:"LSJGCLQuery",
   data() {
@@ -127,31 +125,6 @@ export default {
   },
   created() {
     this.TAG = "tyd";
-    // this.QueryLSJGCL();
-    // 添加请求拦截器
-  //   axios.interceptors.request.use(
-  //     config => {
-  //       console.log(config);
-  //       this.loading = true;
-  //       return config;
-  //     },
-  //     function(error) {
-  //       return Promise.reject(error);
-  //     }
-  //   );
-  //   // 添加响应拦截器
-  //   axios.interceptors.response.use(
-  //     response => {
-  //       // 对响应数据做点什么
-  //       console.log(response);
-  //       this.loading = false;
-  //       return response;
-  //     },
-  //     function(error) {
-  //       // 对响应错误做点什么
-  //       return Promise.reject(error);
-  //     }
-  //   );
   },
   watch:{
     LSJGCL_data(val){
@@ -171,8 +144,8 @@ export default {
       this.style = "";
       this.LSJGCL_data=[];
       // this.currentPage = 0;
-      var url = config.baseurl + config.CLYYQuery;
-      var hz = JSON.parse(localStorage.getItem("clientUser")).YHBH;
+      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
       var data = {
         LX: "LSJGCLQuery",
         TAG: this.TAG,
@@ -183,6 +156,7 @@ export default {
       var promise = post(url, data);
       console.log("*******************", hz);
       promise.then(v => {
+        console.log(v)
         if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
           console.log("*******************", v.data);
           this.count = v.data.count;
@@ -204,8 +178,8 @@ export default {
     handleSizeChange: function(size) {
       this.currentPage = 1;
       this.pagesize = size;
-      var url = config.baseurl + config.CLYYQuery;
-      var hz = JSON.parse(localStorage.getItem("clientUser")).YHBH;
+      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
       var data = {
         LX: "LSJGCLQuery",
         TAG: this.TAG,
@@ -225,8 +199,8 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = config.baseurl + config.CLYYQuery;
-        var hz = JSON.parse(localStorage.getItem("clientUser")).YHBH;
+        var url = host.host6 + "VehicleResvationWebTrans.ashx";
+        var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
         var data = {
           LX: "LSJGCLQuery",
           TAG: this.TAG,
@@ -260,7 +234,8 @@ export default {
         TAG: tag,
         BH: bh
       };
-      this.$router.push({ name: "InboundVehicleList", query: redata });
+      // this.$router.push({ name: "InboundVehicleList", query: redata });
+      this.$router.push({ path:'/vehicle/InboundVehicleList', query: redata });
     }
   }
 };

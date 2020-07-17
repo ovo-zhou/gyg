@@ -64,7 +64,7 @@
 export default {
   methods: {
     login() {
-      this.$router.push("/login");
+      this.$router.push("/clientlogin");
     },
     toHomepage() {
       this.$router.push("/homepage");
@@ -82,7 +82,7 @@ export default {
       this.$router.push("/dynamic");
     },
     toQuery(){
-      this.$router.push("/clientlogin");
+      this.$router.push("/query");
     },
     toVehicle(){
       this.$router.push("/vehicle");
