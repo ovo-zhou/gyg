@@ -1,6 +1,6 @@
 <template>
   <div class="business">
-    <img src="../../assets/business process.png" alt />
+    <img src="../../assets/ywlc.png" alt />
     <div class="b-contain">
       <template v-for="(item ,index) in data">
         <flowchart :key="index" :ywlc="item"></flowchart>

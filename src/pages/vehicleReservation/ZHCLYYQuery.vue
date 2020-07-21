@@ -65,7 +65,7 @@ export default {
   },
   mounted() {
     this.count = 0;
-    var url = host.host6 + "VehicleResvationWebTrans.ashx";
+    var url = host.host6 + "CLYYQuery.ashx";
     var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
     var data = {
       LX: "ZHCLYYQuery",
@@ -104,7 +104,7 @@ export default {
     handleSizeChange: function(size) {
       this.currentPage = 1;
       this.pagesize = size;
-      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var url = host.host6 + "CLYYQuery.ashx";
       var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
       var data = {
         LX: "ZHCLYYQuery",
@@ -124,7 +124,7 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = host.host6 + "VehicleResvationWebTrans.ashx";
+        var url = host.host6 + "CLYYQuery.ashx";
         var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
         var data = {
           LX: "ZHCLYYQuery",

@@ -88,7 +88,8 @@ router.beforeEach((to,from,next)=>{
     if(to.meta.clientlogin){
         let clientUser= JSON.parse(sessionStorage.getItem("clientUser"))
         if(clientUser===""||clientUser===null){
-            next('/clientlogin')
+            // next('/clientlogin')
+            next({path:'/clientlogin',query:{tourl:to.path}})
         }else{
             next()
         }

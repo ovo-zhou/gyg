@@ -2,7 +2,7 @@
   <div>
     <div>
       <el-form ref="loginForm" :model="form" label-width="80px" class="login-box">
-        <h3 class="login-title">欢迎登录</h3>
+        <h3 class="login-title">客户登录</h3>
         <el-form-item label="账号" prop="Account">
           <el-input type="text" placeholder="请输入账号" v-model="form.Account" />
         </el-form-item>
@@ -21,7 +21,7 @@
 import { post } from "../../service/http";
 import host from "../../libs/utils";
 import {dateToString} from "../../assets/vehicleResJs/common.js"
-
+import bus from '../../components/admin/bus'
 export default {
   data() {
     return {
@@ -33,6 +33,10 @@ export default {
   },
   methods: {
     login() {
+      if(this.form.Account===""||this.form.PassWord===""){
+        this.$message.error("用户名或密码不能为空");
+        return
+      }
       var url = host.host4 + "login.ashx";
       var data = {
         Account: this.form.Account,
@@ -42,7 +46,7 @@ export default {
       var promise = post(url, data);
       promise.then(v => {
         if (v.errCode === "SUCCESS") {
-          console.log("客户登录", v);
+          // console.log("客户登录", v);
           let KHQC = v.data[0]["KHQC"];
           let YHBH = v.data[0]["Yhbh"];
           let LOGINTIME=dateToString(new Date())
@@ -58,9 +62,11 @@ export default {
               "clientUser",
               JSON.stringify(clientuser)
             );
-            this.$router.push("/query");
+            bus.$emit("message","退出登录")
+            // this.$router.push("/query");
+            this.$router.push(this.$route.query.tourl);
         } else if (v.errCode === "FAIL") {
-          this.$message.error("登陆失败");
+          this.$message.error("用户名或密码错误");
         }
       });
     }

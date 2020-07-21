@@ -3,16 +3,17 @@
     <div class="top">
       <div class="top_contain">
         <div>
-          <span class="span1">欢迎来到重庆果园港部有限公司、重庆果园港件散货码头有限公司！</span>
+          <span class="span1">欢迎来到重庆果园港埠有限公司、重庆果园件散货码头有限公司！</span>
         </div>
         <div class="contain_right">
           <div class="tel">
             <img class="icon1" src="../../assets/2.png" />
-            <span class="span2">023-80888008</span>
+            <span class="span2">023-60350627</span>
           </div>
           <div>
             <img class="icon2" src="../../assets/1.png" />
-            <span class="span3" @click="login">客户登录</span>
+            <span class="span3" @click="login">{{message}}</span>
+            <span class="span3" @click="stafflogin">员工登录</span>
           </div>
         </div>
       </div>
@@ -61,10 +62,30 @@
   </div>
 </template>
 <script>
+import bus from '../admin/bus'
 export default {
+  data(){
+    return{
+      message:"客户登录"
+    }
+  },
+  mounted(){
+    bus.$on("message",message=>{
+      this.message=message
+    })
+  },
   methods: {
     login() {
+      if(this.message==="客户登录"){
       this.$router.push("/clientlogin");
+      return
+      }
+      if(this.message==="退出登录"||this.message===null||this.message===null){
+        sessionStorage.removeItem("clientUser")
+        this.toHomepage()
+        this.message="客户登录"
+      return
+      }
     },
     toHomepage() {
       this.$router.push("/homepage");
@@ -86,6 +107,9 @@ export default {
     },
     toVehicle(){
       this.$router.push("/vehicle");
+    },
+    stafflogin(){
+      window.open("http://172.16.199.97:9090")
     }
   }
 };

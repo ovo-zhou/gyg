@@ -149,11 +149,11 @@ export default {
   height: 358px;
   /* background: tomato; */
   border-top: 3px solid #1367aa;
+  cursor: pointer;
 }
 .other img {
   width: 307px;
   height: 144px;
-  cursor: pointer;
 }
 .p1 {
   font-size: 16px;

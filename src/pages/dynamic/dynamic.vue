@@ -1,6 +1,6 @@
 <template>
   <div class="dynamic">
-    <img src="../../assets/dynamic.png" alt />
+    <img src="../../assets/hydt.png" alt />
     <div class="d-contain">
       <div class="c-left">
         <template v-for="(item,index) in newsdata">

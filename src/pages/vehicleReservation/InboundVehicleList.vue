@@ -65,7 +65,7 @@ export default {
     this.BH = this.BT_data.BH;
     this.TAG = this.BT_data.TAG;
     console.log(this.BH);
-    var url = host.host6 + "VehicleResvationWebTrans.ashx";
+    var url = host.host6 + "CLYYQuery.ashx";
     var data = {
       LX: "InboundVehicleList",
       TAG: this.TAG,
@@ -96,7 +96,7 @@ export default {
     //改变每页显示数据条数时执行
     handleSizeChange: function(size) {
       this.pagesize = size;
-      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var url = host.host6 + "CLYYQuery.ashx";
       var data = {
         LX: "InboundVehicleList",
         TAG: this.TAG,
@@ -117,7 +117,7 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = host.host6 + "VehicleResvationWebTrans.ashx";
+        var url = host.host6 + "CLYYQuery.ashx";
         var data = {
           LX: "InboundVehicleList",
           TAG: this.TAG,

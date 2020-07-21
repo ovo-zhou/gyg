@@ -177,7 +177,7 @@ export default {
   methods: {
     //查询车辆预约信息
     QueryCLYYXX(bh, index, pagesize) {
-      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var url = host.host6 + "CLYYQuery.ashx";
       var data = {
         LX: "CLYYXX",
         TAG: this.form.TAG,
@@ -302,7 +302,7 @@ export default {
               });
             } else {
               SaveTag = 0;
-              var url = host.host6 + "VehicleResvationWebTrans.ashx";
+              var url = host.host6 + "CLYYQuery.ashx";
               var data = {
                 LX: "addEditResInfo",
                 test:this.test,
@@ -413,7 +413,7 @@ export default {
         this.$message("请至少输入四位车牌号");
       }else {
         CPH=CPH.toUpperCase();
-        var url = host.host6 + "VehicleResvationWebTrans.ashx";
+        var url = host.host6 + "CLYYQuery.ashx";
         var data = {
           LX: "QueDriverInfo",
           CPH: CPH

@@ -1,6 +1,6 @@
 <template>
   <div class="query">
-    <img src="../../assets/query.png" alt="">
+    <img src="../../assets/clyy.png" alt="">
     <div class="function">
       <div class="f-contain">
         <div class="span-text" @click="toZH">

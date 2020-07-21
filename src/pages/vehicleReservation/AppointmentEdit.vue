@@ -330,29 +330,30 @@ export default {
     };
   },
   watch: {
-    SFZF(val) {
-      console.log("as", val);
-    },
-    BH(val) {
-      console.log("as", val);
-    }
+    // SFZF(val) {
+    //   console.log("as", val);
+    // },
+    // BH(val) {
+    //   console.log("as", val);
+    // }
   },
   created() {
     this.TYDHT_data = this.$route.query["body_data"];
     this.TAG = this.$route.query["TAG"];
     this.BH = this.$route.query["BH"];
     this.SFZF = this.$route.query["SFZF"];
-    var url = host.host6 + "VehicleResvationWebTrans.ashx";
+    var url = host.host6 + "CLYYQuery.ashx";
     var data = {
       LX: "AppointmentEdit",
       TAG: this.TAG,
       BH: this.BH
     };
-    console.log("AppointmentEdit-ht", data);
+    // console.log("AppointmentEdit-ht", data);
     var promise = post(url, data);
     promise.then(v => {
       if (v.errCode === "SUCCESS" || v.errCode === "FAIL") {
         this.body_data = v.data;
+        // console.log(v.data)
         if (this.body_data === null) {
           alert("没有相关数据！");
         }
@@ -367,8 +368,11 @@ export default {
     };
     var promise1 = post(url, data1);
     promise1.then(v => {
+      console.log("haungzhou")
+      console.log(v)
       if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
-        this.count = v.data.count;
+        // this.count = v.data.count;
+        this.count = v.data.datanum;
         this.YJGCLS = v.data.YJGCLS;
         this.WJGCLS = v.data.WJGCLS;
         if (this.count > 0) {
@@ -381,7 +385,7 @@ export default {
   methods: {
     handleSizeChange: function(size) {
       this.pagesize = size;
-      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var url = host.host6 + "CLYYQuery.ashx";
       var data = {
         LX: "CLYYXX",
         TAG: this.TAG,
@@ -400,7 +404,7 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = host.host6 + "VehicleResvationWebTrans.ashx";
+        var url = host.host6 + "CLYYQuery.ashx";
         var data = {
           LX: "CLYYXX",
           TAG: this.TAG,
@@ -451,7 +455,7 @@ export default {
 
     /********************修改车辆预约信息*************************/
     editResInfo: function() {
-      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var url = host.host6 + "CLYYQuery.ashx";
       var deleteData = this.rowData;
       // JSON.stringify(deleteData)=="{}"//Vue中判断对象是否为空的方法
       if (Object.keys(deleteData).length === 0) {
@@ -505,7 +509,7 @@ export default {
     },
     /********************删除车辆预约信息*************************/
     QueryCLYYXX(bh, index, pagesize) {
-      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var url = host.host6 + "CLYYQuery.ashx";
       var data = {
         LX: "CLYYXX",
         TAG: this.TAG,
@@ -542,7 +546,7 @@ export default {
       return xtrz;
     },
     deleteResInfo: function() {
-      var url = host.host6 + "VehicleResvationWebTrans.ashx";
+      var url = host.host6 + "CLYYQuery.ashx";
       var deleteData = this.rowData;
       // JSON.stringify(deleteData)=="{}"//Vue中判断对象是否为空的方法
       if (Object.keys(deleteData).length === 0) {
