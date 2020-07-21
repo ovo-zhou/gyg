@@ -108,7 +108,7 @@
 </template>
 <script>
 import { post } from "../../service/http.js";
-import host from "../../libs/utils";
+import config from "../../libs/config.js";
 export default {
   name:"LSJGCLQuery",
   data() {
@@ -143,8 +143,7 @@ export default {
     QueryLSJGCL: function() {
       this.style = "";
       this.LSJGCL_data=[];
-      // this.currentPage = 0;
-      var url = host.host6 + "CLYYQuery.ashx";
+      var url = config.baseurl + config.CLYYQuery;
       var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
       var data = {
         LX: "LSJGCLQuery",
@@ -156,13 +155,11 @@ export default {
       var promise = post(url, data);
       console.log("*******************", hz);
       promise.then(v => {
-        console.log(v)
         if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
           console.log("*******************", v.data);
           this.count = v.data.count;
           if (this.count > 0) {
             this.currentPage = 1;
-            // this.LSJGCL_data = JSON.parse(v.data.data);
             this.LSJGCL_data = JSON.parse(v.data.data);
             console.log("LSJGCL_data", this.LSJGCL_data);
           } else {
@@ -178,7 +175,7 @@ export default {
     handleSizeChange: function(size) {
       this.currentPage = 1;
       this.pagesize = size;
-      var url = host.host6 + "CLYYQuery.ashx";
+      var url = config.baseurl + config.CLYYQuery;
       var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
       var data = {
         LX: "LSJGCLQuery",
@@ -199,7 +196,7 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = host.host6 + "CLYYQuery.ashx";
+        var url = config.baseurl + config.CLYYQuery;
         var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
         var data = {
           LX: "LSJGCLQuery",
@@ -235,7 +232,7 @@ export default {
         BH: bh
       };
       // this.$router.push({ name: "InboundVehicleList", query: redata });
-      this.$router.push({ path:'/vehicle/InboundVehicleList', query: redata });
+      this.$router.push({ path: "/vehicle/InboundVehicleList", query: redata });
     }
   }
 };

@@ -44,7 +44,7 @@
             format="yyyy-MM-dd HH:mm:ss"
             default-time="12:00:00"
           ></el-date-picker>
-          <!-- <el-input v-model="form.CPH" autocomplete="off"></el-input> -->
+        
         </el-form-item>
         <el-form-item label="计划最后一次离港时间">
           <div class="block">
@@ -59,13 +59,13 @@
             ></el-date-picker>
           </div>
 
-          <!-- <el-input v-model="form.CPH" autocomplete="off"></el-input> -->
+     
         </el-form-item>
         <el-form-item style="margin-bottom:-15px;">
-          <!-- <div slot="footer" class="dialog-footer"> -->
+         
           <el-button @click="dialogFormVisible = false" style="width:30%;">取 消</el-button>
           <el-button type="primary" @click="submitResInfo('form')" style="width:30%;">保 存</el-button>
-          <!-- </div> -->
+        
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -73,8 +73,9 @@
 </template>
 <script>
 import { post } from "../../service/http.js";
-import host from "../../libs/utils";
-import { dateToString } from "../../assets/vehicleResJs/common.js";
+import config from "../../libs/config.js";
+import {dateToString} from "../../assets/vehicleResJs/common.js"
+
 export default {
   data() {
     var validateSJXM = (rule, value, callback) => {
@@ -118,7 +119,6 @@ export default {
     return {
       title:"",
       labelPositon: "left",
-      //   addResInfo: false,
       dialogFormVisible: false,
       SaveTag: 1, //解决多次点击保存按钮问题
       test:"",
@@ -177,7 +177,7 @@ export default {
   methods: {
     //查询车辆预约信息
     QueryCLYYXX(bh, index, pagesize) {
-      var url = host.host6 + "CLYYQuery.ashx";
+      var url = config.baseurl + config.CLYYQuery;
       var data = {
         LX: "CLYYXX",
         TAG: this.form.TAG,
@@ -302,7 +302,7 @@ export default {
               });
             } else {
               SaveTag = 0;
-              var url = host.host6 + "CLYYQuery.ashx";
+              var url = config.baseurl + config.CLYYQuery;
               var data = {
                 LX: "addEditResInfo",
                 test:this.test,
@@ -393,11 +393,6 @@ export default {
                   SaveTag = 1;
                 }
               });
-              //  this.dialogFormVisible = false;
-              // console.log("qwe",this.dateValue);
-              // this.$emit("submitResInfo", this.parm);
-              // this.init();
-              // this.$parent.$data.key++;
             }
           }
         });
@@ -413,7 +408,7 @@ export default {
         this.$message("请至少输入四位车牌号");
       }else {
         CPH=CPH.toUpperCase();
-        var url = host.host6 + "CLYYQuery.ashx";
+        var url = config.baseurl + config.CLYYQuery;
         var data = {
           LX: "QueDriverInfo",
           CPH: CPH

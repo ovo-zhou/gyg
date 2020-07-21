@@ -64,7 +64,7 @@ export default {
             );
             bus.$emit("message","退出登录")
             // this.$router.push("/query");
-            this.$router.push(this.$route.query.tourl);
+            this.$router.push(this.$route.query.tourl);  
         } else if (v.errCode === "FAIL") {
           this.$message.error("用户名或密码错误");
         }

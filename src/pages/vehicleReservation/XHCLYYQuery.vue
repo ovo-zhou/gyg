@@ -50,7 +50,7 @@
 </template>
 <script>
 import { post } from "../../service/http.js";
-import host from "../../libs/utils";
+import config from "../../libs/config.js";
 export default {
   name:"XHCLYYQuery",
   data() {
@@ -65,18 +65,16 @@ export default {
   },
   mounted:function() {
     var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
-    var url =host.host6 + "CLYYQuery.ashx";
+    var url = config.baseurl + config.CLYYQuery;
     var data = {
       LX: "XHCLYYQuery",
       HZ: hz,
       page: this.currentPage,
       pagesize: this.pagesize
     };
-    console.log(data)
     var promise = post(url, data);
     promise.then(v => {
       if(v.errCode === "FAIL"){
-        console.log(v)
         this.loading=false;
         this.$alert(v.errStr, '提示', {
           confirmButtonText: '确定',
@@ -84,8 +82,7 @@ export default {
         })
       }else if (v.errCode === "SUCCESS") {
         console.log("************lp",v.data);
-        this.count = v.data.count;
-       
+          this.count = v.data.count;
           this.currentPage=1;
           this.body_data =JSON.parse(v.data.data) ;
           console.log(this.body_data);
@@ -103,7 +100,7 @@ export default {
     handleSizeChange: function(size) {
       this.currentPage = 1;
       this.pagesize = size;
-      var url =host.host6 + "CLYYQuery.ashx";
+      var url = config.baseurl + config.CLYYQuery;
       var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
       var data = {
         LX: "XHCLYYQuery",
@@ -123,7 +120,7 @@ export default {
     handleCurrentChange: function(currentPage) {
       this.currentPage = currentPage;
       if (this.count > 0) {
-        var url = host.host6 + "CLYYQuery.ashx";
+        var url = config.baseurl + config.CLYYQuery;
         var hz = JSON.parse(sessionStorage.getItem("clientUser")).YHBH;
         var data = {
           LX: "XHCLYYQuery",
@@ -153,7 +150,7 @@ export default {
         TAG: "ht"
       };
       // this.$router.push({ name: "AppointmentEdit", query: redata });
-      this.$router.push({path:'/vehicle/appointmentEdit', query: redata });
+      this.$router.push({ path: "/vehicle/appointmentEdit", query: redata });
     }
   }
 };

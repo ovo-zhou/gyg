@@ -85,6 +85,7 @@ export default {
 .d-contain {
   width: 1080px;
   /* height: 600px; */
+  min-height: 700px;
   /* background: violet; */
   margin: 0px auto;
   position: relative;
