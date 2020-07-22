@@ -10,13 +10,13 @@
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-            黄舟
-            <i class="el-icon-caret-bottom"></i>
+            当前用户：{{username}}
+            <!-- <i class="el-icon-caret-bottom"></i> -->
           </span>
-          <el-dropdown-menu slot="dropdown">
+          <!-- <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>用户信息</el-dropdown-item>
             <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
-          </el-dropdown-menu>
+          </el-dropdown-menu> -->
         </el-dropdown>
       </div>
     </div>
@@ -28,10 +28,12 @@ export default {
   data() {
     return {
       collapse: false,
+      username:''
     };
   },
-  computed: {
-  },
+mounted(){
+  this.username=JSON.parse(sessionStorage.getItem("user")).XM
+},
   methods: { 
     collapseChage() {
       this.collapse = !this.collapse;
@@ -40,8 +42,6 @@ export default {
     toHome(){
       this.$router.push('/')
     }
-  },
-  mounted() {
   }
 };
 </script>

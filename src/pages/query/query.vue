@@ -1,12 +1,15 @@
 <template>
   <div class="query">
-    <img src="../../assets/query.png" alt="">
+    <img src="../../assets/query.png" alt />
     <div class="function">
       <div class="f-contain">
         <div class="span-text" @click="toDckc">
           <a>堆场库存</a>
         </div>
-        <div class="span-text" @click="toZxfjf">
+        <div class="span-text" @click="toJCKMX">
+          <a>进出库明细</a>
+        </div>
+        <!-- <div class="span-text" @click="toZxfjf">
           <a>装卸费计费</a>
         </div>
         <div class="span-text" @click="toDcjf">
@@ -14,14 +17,14 @@
         </div>
         <div class="span-text" @click="toJhjzx">
           <a>件货集装箱信息</a>
-        </div>
+        </div>-->
       </div>
     </div>
     <div class="show">
       <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
   </div>
 </template>
@@ -40,17 +43,19 @@ export default {
     },
     toJhjzx() {
       this.$router.push("/query/jhjzx");
+    },
+    toJCKMX(){
+      this.$router.push("/query/jckmx");
     }
   }
 };
 </script>
 
 <style scoped>
-.query{
+.query {
   background: #fbfbfb;
-
 }
-.query img{
+.query img {
   width: 100%;
 }
 .function {
@@ -67,15 +72,15 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.span-text{
-    border-bottom: 2px solid #0e68b1;
-    margin-left: 10px;
+.span-text {
+  border-bottom: 2px solid #0e68b1;
+  margin-left: 10px;
   margin-right: 10px;
 }
 .span-text a {
   line-height: 53px;
   font-size: 16px;
-  
+
   text-decoration: none;
   color: #333;
 }

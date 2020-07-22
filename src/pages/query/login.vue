@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>
       <el-form ref="loginForm" :model="form" label-width="80px" class="login-box">
         <h3 class="login-title">客户登录</h3>
         <el-form-item label="账号" prop="Account">
@@ -9,64 +8,104 @@
         <el-form-item label="密码" prop="PassWord">
           <el-input type="password" placeholder="请输入密码" v-model="form.PassWord" />
         </el-form-item>
+        <el-form-item label="验证码" prop="YZM">
+          <el-row>
+            <el-col :span="14">
+              <el-input placeholder="请输入验证码" v-model="form.YZM" />
+            </el-col>
+            <el-col :span="10">
+              <img :src="imgData" id="idPic" style="width:110px;height:40px" @click="updateImg" />
+            </el-col>
+          </el-row>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login">登录</el-button>
+          <el-button @click="cancel">取消</el-button>
         </el-form-item>
       </el-form>
-    </div>
   </div>
 </template>
 
 <script>
 import { post } from "../../service/http";
 import host from "../../libs/utils";
-import {dateToString} from "../../assets/vehicleResJs/common.js"
-import bus from '../../components/admin/bus'
+import { dateToString } from "../../assets/vehicleResJs/common.js";
+import bus from "../../components/admin/bus";
 export default {
   data() {
     return {
       form: {
         Account: "",
-        PassWord: ""
-      }
+        PassWord: "",
+        YZM: ""
+      },
+      imgData: "",
+      nowtime: ""
     };
   },
+  mounted() {
+    this.nowtime = new Date().getTime() * 1000;
+    // console.log("nowtime", this.nowtime);
+    var url = host.host1 + "updateVerifyCode.ashx";
+    var data = { SESSIONID: this.nowtime };
+    var promise = post(url, data);
+    promise.then(v => {
+      console.log("v.errStr", v.errStr);
+      if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
+        // console.log(v.errStr);
+        this.imgData = "data:image/jpg;base64," + v.errStr;
+      }
+    });
+  },
   methods: {
+    cancel(){
+      this.$router.push('/homepage')
+    },
+    updateImg() {
+      var url = host.host1 + "updateVerifyCode.ashx";
+      var data = { SESSIONID: this.nowtime };
+      var promise = post(url, data);
+      promise.then(v => {
+        if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
+          // console.log(v.errStr);
+          this.imgData = "data:image/jpg;base64," + v.errStr;
+        }
+      });
+    },
     login() {
-      if(this.form.Account===""||this.form.PassWord===""){
+      if (this.form.Account === "" || this.form.PassWord === "") {
         this.$message.error("用户名或密码不能为空");
-        return
+        return;
+      }
+      if(this.form.YZM===""){
+        this.$message.error("验证码不能为空");
+        return;
       }
       var url = host.host4 + "login.ashx";
       var data = {
-        Account: this.form.Account,
-        PassWord: this.form.PassWord,
-        YHLX: "0"
+        Account: this.form.Account, PassWord: this.form.PassWord, YZM: this.form.YZM, SESSIONID: this.nowtime,YHLX : '0'
       };
       var promise = post(url, data);
       promise.then(v => {
+         console.log("客户登录", v);
         if (v.errCode === "SUCCESS") {
-          // console.log("客户登录", v);
           let KHQC = v.data[0]["KHQC"];
           let YHBH = v.data[0]["Yhbh"];
-          let LOGINTIME=dateToString(new Date())
-          let clientuser={
-              KHQC:'',
-              YHBH:'',
-              LOGINTIME:""
-          }
-          clientuser.KHQC=KHQC;
-          clientuser.YHBH=YHBH;
-          clientuser.LOGINTIME=LOGINTIME
-            sessionStorage.setItem(
-              "clientUser",
-              JSON.stringify(clientuser)
-            );
-            bus.$emit("message","退出登录")
-            // this.$router.push("/query");
-            this.$router.push(this.$route.query.tourl);  
+          let LOGINTIME = dateToString(new Date());
+          let clientuser = {
+            KHQC: "",
+            YHBH: "",
+            LOGINTIME: ""
+          };
+          clientuser.KHQC = KHQC;
+          clientuser.YHBH = YHBH;
+          clientuser.LOGINTIME = LOGINTIME;
+          sessionStorage.setItem("clientUser", JSON.stringify(clientuser));
+          bus.$emit("message", "退出登录");
+          // this.$router.push("/query");
+          this.$router.push(this.$route.query.tourl);
         } else if (v.errCode === "FAIL") {
-          this.$message.error("用户名或密码错误");
+          this.$message.error(v.errStr);
         }
       });
     }

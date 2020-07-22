@@ -16,6 +16,7 @@ import dckc from './pages/query/dckc'
 import zxfjf from './pages/query/zxfjf'
 import dcjf from './pages/query/dcjf'
 import jhjzx from './pages/query/jhjzx'
+import jckmx from './pages/query/jckmx'
 import clientlogin from './pages/query/login'
 import vehicle from './pages/vehicleReservation/index'
 import ZHCLYY from "./pages/vehicleReservation/ZHCLYYQuery";
@@ -50,6 +51,7 @@ const routes = [
                     { path: 'zxfjf', component: zxfjf, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'dcjf', component: dcjf, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'jhjzx', component: jhjzx, meta: { keepAlive: true, clientlogin: true } },
+                    { path: 'jckmx', component: jckmx, meta: { keepAlive: true, clientlogin: true } },
                 ]
             },
             {

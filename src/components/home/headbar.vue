@@ -109,7 +109,7 @@ export default {
       this.$router.push("/vehicle");
     },
     stafflogin(){
-      window.open("http://172.16.199.97:9090")
+      window.open("http://172.18.1.196:9300")//http://172.16.199.97:9090
     }
   }
 };

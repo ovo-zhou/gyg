@@ -193,7 +193,7 @@ export default {
           this.$parent.$data.WJGCLS = v.data.WJGCLS;
           if (this.$parent.$data.count > 0) {
             this.$parent.$data.currentPage = 1;
-            console.log(v.data);
+            // console.log(v.data);
             this.$parent.$data.CLYY_data = JSON.parse(v.data.data);
           }else{
             this.$parent.$data.CLYY_data =[];
@@ -392,6 +392,8 @@ export default {
                   });
                   SaveTag = 1;
                 }
+              }).catch(err=>{
+                console.log(err)
               });
             }
           }

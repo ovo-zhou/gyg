@@ -10,14 +10,14 @@
             <el-input v-model="userform.PassWord" placeholder="密码" show-password></el-input>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="userform.DLFS" placeholder="请选择">
-              <el-option label="员工登录" value="员工登录"></el-option>
-              <el-option label="后台管理" value="后台管理"></el-option>
-              <el-option label="客户登录" value="客户登录"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <slider ref="slider"></slider>
+            <el-row>
+              <el-col :span="14">
+                <el-input placeholder="请输入验证码" v-model="userform.YZM" />
+              </el-col>
+              <el-col :span="10">
+                <img :src="imgData" id="idPic" style="width:90px;height:40px" @click="updateImg" />
+              </el-col>
+            </el-row>
           </el-form-item>
           <el-form-item>
             <div class="btn_login" @click="login">登录</div>
@@ -29,23 +29,47 @@
 </template>
 
 <script>
-import slider from "./slider";
 import host from "../../libs/utils";
 import { post } from "../../service/http";
 export default {
   data() {
     return {
       userform: {
-        Account: "admin",
-        PassWord: "sdic818",
-        DLFS: "后台管理"
-      }
+        Account: "",
+        PassWord: "",
+        DLFS: "后台管理",
+        YZM: ""
+      },
+      imgData: "",
+      nowtime: ""
     };
   },
-  components: {
-    slider
+  mounted() {
+    this.nowtime = new Date().getTime() * 1000;
+    // console.log("nowtime", this.nowtime);
+    var url = host.host1 + "updateVerifyCode.ashx";
+    var data = { SESSIONID: this.nowtime };
+    var promise = post(url, data);
+    promise.then(v => {
+      console.log("v.errStr", v.errStr);
+      if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
+        // console.log(v.errStr);
+        this.imgData = "data:image/jpg;base64," + v.errStr;
+      }
+    });
   },
   methods: {
+    updateImg() {
+      var url = host.host1 + "updateVerifyCode.ashx";
+      var data = { SESSIONID: this.nowtime };
+      var promise = post(url, data);
+      promise.then(v => {
+        if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
+          // console.log(v.errStr);
+          this.imgData = "data:image/jpg;base64," + v.errStr;
+        }
+      });
+    },
     check() {
       if (this.userform.Account === "") {
         this.$message.error("请输入用户名");
@@ -71,62 +95,49 @@ export default {
       if (!this.check()) {
         return;
       }
-      if (this.userform.DLFS === "客户登录") {
-        alert("等待完善");
-      } else {
-        let url = host.host1 + "login.ashx";
-        post(url, this.userform).then(res => {
-          if (res.errCode === "SUCCESS") {
-            console.log(res);
-            let user = {
-              DeptId: "",
-              DeptName: "",
-              Yhbh: "",
-              XM: "",
-              UserIdentity: []
-            };
-            user.DeptId = res.data[0]["DeptId"];
-            user.DeptName = res.data[0]["DeptName"];
-            user.Yhbh = res.data[0]["Yhbh"];
-            user.XM = res.data[0]["XM"];
-            for (var i = 0; i < res.data.length; i++) {
-              user.UserIdentity.push(res.data[i]["Jsmc"]);
-            }
-            sessionStorage.setItem("user", JSON.stringify(user));
-            sessionStorage.setItem("isLogin", "true");
-            if (this.userform.DLFS === "员工登录" || this.userform.DLFS === "后台管理") {
-              if (
-                JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
-                  "货主"
-                ) >= 0 &&
-                JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
-                  "系统管理员"
-                ) === -1
-              ) {
-                this.$message.error("不是内部员工");
-              }
-            }
-            if (this.userform.DLFS === "后台管理") {
-              if (
-                JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
-                  "系统管理员"
-                ) >= 0
-              ) {
-                this.$router.push({ path: "/admin" });
-                return;
-              } else {
-                this.$message.error("不是系统管理员");
-                return;
-              }
-            } else {
-              // this.$router.push({ path: "/workspace" });
-              alert("等待完善")
-            }
-          } else if (res.errCode === "FAIL") {
-            this.$message.error(res.errStr);
+
+      let url = host.host1 + "login.ashx";
+      var data = {
+        Account: this.userform.Account,
+        PassWord: this.userform.PassWord,
+        YZM: this.userform.YZM,
+        SESSIONID: this.nowtime
+      };
+      post(url, data).then(res => {
+        if (res.errCode === "SUCCESS") {
+          console.log(res);
+          let user = {
+            DeptId: "",
+            DeptName: "",
+            Yhbh: "",
+            XM: "",
+            UserIdentity: []
+          };
+          user.DeptId = res.data[0]["DeptId"];
+          user.DeptName = res.data[0]["DeptName"];
+          user.Yhbh = res.data[0]["Yhbh"];
+          user.XM = res.data[0]["XM"];
+          for (var i = 0; i < res.data.length; i++) {
+            user.UserIdentity.push(res.data[i]["Jsmc"]);
           }
-        });
-      }
+          sessionStorage.setItem("user", JSON.stringify(user));
+          sessionStorage.setItem("isLogin", "true");
+
+          if (
+            JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+              "系统管理员"
+            ) >= 0
+          ) {
+            this.$router.push({ path: "/admin" });
+            return;
+          } else {
+            this.$message.error("不是系统管理员");
+            return;
+          }
+        } else if (res.errCode === "FAIL") {
+          this.$message.error(res.errStr);
+        }
+      });
     }
   }
 };
@@ -141,7 +152,7 @@ export default {
   background-attachment: fixed;
 }
 .border {
-  width: 300px;
+  width: 350px;
   padding-top: 30px;
   padding-bottom: 30px;
   border-radius: 5px;
@@ -151,7 +162,7 @@ export default {
   top: 30%;
 }
 .login_box {
-  width: 200px;
+  width: 220px;
   color: #ffffff;
   margin-left: 45px;
 }

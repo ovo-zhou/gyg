@@ -559,6 +559,8 @@ export default {
             this.CLYY_data =[];
           }
         }
+      }).catch(err=>{
+        console.log(err)
       });
       this.rowData=[];
     },
