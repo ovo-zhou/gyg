@@ -19,35 +19,48 @@
         <el-button type="primary" @click="query">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="tableData" style="width: 100%"  max-height="500">
-      <el-table-column prop="GBRQ" label="工班日期"></el-table-column>
-      <el-table-column prop="BCMC" label="班次"></el-table-column>
-      <el-table-column prop="ZYSJ" label="作业时间"></el-table-column>
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="GBRQ" label="工班日期" width="100"></el-table-column>
+      <el-table-column prop="BCMC" label="班次" width="50"></el-table-column>
+      <el-table-column prop="ZYSJ" label="作业时间" width="90"></el-table-column>
       <el-table-column prop="HWLBMC" label="货物类型"></el-table-column>
       <el-table-column prop="HWGGXH" label="货物规格型号" width="120"></el-table-column>
       <el-table-column prop="YSGJ" label="运输工具"></el-table-column>
-      <el-table-column prop="YSXX" label="运输信息"></el-table-column>
+      <el-table-column prop="YSXX" label="运输信息" width="190"></el-table-column>
       <el-table-column prop="CZGCMC" label="操作过程"></el-table-column>
       <el-table-column prop="ZL" label="重量"></el-table-column>
       <el-table-column prop="JXS" label="件箱数"></el-table-column>
       <el-table-column prop="LHYMC" label="理货员"></el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :page-sizes="[10, 50, 100]"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
 <script>
 import {post} from '../../service/http'
 import host from '../../libs/utils'
+import {formatDate}from '../../assets/vehicleResJs/common'
 export default {
   data() {
     return {
     form:{
         kssj:'',
         jssj:'',
-        czgcbm:'0'
+        czgcbm:'0',
+        hzqc:JSON.parse(sessionStorage.getItem("clientUser")).KHQC
     },
       tableData: [],
-      czgc:[]
+      czgc:[],
+      total:"",
+      alldata:[],
+      pagesize:10
     };
   },
   mounted(){
@@ -57,15 +70,35 @@ export default {
       // console.log(res)
       this.czgc=res.data;
     })
+    this.form.kssj= formatDate(new Date(new Date().getTime() - 24*60*60*1000)) ; 
+    this. form.jssj=formatDate(new Date()) 
+    this.query();
   },
   methods:{
+     handleSizeChange(val) {
+        this.pagesize=val
+        this.tableData=this.alldata.slice(0,this.pagesize)
+      },
+      handleCurrentChange(val) {
+       var start =(val-1)*this.pagesize;
+       var end  =start+this.pagesize;
+       this.tableData=this.alldata.slice(start,end)
+      },
     query(){
       var url=host.host5+"QueJCKMX.ashx";
       console.log(this.form)
       post(url,this.form).then(res=>{
         console.log(res)
         if(res.errCode=="SUCCESS"){
-          this.tableData=res.data
+          if(res.data===null){
+            this.alldata=[];
+            this.tableData=[];
+            this.total=0
+            return
+          }
+          this.alldata=res.data;
+          this.total=this.alldata.length;
+          this.tableData=this.alldata.slice(0,this.pagesize)
         } 
       })
     }
