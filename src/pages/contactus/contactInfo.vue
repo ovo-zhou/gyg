@@ -50,7 +50,7 @@ export default {
   methods: {
     CreateMap() {
       var map = new BMap.Map("allmap", { enableMapClick: false }); //实例化
-      var point = new BMap.Point(106.773899, 29.619622);
+      var point = new BMap.Point(106.789967,29.624005);
       var marker = new BMap.Marker(point); // 创建标注
       map.addOverlay(marker); // 将标注添加到地图中
       map.centerAndZoom(point, 16);

@@ -5,6 +5,18 @@
         <el-form-item label="标题">
           <el-input v-model="form.title"></el-input>
         </el-form-item>
+        <el-form-item label="封面图">
+          <el-upload
+            class="avatar-uploader"
+            :action="imgUpLoadUrl"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            accept="image/jpeg, image/jpg, image/png"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
       </el-form>
     </div>
     <Editor id="tinymce" v-model="tinymceHtml" :init="init"></Editor>
@@ -61,6 +73,8 @@ export default {
         title: ""
       },
       tinymceHtml: "",
+      imageUrl: "",
+      imgUpLoadUrl: "",
       show: true,
       btnMessage: "发布",
       flag: "发布",
@@ -95,8 +109,10 @@ export default {
   },
   mounted() {
     tinymce.init({});
+    this.imgUpLoadUrl = host.host2 + "upload.ashx";
   },
   created() {
+    
     if (this.$route.query.flag === "查看") {
       this.flag = "查看";
       this.form.title = this.$route.query.new.XWBT;
@@ -117,6 +133,10 @@ export default {
     Editor
   },
   methods: {
+    handleAvatarSuccess(res) {
+      // console.log(res);
+      this.imageUrl = res.url;
+    },
     handleClick() {
       if (this.flag === "发布") {
         this.handleRelease();
@@ -153,6 +173,7 @@ export default {
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
+      data.COVER_IMG = this.imageUrl;
       this.$alert("确认修改？", "提示", {
         confirmButtonText: "确定",
         callback: action => {
@@ -202,6 +223,7 @@ export default {
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
+      data.COVER_IMG = this.imageUrl;
       this.$alert("确认发布？", "提示", {
         confirmButtonText: "确定",
         callback: action => {

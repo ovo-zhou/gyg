@@ -1,7 +1,7 @@
 <template>
   <div class="funbar">
     <div class="funcontain">
-      <div class="item" @mouseover="changeline(1)" @mouseleave="leave(1)">
+      <div class="item" @mouseover="changeline(1)" @mouseleave="leave(1)" @click="toDZSW">
         <div class="title">
           <h1>电子商务</h1>
           <p>
@@ -14,7 +14,7 @@
           <img src="../../assets/组17.png" alt />
         </div>
       </div>
-      <div class="item" @mouseover="changeline(2)" @mouseleave="leave(2)">
+      <div class="item" @mouseover="changeline(2)" @mouseleave="leave(2)" @click="toVehicle">
         <div class="title" >
           <h1>车辆预约</h1>
           <p>
@@ -26,7 +26,7 @@
           <img src="../../assets/组19.png" alt />
         </div>
       </div>
-      <div class="item" @mouseover="changeline(3)" @mouseleave="leave(3)">
+      <div class="item" @mouseover="changeline(3)" @mouseleave="leave(3)" @click="toQuery">
         <div class="title">
           <h1>线上查询</h1>
           <p>
@@ -45,6 +45,15 @@
 <script>
 export default {
   methods:{
+     toDZSW(){
+      window.open("http://172.18.1.73:8080")
+    },
+    toQuery(){
+      this.$router.push("/query");
+    },
+     toVehicle(){
+      this.$router.push("/vehicle");
+    },
     changeline(e){
      var line=document.getElementsByClassName("line")
         line[e-1].style.width=300+'px';

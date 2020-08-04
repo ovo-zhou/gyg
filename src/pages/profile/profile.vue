@@ -20,7 +20,7 @@
     <div class="framework" id="jiagou"> 
       <div class="f-contain">
         <h1>企业架构</h1>
-        <img src="../../assets/jiagou.jpg" alt="">
+        <img src="../../assets/jiagou.png" alt="">
       </div>
     </div> 
   </div>
@@ -109,7 +109,7 @@ width: 1080px;
 } 
 .f-contain img{
   width: 100%;
-  height: 400px;
+  height: 800px;
   margin-top: 30px;
 }
 </style>

@@ -2,6 +2,7 @@
   <div class="back_img">
     <div class="border">
       <div class="login_box">
+        <h3 class="login-title">后台管理</h3>
         <el-form label-width="0px" :model="userform">
           <el-form-item>
             <el-input v-model="userform.Account" placeholder="用户名"></el-input>
@@ -15,7 +16,7 @@
                 <el-input placeholder="请输入验证码" v-model="userform.YZM" />
               </el-col>
               <el-col :span="10">
-                <img :src="imgData" id="idPic" style="width:90px;height:40px" @click="updateImg" />
+                <img :src="imgData" id="idPic" style="width:100px;height:40px" @click="updateImg" />
               </el-col>
             </el-row>
           </el-form-item>
@@ -144,27 +145,25 @@ export default {
 </script>
 
 <style scoped>
+.login-title {
+  text-align: center;
+  margin: 0 auto 40px auto;
+  color: #303133;
+}
 .back_img {
   width: 100%;
-  height: 100vh;
-  background: url("../../assets/login_back1.jpg") no-repeat;
-  background-size: 100% 100%;
-  background-attachment: fixed;
+  /* height: 100vh; */
+  background: #ffffff;
 }
 .border {
-  width: 350px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  border: 1px solid #dcdfe6;
+  width: 250px;
+  margin: 200px auto;
+  padding: 35px 35px 15px 35px;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: relative;
-  left: 40%;
-  top: 30%;
-}
-.login_box {
-  width: 220px;
-  color: #ffffff;
-  margin-left: 45px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  box-shadow: 0 0 25px #909399;
 }
 .btn_login {
   width: 100%;
@@ -174,5 +173,6 @@ export default {
   text-align: center;
   font-size: 16px;
   cursor: pointer;
+  color: #fff;
 }
 </style>

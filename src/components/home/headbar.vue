@@ -36,7 +36,7 @@
             <h3>行业动态</h3>
             <h4>Dynamic</h4>
           </div>
-          <div class="tab_item">
+          <div class="tab_item" @click="toDZSW">
             <h3>电子商务</h3>
             <h4>e-Commerce</h4>
           </div>
@@ -87,6 +87,9 @@ export default {
       return
       }
     },
+    toDZSW(){
+      window.open("http://172.18.1.73:8080")
+    },
     toHomepage() {
       this.$router.push("/homepage");
     },
@@ -109,7 +112,7 @@ export default {
       this.$router.push("/vehicle");
     },
     stafflogin(){
-      window.open("http://172.18.1.196:9300")//http://172.16.199.97:9090
+      window.open("http://222.178.229.150:59300")//http://172.16.199.97:9090
     }
   }
 };

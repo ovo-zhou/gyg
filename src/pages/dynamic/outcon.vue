@@ -21,9 +21,9 @@
             </li>
 
             <li>
-                <a href="http://www.wzg.com.cn/" target="_blank" class="company">万州港</a> |
-                <a href="https://www.gzport.com/foreground/index.html" target="_blank" class="company">广州港</a> |
-                <a href="http://www.nbport.com.cn/gfww/" target="_blank" class="company">宁波舟山港</a>
+                <a href="http://www.wzg.com.cn/" target="_blank" class="company">万州港</a> 
+                <!-- <a href="https://www.gzport.com/foreground/index.html" target="_blank" class="company">广州港</a> | -->
+                <!-- <a href="http://www.nbport.com.cn/gfww/" target="_blank" class="company">宁波舟山港</a> -->
             </li>
         </ul>
     </div>
