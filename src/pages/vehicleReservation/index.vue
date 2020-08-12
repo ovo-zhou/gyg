@@ -46,6 +46,10 @@ export default {
 .query img{
   width: 100%;
 }
+@media screen and (max-width: 1000px)
+{
+.query img{ width:1080px; }
+}
 .function {
   width: 100%;
   height: 53px;

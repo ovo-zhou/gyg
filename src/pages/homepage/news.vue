@@ -59,6 +59,11 @@ export default {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;
             this.newsdata = this.newsdata.slice(0, 6);
+            for(let i=0;i<this.newsdata.length;i++){
+              if(this.newsdata[i].COVER_IMG!==""){
+                this.newsdata[i].COVER_IMG=host.baseUrl+ this.newsdata[i].COVER_IMG
+              }
+            }
             console.log(this.newsdata);
           }else{
             console.log(res.errCode)

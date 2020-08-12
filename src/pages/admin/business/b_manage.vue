@@ -116,15 +116,21 @@ export default {
           this.tableData = res.data;
           for (let i = 0; i < this.tableData.length; i++) {
             this.tableData[i].LCT = JSON.parse(this.tableData[i].LCT);
+            for(let j=0;j<this.tableData[i].LCT.length;j++){
+              this.tableData[i].LCT[j]=host.baseUrl+this.tableData[i].LCT[j]
+            }
             this.tableData[i].SP = JSON.parse(this.tableData[i].SP);
+            for(let k=0;k<this.tableData[i].SP.length;k++){
+              this.tableData[i].SP[k]=host.baseUrl+ this.tableData[i].SP[k]
+            }
           }
-          console.log(JSON.parse(this.tableData[0].LCT)[1]);
+          console.log(JSON.parse(this.tableData));
         }
       });
     },
     play(item) {
       this.dialogVisible = true;
-      this.curVideo = item;
+      this.curVideo =item;
     },
     handleEdit(row) {
       console.log(row);
@@ -159,11 +165,11 @@ export default {
       done();
     },
     handleSuccess1(res) {
-      this.curRow.LCT.push(res.url);
+      this.curRow.LCT.push(host.baseUrl+ res.url);
       // console.log(this.curRow);
     },
     handleSuccess2(res) {
-      this.curRow.SP.push(res.url);
+      this.curRow.SP.push(host.baseUrl+ res.url);
       // console.log(this.curRow);
     },
     handleModify() {
@@ -171,6 +177,12 @@ export default {
         confirmButtonText: "确定",
         callback: action => {
           if (action === "confirm") {
+            for(let i=0;i<this.curRow.LCT.length;i++){
+              this.curRow.LCT[i]=this.curRow.LCT[i].replace(host.baseUrl,"")
+            }
+            for(let j=0;j<this.curRow.LCT.length;j++){
+              this.curRow.SP[j]=this.curRow.SP[j].replace(host.baseUrl,"")
+            }
             post(host.host3 + "UpdateYWLC.ashx", this.curRow).then(res => {
               if (res.errCode === "SUCCESS") {
                 this.$message({

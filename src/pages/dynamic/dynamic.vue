@@ -82,6 +82,10 @@ export default {
 .dynamic img {
   width: 100%;
 }
+@media screen and (max-width: 1000px)
+{
+.dynamic img{ width:1080px; }
+}
 .d-contain {
   width: 1080px;
   /* height: 600px; */

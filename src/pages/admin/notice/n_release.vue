@@ -75,6 +75,7 @@ export default {
       tinymceHtml: "",
       imageUrl: "",
       imgUpLoadUrl: "",
+      path:"",
       show: true,
       btnMessage: "发布",
       flag: "发布",
@@ -97,7 +98,7 @@ export default {
           xhr.withCredentials = false;
           xhr.open("POST", host.host2 + "upload.ashx");
           xhr.onload = function() {
-            let url = JSON.parse(xhr.responseText).url;
+            let url = host.baseUrl+JSON.parse(xhr.responseText).url;
             success(url);
           };
           let formData = new FormData();
@@ -116,14 +117,14 @@ export default {
     if (this.$route.query.flag === "查看") {
       this.flag = "查看";
       this.form.title = this.$route.query.new.XWBT;
-      this.imageUrl = this.$route.query.new.COVER_IMG;
+      this.imageUrl = host.baseUrl+this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = false;
     }
     if (this.$route.query.flag === "编辑") {
       this.flag = "编辑";
       this.form.title = this.$route.query.new.XWBT;
-      this.imageUrl = this.$route.query.new.COVER_IMG;
+      this.imageUrl = host.baseUrl+this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = true;
       this.btnMessage = "确认修改";
@@ -135,7 +136,8 @@ export default {
   methods: {
     handleAvatarSuccess(res) {
       // console.log(res);
-      this.imageUrl = res.url;
+      this.path=res.url
+      this.imageUrl = host.baseUrl+res.url;
     },
     handleClick() {
       if (this.flag === "发布") {
@@ -173,7 +175,7 @@ export default {
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
-      data.COVER_IMG = this.imageUrl;
+      data.COVER_IMG = this.path;
       this.$alert("确认修改？", "提示", {
         confirmButtonText: "确定",
         callback: action => {
@@ -223,7 +225,7 @@ export default {
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
-      data.COVER_IMG = this.imageUrl;
+      data.COVER_IMG = this.path;
       this.$alert("确认发布？", "提示", {
         confirmButtonText: "确定",
         callback: action => {

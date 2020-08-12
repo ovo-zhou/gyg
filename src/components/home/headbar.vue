@@ -88,7 +88,7 @@ export default {
       }
     },
     toDZSW(){
-      window.open("http://172.18.1.73:8080")
+      window.open("http://222.178.229.150:58080")
     },
     toHomepage() {
       this.$router.push("/homepage");

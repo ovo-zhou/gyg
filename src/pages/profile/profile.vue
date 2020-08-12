@@ -36,6 +36,10 @@ export default {};
 .top_img img {
   width: 100%;
 }
+@media screen and (max-width: 1000px)
+{
+.top_img img{ width:1080px; }
+}
 .pro-title {
   width: 100%;
   background: #fbfbfb;

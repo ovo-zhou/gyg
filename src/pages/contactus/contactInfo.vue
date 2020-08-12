@@ -80,6 +80,10 @@ export default {
 };
 </script>
 <style scoped>
+@media screen and (max-width: 1000px)
+{
+img{ width:1080px; }
+}
 .contact {
   width: 1000px;
   margin: 0 auto;

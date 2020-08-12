@@ -97,6 +97,10 @@ export default {
   height: 300px;
   margin-top: 50px;
 }
+@media screen and (max-width: 1000px)
+{
+.bottombar{ width:1080px; }
+}
 .line {
   width: 100%;
   height: 16px;

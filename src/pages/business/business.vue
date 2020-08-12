@@ -27,7 +27,13 @@ export default {
         this.data = res.data;
         for (let i = 0; i < this.data.length; i++) {
           this.data[i].LCT = JSON.parse(this.data[i].LCT);
+          for(let j=0;j<this.data[i].LCT.length;j++){
+              this.data[i].LCT[j]=host.baseUrl+this.data[i].LCT[j]
+            }
           this.data[i].SP = JSON.parse(this.data[i].SP);
+          for(let k=0;k<this.data[i].SP.length;k++){
+              this.data[i].SP[k]=host.baseUrl+ this.data[i].SP[k]
+            }
         }
       }
     });
@@ -48,6 +54,10 @@ export default {
 }
 .business img {
   width: 100%;
+}
+@media screen and (max-width: 1000px)
+{
+.business img{ width:1080px; }
 }
 .b-contain {
   width: 1080px;
