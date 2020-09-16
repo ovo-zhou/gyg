@@ -17,14 +17,16 @@
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-s-claim"></i>
-          <span>行业动态</span>
+          <span>新闻聚焦</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/admin/drelease">动态发布</el-menu-item>
-          <el-menu-item index="/admin/dmanage">动态管理</el-menu-item>
+          <el-menu-item index="/admin/drelease">文章发布</el-menu-item>
+          <el-menu-item index="/admin/dmanage">文章管理</el-menu-item>
+          <el-menu-item index="/admin/companystyle">直击风采</el-menu-item>
+          <el-menu-item index="/admin/cmanage">风采管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="2">
+      <!-- <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-s-claim"></i>
           <span>通知公告</span>
@@ -33,7 +35,7 @@
           <el-menu-item index="/admin/nrelease">公告发布</el-menu-item>
           <el-menu-item index="/admin/nmanage">公告管理</el-menu-item>
         </el-menu-item-group>
-      </el-submenu>
+      </el-submenu> -->
       <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-s-claim"></i>

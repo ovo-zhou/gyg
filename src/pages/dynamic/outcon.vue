@@ -12,7 +12,7 @@
             </li>
 
             <li>
-                <a href="http://gzw.cq.gov.cn/" target="_blank" class="company">重庆市国资委</a> |
+                <a href="http://www.cjh.com.cn/" target="_blank" class="company">长江水文网</a> |
                 <a href="http://www.zgjtb.com" target="_blank" class="company">中国交通报</a>
             </li>
 
@@ -21,8 +21,8 @@
             </li>
 
             <li>
-                <a href="http://www.wzg.com.cn/" target="_blank" class="company">万州港</a> 
-                <!-- <a href="https://www.gzport.com/foreground/index.html" target="_blank" class="company">广州港</a> | -->
+                <a href="http://www.12371.cn/" target="_blank" class="company">共产党员网</a> |
+                <a href="http://www.ccyl.org.cn/" target="_blank" class="company">中国共青团</a> 
                 <!-- <a href="http://www.nbport.com.cn/gfww/" target="_blank" class="company">宁波舟山港</a> -->
             </li>
         </ul>

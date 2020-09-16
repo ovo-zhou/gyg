@@ -5,6 +5,16 @@
         <el-form-item label="标题">
           <el-input v-model="form.title"></el-input>
         </el-form-item>
+        <!-- <el-form-item label="类型">
+          <el-select v-model="form.LM" placeholder="请选择">
+            <el-option label="公司要闻" value="公司要闻"></el-option>
+            <el-option label="通知公告" value="通知公告"></el-option>
+            <el-option label="党群动态" value="党群动态"></el-option>
+          </el-select>
+        </el-form-item>-->
+        <el-form-item label="类型">
+          <el-cascader v-model="form.LM" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
+        </el-form-item>
         <el-form-item label="封面图">
           <el-upload
             class="avatar-uploader"
@@ -19,6 +29,7 @@
         </el-form-item>
       </el-form>
     </div>
+
     <Editor id="tinymce" v-model="tinymceHtml" :init="init"></Editor>
     <template v-if="show">
       <div class="btn">
@@ -71,13 +82,39 @@ import { post } from "../../../service/http";
 export default {
   data() {
     return {
+      options: [
+        {
+          value: "公司要闻",
+          label: "公司要闻",
+        },
+        {
+          value: "通知公告",
+          label: "通知公告",
+          children:[
+            {
+              value: '对内公告',
+              label: '对内公告'
+            }, {
+              value: '对外公告',
+              label: '对外公告'
+            },{
+              value: '公开公告',
+              label: '公开公告'
+            }
+          ]
+        },{
+          value: "党群动态",
+          label: "党群动态",
+        }
+      ],
       form: {
-        title: ""
+        title: "",
+        LM: ["公司要闻"],
       },
       tinymceHtml: "",
       imageUrl: "",
       imgUpLoadUrl: "",
-      path:'',
+      path: "",
       show: true,
       btnMessage: "发布",
       flag: "发布",
@@ -91,23 +128,23 @@ export default {
         toolbar: [
           "newdocument undo redo | formatselect visualaid|cut copy paste selectall| bold italic underline strikethrough lineheight|codeformat blockformats| superscript subscript  | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent |  removeformat ",
 
-          "code  bullist numlist | lists image media table link |fullscreen help toc fullpage restoredraft nonbreaking insertdatetime visualchars visualblocks searchreplace spellchecker pagebreak anchor charmap  pastetext print preview hr"
+          "code  bullist numlist | lists image media table link |fullscreen help toc fullpage restoredraft nonbreaking insertdatetime visualchars visualblocks searchreplace spellchecker pagebreak anchor charmap  pastetext print preview hr",
         ],
         branding: false,
         height: 630,
-        images_upload_handler: function(blobInfo, success) {
+        images_upload_handler: function (blobInfo, success) {
           let xhr = new XMLHttpRequest();
           xhr.withCredentials = false;
           xhr.open("POST", host.host2 + "upload.ashx");
-          xhr.onload = function() {
-            let url = host.baseUrl+JSON.parse(xhr.responseText).url;
+          xhr.onload = function () {
+            let url = host.baseUrl + JSON.parse(xhr.responseText).url;
             success(url);
           };
           let formData = new FormData();
           formData.append("file", blobInfo.blob(), blobInfo.filename());
           xhr.send(formData);
-        }
-      }
+        },
+      },
     };
   },
   mounted() {
@@ -118,27 +155,44 @@ export default {
     if (this.$route.query.flag === "查看") {
       this.flag = "查看";
       this.form.title = this.$route.query.new.XWBT;
-      this.imageUrl = host.baseUrl+this.$route.query.new.COVER_IMG;
+      let arr=new  Array();
+      let lm=this.$route.query.new.LM;
+      if(lm==="对内公告"||lm=="对外公告"||lm=="公开公告"){
+        arr.push("通知公告",lm)
+      }else{
+        arr.push(lm);
+      }
+      this.form.LM = arr;
+      this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = false;
     }
     if (this.$route.query.flag === "编辑") {
       this.flag = "编辑";
       this.form.title = this.$route.query.new.XWBT;
-      this.imageUrl = host.baseUrl+this.$route.query.new.COVER_IMG;
+      let arr=new  Array();
+      let lm=this.$route.query.new.LM;
+      if(lm==="对内公告"||lm=="对外公告"||lm=="公开公告"){
+        arr.push("通知公告",lm)
+      }else{
+        arr.push(lm);
+      }
+      this.form.LM = arr;
+      this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = true;
       this.btnMessage = "确认修改";
+      console.log(this.form.LM)
     }
   },
   components: {
-    Editor
+    Editor,
   },
   methods: {
     handleAvatarSuccess(res) {
       // console.log(res);
-      this.path=res.url
-      this.imageUrl = host.baseUrl+res.url;
+      this.path = res.url;
+      this.imageUrl = host.baseUrl + res.url;
     },
     handleClick() {
       if (this.flag === "发布") {
@@ -162,16 +216,17 @@ export default {
       }
       let data = {
         ID: "",
-        LM: "行业动态",
+        LM: "",
         XWBT: "",
         XWNR: "",
         FBRBH: "",
         FBRXM: "",
         SHRBH: "",
         SHRXM: "",
-        COVER_IMG: ""
+        COVER_IMG: "",
       };
       data.ID = this.$route.query.new.ID;
+      data.LM = this.form.LM[this.form.LM.length-1];
       data.XWBT = this.form.title;
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
@@ -180,24 +235,24 @@ export default {
       // console.log(data);
       this.$alert("确认修改？", "提示", {
         confirmButtonText: "确定",
-        callback: action => {
+        callback: (action) => {
           if (action === "confirm") {
-            post(host.host2 + "UpdateNews.ashx", data).then(res => {
+            post(host.host2 + "UpdateNews.ashx", data).then((res) => {
               if (res.errCode === "SUCCESS") {
                 this.$message({
                   message: "修改成功",
-                  type: "success"
+                  type: "success",
                 });
                 this.form.title = "";
                 this.imageUrl = "";
                 this.tinymceHtml = "";
                 this.$router.push("/admin/dmanage");
-              }else{
-                this.$message.error("出现了一点问题，请联系技术人员")
+              } else {
+                this.$message.error("出现了一点问题，请联系技术人员");
               }
             });
           }
-        }
+        },
       });
     },
     handleRelease() {
@@ -214,15 +269,16 @@ export default {
         return;
       }
       let data = {
-        LM: "行业动态",
+        LM: "",
         XWBT: "",
         XWNR: "",
         FBRBH: "",
         FBRXM: "",
         SHRBH: "",
         SHRXM: "",
-        COVER_IMG: ""
+        COVER_IMG: "",
       };
+      data.LM = this.form.LM[this.form.LM.length-1];
       data.XWBT = this.form.title;
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
@@ -231,26 +287,26 @@ export default {
       // console.log(data);
       this.$alert("确认发布？", "提示", {
         confirmButtonText: "确定",
-        callback: action => {
+        callback: (action) => {
           if (action === "confirm") {
-            post(host.host2 + "AddNews.ashx", data).then(res => {
+            post(host.host2 + "AddNews.ashx", data).then((res) => {
               // console.log(res);
               if (res.errCode === "SUCCESS") {
                 this.$message({
                   message: "发布成功",
-                  type: "success"
+                  type: "success",
                 });
                 this.form.title = "";
                 this.imageUrl = "";
                 this.tinymceHtml = "";
-              }else{
-                this.$message.error("出现了一点问题，请联系技术人员")
+              } else {
+                this.$message.error("出现了一点问题，请联系技术人员");
               }
             });
           }
-        }
+        },
       });
-    }
+    },
   },
   watch: {
     $route(to, from) {
@@ -262,12 +318,15 @@ export default {
         this.show = true;
         this.btnMessage = "发布";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.title {
+  width: 600px;
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

@@ -3,7 +3,7 @@
     <div class="news_contain">
       <div class="post_head">
         <p>
-          <span class="post_title">行业动态</span>
+          <span class="post_title">公司要闻</span>
           <span class="more" @click="toAll">全部动态</span>
         </p>
         <p>
@@ -54,7 +54,7 @@ export default {
       document.body.scrollIntoView()
     },
     querynew() {
-      post(host.host2 + "QueryNews.ashx", { page: 1, LM: "行业动态" }).then(
+      post(host.host2 + "QueryNews.ashx", { page: 1, LM: "公司要闻" }).then(
         res => {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;

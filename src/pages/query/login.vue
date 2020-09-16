@@ -105,7 +105,7 @@ export default {
           clientuser.YHBH = YHBH;
           clientuser.LOGINTIME = LOGINTIME;
           sessionStorage.setItem("clientUser", JSON.stringify(clientuser));
-          bus.$emit("message", "退出登录");
+          bus.$emit("message", KHQC);
           if (typeof this.$route.query.tourl == "undefined") {
             this.$router.push("/homepage");
           } else {

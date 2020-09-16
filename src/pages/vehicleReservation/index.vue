@@ -4,13 +4,13 @@
     <div class="function">
       <div class="f-contain">
         <div class="span-text" @click="toZH">
-          <a>装货车辆预约</a>
+          <a class="span-link">装货车辆预约</a>
         </div>
         <div class="span-text" @click="toXH">
-          <a>卸货车辆预约</a>
+          <a class="span-link">卸货车辆预约</a>
         </div>
         <div class="span-text" @click="toLSJGCL">
-          <a>历史进港车辆</a>
+          <a class="span-link">历史进港车辆</a>
         </div>
       </div>
     </div>
@@ -65,21 +65,23 @@ export default {
   flex-direction: row;
 }
 .span-text{
-    border-bottom: 2px solid #0e68b1;
+    /* border-bottom: 2px solid #0e68b1; */
     margin-left: 10px;
   margin-right: 10px;
 }
 .span-text a {
   line-height: 53px;
   font-size: 16px;
-  
+  font-weight: 600;
   text-decoration: none;
   color: #333;
 }
 .span-text:hover {
-  background: #0e68b1;
-  color: #fbfbfb;
+  border-bottom: 4px solid #0e68b1;
   cursor: pointer;
+}
+.span-text:hover .span-link{
+  color: #0e68b1;
 }
 .show {
   width: 1250px;

@@ -30,8 +30,10 @@ import dmanage from "./pages/admin/dynamic/d_manage";
 import drelease from './pages/admin/dynamic/d_release'
 import bmanage from './pages/admin/business/b_manage'
 import brelease from './pages/admin/business/b_release'
-import nrelease from './pages/admin/notice/n_release'
-import nmanage from './pages/admin/notice/n_manage'
+// import nrelease from './pages/admin/notice/n_release'
+// import nmanage from './pages/admin/notice/n_manage'
+import companystyle from './pages/admin/companystyle/companystyle'
+import cmanage from "./pages/admin/companystyle/c_manage"
 
 const routes = [
     //这里配置路由
@@ -76,8 +78,10 @@ const routes = [
             { path: 'drelease', component: drelease, meta: { adminlogin: true } },
             { path: 'bmanage', component: bmanage, meta: { keepAlive: true } },
             { path: 'brelease', component: brelease, meta: { adminlogin: true } },
-            { path: 'nrelease', component: nrelease, meta: { adminlogin: true } },
-            { path: 'nmanage', component: nmanage, meta: { keepAlive: true } },
+            // { path: 'nrelease', component: nrelease, meta: { adminlogin: true } },
+            // { path: 'nmanage', component: nmanage, meta: { keepAlive: true } },
+            { path: "companystyle", component: companystyle, meta: { adminlogin: true } },
+            { path: "cmanage", component: cmanage, meta: { adminlogin: true } },
         ]
     },
 
@@ -86,30 +90,30 @@ const router = new VueRouter({
     routes
 })
 //路由守卫
-router.beforeEach((to,from,next)=>{
-    if(to.meta.clientlogin){
-        let clientUser= JSON.parse(sessionStorage.getItem("clientUser"))
-        if(clientUser===""||clientUser===null){
+router.beforeEach((to, from, next) => {
+    if (to.meta.clientlogin) {
+        let clientUser = JSON.parse(sessionStorage.getItem("clientUser"))
+        if (clientUser === "" || clientUser === null) {
             // next('/clientlogin')
-            next({path:'/clientlogin',query:{tourl:to.path}})
-        }else{
+            next({ path: '/clientlogin', query: { tourl: to.path } })
+        } else {
             next()
         }
     }
-    else if(to.meta.adminlogin){
+    else if (to.meta.adminlogin) {
         if (
             JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
-              "系统管理员"
+                "系统管理员"
             ) >= 0
-          ){
-              next()
-          }else{
-              next("/login")
-          }
-    }else{
+        ) {
+            next()
+        } else {
+            next("/login")
+        }
+    } else {
         next()
     }
-    
+
 })
 
 export default router

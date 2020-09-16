@@ -32,7 +32,7 @@ export default {
   },
   created() {
     this.curnew=this.$route.query.newdata
-    post(host.host2 + "QueryNews.ashx", { page: 1, LM: "行业动态" }).then(
+    post(host.host2 + "QueryNews.ashx", { page: 1, LM: "公司要闻" }).then(
       res => {
         if (res.errCode === "SUCCESS") {
           this.news = res.data;

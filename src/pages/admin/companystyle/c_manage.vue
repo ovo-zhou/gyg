@@ -1,20 +1,10 @@
 <template>
   <div class="dynamic">
-    <el-form :inline="true" class="demo-form-inline">
-      <el-form-item label="类型">
-          <el-cascader v-model="LM" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="querybtn">查询</el-button>
-      </el-form-item>
-    </el-form>
     <el-table :data="newsdata" style="width: 100%">
       <el-table-column prop="FBSJ" label="发布日期" width="200"></el-table-column>
       <el-table-column prop="XWBT" label="动态标题" width="400"></el-table-column>
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
-          <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -37,32 +27,6 @@ import { post } from "../../../service/http";
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "公司要闻",
-          label: "公司要闻",
-        },
-        {
-          value: "通知公告",
-          label: "通知公告",
-          children:[
-            {
-              value: '对内公告',
-              label: '对内公告'
-            }, {
-              value: '对外公告',
-              label: '对外公告'
-            },{
-              value: '公开公告',
-              label: '公开公告'
-            }
-          ]
-        },{
-          value: "党群动态",
-          label: "党群动态",
-        }
-      ],
-      LM: ["公司要闻"],
       total: 0,
       newsdata: [],
     };
@@ -76,7 +40,7 @@ export default {
       this.queryNews(val);
     },
     queryTotal() {
-      post(host.host2 + "QueryNews.ashx", { page: 0, LM: this.LM[this.LM.length-1] }).then(
+      post(host.host2 + "QueryNews.ashx", { page: 0, LM: "直击风采" }).then(
         (res) => {
           console.log(res);
           if (res.errCode === "SUCCESS") {
@@ -86,33 +50,13 @@ export default {
       );
     },
     queryNews(val) {
-      post(host.host2 + "QueryNews.ashx", { page: val, LM: this.LM[this.LM.length-1] }).then(
+      post(host.host2 + "QueryNews.ashx", { page: val, LM: "直击风采" }).then(
         (res) => {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;
           }
         }
       );
-    },
-    handleLook(row) {
-      // console.log(row);
-      this.$router.push({
-        path: "/admin/drelease",
-        query: {
-          flag: "查看",
-          new: row,
-        },
-      });
-    },
-    handleEdit(row) {
-      // console.log(row);
-      this.$router.push({
-        path: "/admin/drelease",
-        query: {
-          flag: "编辑",
-          new: row,
-        },
-      });
     },
     handleDelete(index, row) {
       // console.log(row.ID)

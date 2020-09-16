@@ -34,23 +34,30 @@
         </div>
 
         <div class="info">
-          <img src="../../assets/图层6.png" alt />
+          <img src="../../assets/cplg.png" alt />
         </div>
 
         <div class="code">
           <h3>关注我们</h3>
           <div class="focus">
-            <div class="f-item">
+            <div class="f-item" id="dropdown">
               <img src="../../assets/wx.png" alt />
               <span>官方微信</span>
+              <div class="content"><img src="../../assets/wxcode.jpg" ></div>
             </div>
             <!-- <div class="f-item">
               <img src="../../assets/wb.png" alt=""><span>官方微博</span>
             </div>-->
-            <div class="f-item">
+            <!-- <div class="f-item">
               <img src="../../assets/yj.png" alt />
               <span>电子邮件</span>
-            </div>
+            </div>-->
+            <el-tooltip class="item" effect="light" content="27873534@QQ.COM" placement="bottom">
+              <div class="f-item">
+                <img src="../../assets/yj.png" alt />
+                <span>电子邮件</span>
+              </div>
+            </el-tooltip>
             <!-- <div class="f-item">
               <img src="../../assets/gw.png" alt=""><span>网站地图</span>
             </div>-->
@@ -87,8 +94,8 @@ export default {
     contactus() {
       this.$router.push("/contactus");
       document.body.scrollIntoView();
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -97,9 +104,10 @@ export default {
   height: 300px;
   margin-top: 50px;
 }
-@media screen and (max-width: 1000px)
-{
-.bottombar{ width:1080px; }
+@media screen and (max-width: 1000px) {
+  .bottombar {
+    width: 1080px;
+  }
 }
 .line {
   width: 100%;
@@ -172,7 +180,9 @@ export default {
   /* background: chartreuse; */
 }
 .info img {
-  margin-left: 80px;
+  width: 150px;
+  height: 75px;
+  margin-left: 40px;
 }
 .code {
   width: 360px;
@@ -207,5 +217,15 @@ export default {
   color: rgba(234, 234, 234, 1);
   margin-left: 10px;
   line-height: 30px;
+}
+.content{
+  /* display: none; */
+}
+.content img{
+  width: 100px;
+  height: 100px;
+}
+#dropdown:hover .content{
+   display: block;
 }
 </style>

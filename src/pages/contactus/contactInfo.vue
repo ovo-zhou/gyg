@@ -15,10 +15,10 @@
         <i class="el-icon-printer"></i>
         <span>传真：023-67587523</span>
       </div>
-      <div class="content">
+      <!-- <div class="content">
         <i class="el-icon-message"></i>
         <span>邮箱：17723554589@163.com</span>
-      </div>
+      </div> -->
       <div class="title" style="margin-top: 50px;">
         <span>地址：</span>
         <hr style="margin-top:5px;" />
