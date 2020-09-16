@@ -19,14 +19,14 @@
         <el-button type="primary" @click="query">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="GBRQ" label="工班日期" width="100"></el-table-column>
-      <el-table-column prop="BCMC" label="班次" width="50"></el-table-column>
-      <el-table-column prop="ZYSJ" label="作业时间" width="90"></el-table-column>
-      <el-table-column prop="HWLBMC" label="货物类型"></el-table-column>
-      <el-table-column prop="HWGGXH" label="货物规格型号" width="120"></el-table-column>
-      <el-table-column prop="YSGJ" label="运输工具"></el-table-column>
-      <el-table-column prop="YSXX" label="运输信息" width="190"></el-table-column>
+    <el-table :data="tableData" stripe style="width: 100%">
+      <el-table-column prop="GBRQ" label="工班日期" width="110"></el-table-column>
+      <el-table-column prop="BCMC" label="班次" width="60"></el-table-column>
+      <el-table-column prop="ZYSJ" label="作业时间" width="160"></el-table-column>
+      <el-table-column prop="HWLBMC" label="货物类型" width="120"></el-table-column>
+      <el-table-column prop="HWGGXH" label="规格型号" width="100"></el-table-column>
+      <el-table-column prop="YSGJ" label="运输工具"  width="80"></el-table-column>
+      <el-table-column prop="YSXX" label="运输信息" width="280"></el-table-column>
       <el-table-column prop="CZGCMC" label="操作过程"></el-table-column>
       <el-table-column prop="ZL" label="重量"></el-table-column>
       <el-table-column prop="JXS" label="件箱数"></el-table-column>

@@ -34,15 +34,15 @@
         </div>
 
         <div class="info">
-          <img src="../../assets/cplg.png" alt />
+          <img src="../../assets/newlogo1.png" alt />
         </div>
 
         <div class="code">
           <h3>关注我们</h3>
           <div class="focus">
             <div class="f-item" id="dropdown">
-              <img src="../../assets/wx.png" alt />
-              <span>官方微信</span>
+              <!-- <img src="../../assets/wx.png" alt />
+              <span>官方微信</span> -->
               <div class="content"><img src="../../assets/wxcode.jpg" ></div>
             </div>
             <!-- <div class="f-item">
@@ -52,12 +52,12 @@
               <img src="../../assets/yj.png" alt />
               <span>电子邮件</span>
             </div>-->
-            <el-tooltip class="item" effect="light" content="27873534@QQ.COM" placement="bottom">
+            <!-- <el-tooltip class="item" effect="light" content="27873534@QQ.COM" placement="bottom">
               <div class="f-item">
                 <img src="../../assets/yj.png" alt />
                 <span>电子邮件</span>
               </div>
-            </el-tooltip>
+            </el-tooltip> -->
             <!-- <div class="f-item">
               <img src="../../assets/gw.png" alt=""><span>网站地图</span>
             </div>-->
@@ -176,12 +176,12 @@ export default {
 .info {
   width: 360px;
   height: 150px;
-  margin-top: 100px;
+  margin-top: 90px;
   /* background: chartreuse; */
 }
 .info img {
   width: 150px;
-  height: 75px;
+  height: 90px;
   margin-left: 40px;
 }
 .code {

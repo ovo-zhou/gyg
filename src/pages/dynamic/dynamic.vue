@@ -6,19 +6,22 @@
         <template v-for="(item,index) in newsdata">
           <newitem :newdata="item" :key="index"></newitem>
         </template>
+        <div class="line" style="height:20px"></div>
         <el-pagination
           background
           @current-change="handleCurrentChange"
           :page-size="10"
           layout="total,prev, pager, next, jumper"
           :total="total"
+          v-if="isShow"
         ></el-pagination>
+        <div class="backbtn" v-else @click="backDynamic">回到行业动态</div>
       </div>
       <div class="c-right">
         <outcon></outcon>
         <div class="date">
-        <Calendar ref="Calendar" :markDate="arr2" v-on:changeMonth="changeDate"></Calendar>
-      </div>
+          <Calendar v-on:choseDay="clickDay"></Calendar>
+        </div>
       </div>
     </div>
   </div>
@@ -27,29 +30,55 @@
 <script>
 import newitem from "./newitem";
 import host from "../../libs/utils";
-import outcon from './outcon'
+import outcon from "./outcon";
 import Calendar from "vue-calendar-component";
 import { post } from "../../service/http";
 export default {
   components: {
     newitem,
     outcon,
-    Calendar
+    Calendar,
   },
   data() {
     return {
       total: 0,
-      newsdata: []
+      newsdata: [],
+      isShow: true,
     };
   },
   methods: {
+    backDynamic() {
+      this.queryTotal();
+      this.queryNews(1);
+      this.isShow = !this.isShow;
+    },
+    clickDay(data) {
+      // console.log(data);
+      post(host.host2 + "QueryNewsByDate.ashx", {
+        date: data,
+        LM: "公司要闻",
+      }).then((res) => {
+        if (res.errCode == "SUCCESS") {
+          if (res.data == null) {
+            this.$message.error("这天没有发布新闻哦！");
+          } else {
+            this.newsdata = res.data;
+            if(this.isShow){
+            this.isShow = !this.isShow;
+            }
+          }
+        } else {
+          this.$message.error("出了点小错误，请联系技术人员！");
+        }
+      });
+    },
     handleCurrentChange(val) {
       this.queryNews(val);
     },
     queryTotal() {
       post(host.host2 + "QueryNews.ashx", { page: 0, LM: "公司要闻" }).then(
-        res => {
-          console.log(res);
+        (res) => {
+          // console.log(res);
           if (res.errCode === "SUCCESS") {
             this.total = res.data[0].datanum;
           }
@@ -58,19 +87,19 @@ export default {
     },
     queryNews(val) {
       post(host.host2 + "QueryNews.ashx", { page: val, LM: "公司要闻" }).then(
-        res => {
+        (res) => {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;
-            console.log(this.newsdata);
+            // console.log(this.newsdata);
           }
         }
       );
-    }
+    },
   },
   mounted() {
     this.queryTotal();
     this.queryNews(1);
-  }
+  },
 };
 </script>
 
@@ -82,9 +111,10 @@ export default {
 .dynamic img {
   width: 100%;
 }
-@media screen and (max-width: 1000px)
-{
-.dynamic img{ width:1080px; }
+@media screen and (max-width: 1000px) {
+  .dynamic img {
+    width: 1080px;
+  }
 }
 .d-contain {
   width: 1080px;
@@ -96,19 +126,29 @@ export default {
   left: 0px;
   top: 0px;
 }
-.c-left{
+.c-left {
   width: 750px;
 }
-.c-right{
+.c-right {
   width: 280px;
   height: 600px;
   position: absolute;
-  top :0px;
+  top: 0px;
   left: 770px;
   /* background: yellow; */
 }
-.data{
+.data {
   padding-top: 50px;
+}
+.backbtn {
+  width: 100%;
+  height: 30px;
+  background: #409eff;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
 }
 .wh_container >>> .wh_content_all {
   background-color: #ffffff !important;

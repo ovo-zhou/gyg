@@ -13,10 +13,10 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="table" style="width: 100%">
-      <el-table-column prop="ZXHTBH" label="合同编号" width="100"></el-table-column>
+    <el-table :data="table" stripe style="width: 100%">
+      <el-table-column prop="ZXHTBH" label="合同编号" width="200"></el-table-column>
       <el-table-column prop="HWMC" label="货物名称" width='100'></el-table-column>
-      <el-table-column prop="HWGGXH" label="规格型号" width='100'></el-table-column>
+      <el-table-column prop="HWGGXH" label="规格型号" width='150'></el-table-column>
       <el-table-column prop="JKL" label="进库量（吨）" width='100'></el-table-column>
       <el-table-column prop="CKL" label="出库量（吨）" width='100'></el-table-column>
       <el-table-column prop="KCCL" label="库场存量（吨）" width='100'></el-table-column>

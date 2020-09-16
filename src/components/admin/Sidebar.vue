@@ -26,16 +26,6 @@
           <el-menu-item index="/admin/cmanage">风采管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <!-- <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-s-claim"></i>
-          <span>通知公告</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="/admin/nrelease">公告发布</el-menu-item>
-          <el-menu-item index="/admin/nmanage">公告管理</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu> -->
       <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-s-claim"></i>
@@ -46,6 +36,16 @@
           <el-menu-item index="/admin/bmanage">流程管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+      <!-- <el-submenu index="2">
+        <template slot="title">
+          <i class="el-icon-s-claim"></i>
+          <span>业务推广</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/admin/adrelease">广告发布</el-menu-item>
+          <el-menu-item index="/admin/admanage">广告管理</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu> -->
     </el-menu>
   </div>
 </template>

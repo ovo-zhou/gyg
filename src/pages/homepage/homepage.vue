@@ -4,12 +4,14 @@
     <textBox></textBox>
     <news></news>
     <functionbar></functionbar>
+    <ad></ad>
   </div>
 </template>
 <script>
 import news from "./news";
 import functionbar from "./functionbar";
 import textBox from './textBox'
+import ad from './ad'
 import img1 from "../../assets/back1.jpg";
 import img2 from "../../assets/back2.jpg";
 import img3 from "../../assets/culture.png";
@@ -17,7 +19,8 @@ export default {
   components: {
     news,
     functionbar,
-    textBox
+    textBox,
+    ad
   },
   created() {
     

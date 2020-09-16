@@ -23,7 +23,9 @@
             <!-- <img class="icon2" src="../../assets/1.png" /> -->
             <span class="span3" @click="stafflogin">内网首页</span>
             <span class="span3" @click="login">{{message}}</span>
-
+            <span class="span3">
+              <a href="http://222.178.229.150:59300/#/login">员工登录</a>
+            </span>
           </div>
         </div>
       </div>
@@ -31,7 +33,11 @@
     <div class="menu_tab" id="nav">
       <div class="menu_contain">
         <div>
-          <img class="icon3" src="../../assets/公司名logo.png" />
+          <img class="icon3" src="../../assets/newlogo1.png" />
+          <div class="companyName">
+            <p style="margin-left: 20px;">重庆果园港埠有限公司</p>
+            <p>重庆果园件散货码头有限公司</p>
+          </div>
         </div>
         <div class="tab">
           <div class="tab_item" @click="toHomepage">
@@ -78,13 +84,18 @@ import host from "../../libs/utils";
 export default {
   data() {
     return {
-      message: "未登录",
+      message: "客户登录",
       weatherinfo: "",
     };
   },
   mounted() {
+    let user=JSON.parse(sessionStorage.getItem("clientUser"))
+    if(user!=null){
+      this.message = "欢迎 " + user.KHQC;
+    }
+
     bus.$on("message", (message) => {
-      this.message = "欢迎 "+message;
+      this.message = "欢迎 " + message;
     });
 
     let mynav = document.getElementById("nav");
@@ -97,32 +108,30 @@ export default {
       }
     };
     //host.host1 + "weather.ashx"
-    axios
-      .post(host.host1 + "weather.ashx")
-      .then((e) => {
-        console.log(e.data);
-        this.weatherinfo = e.data;
-        var tem2 = document.getElementById("tem2");
-        var tem1 = document.getElementById("tem1");
-        if (this.weatherinfo.tem2 <= 35) {
-          tem2.style.color = "green";
-        } else if (this.weatherinfo.tem2 > 35 && this.weatherinfo.tem2 <= 37) {
-          tem2.style.color = "blue";
-        } else if (this.weatherinfo.tem2 > 37 && this.weatherinfo.tem2 <= 40) {
-          tem2.style.color = "orange";
-        } else if (this.weatherinfo.tem2 > 40) {
-          tem2.style.color = "red";
-        }
-        if (this.weatherinfo.tem1 <= 35) {
-          tem1.style.color = "green";
-        } else if (this.weatherinfo.tem1 > 35 && this.weatherinfo.tem1 <= 37) {
-          tem1.style.color = "blue";
-        } else if (this.weatherinfo.tem1 > 37 && this.weatherinfo.tem1 <= 40) {
-          tem1.style.color = "orange";
-        } else if (this.weatherinfo.tem1 > 40) {
-          tem1.style.color = "red";
-        }
-      });
+    axios.post(host.host1 + "weather.ashx").then((e) => {
+      console.log(e.data);
+      this.weatherinfo = e.data;
+      var tem2 = document.getElementById("tem2");
+      var tem1 = document.getElementById("tem1");
+      if (this.weatherinfo.tem2 <= 35) {
+        tem2.style.color = "green";
+      } else if (this.weatherinfo.tem2 > 35 && this.weatherinfo.tem2 <= 37) {
+        tem2.style.color = "blue";
+      } else if (this.weatherinfo.tem2 > 37 && this.weatherinfo.tem2 <= 40) {
+        tem2.style.color = "orange";
+      } else if (this.weatherinfo.tem2 > 40) {
+        tem2.style.color = "red";
+      }
+      if (this.weatherinfo.tem1 <= 35) {
+        tem1.style.color = "green";
+      } else if (this.weatherinfo.tem1 > 35 && this.weatherinfo.tem1 <= 37) {
+        tem1.style.color = "blue";
+      } else if (this.weatherinfo.tem1 > 37 && this.weatherinfo.tem1 <= 40) {
+        tem1.style.color = "orange";
+      } else if (this.weatherinfo.tem1 > 40) {
+        tem1.style.color = "red";
+      }
+    });
   },
   computed: {
     getDate: function () {
@@ -139,7 +148,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.message === "未登录") {
+      if (this.message === "客户登录") {
         this.$router.push("/clientlogin");
         return;
       }
@@ -237,6 +246,10 @@ export default {
   margin-left: 5px;
   cursor: pointer;
 }
+.span3 a {
+  text-decoration: none;
+  color: rgba(0, 64, 110, 1);
+}
 .icon1 {
   display: inline-block;
   vertical-align: middle;
@@ -265,7 +278,18 @@ export default {
   justify-content: space-between;
 }
 .icon3 {
-  margin-top: 23px;
+  margin-top: 25px;
+  width: 70PX;
+  height: 40px;
+}
+.companyName{
+  position: relative;
+  left: 80px;
+  top: -45px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: default;
 }
 .tab {
   display: flex;

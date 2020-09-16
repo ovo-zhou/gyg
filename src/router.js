@@ -15,7 +15,8 @@ import query from './pages/query/query'
 import dckc from './pages/query/dckc'
 import zxfjf from './pages/query/zxfjf'
 import dcjf from './pages/query/dcjf'
-import jhjzx from './pages/query/jhjzx'
+import jh from './pages/query/jh'
+import jzx from './pages/query/jzx'
 import jckmx from './pages/query/jckmx'
 import clientlogin from './pages/query/login'
 import vehicle from './pages/vehicleReservation/index'
@@ -34,6 +35,8 @@ import brelease from './pages/admin/business/b_release'
 // import nmanage from './pages/admin/notice/n_manage'
 import companystyle from './pages/admin/companystyle/companystyle'
 import cmanage from "./pages/admin/companystyle/c_manage"
+import adrelease from './pages/admin/advertisement/ad_release'
+import admanage from './pages/admin/advertisement/ad_manage'
 
 const routes = [
     //这里配置路由
@@ -52,7 +55,8 @@ const routes = [
                     { path: 'dckc', component: dckc, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'zxfjf', component: zxfjf, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'dcjf', component: dcjf, meta: { keepAlive: true, clientlogin: true } },
-                    { path: 'jhjzx', component: jhjzx, meta: { keepAlive: true, clientlogin: true } },
+                    { path: 'jh', component: jh, meta: { keepAlive: true, clientlogin: true } },
+                    { path: 'jzx', component: jzx, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'jckmx', component: jckmx, meta: { keepAlive: true, clientlogin: true } },
                 ]
             },
@@ -74,14 +78,16 @@ const routes = [
         path: '/admin', component: admin, redirect: '/admin/adminhome',
         children: [
             { path: 'adminhome', component: adminhome, meta: { adminlogin: true } },
-            { path: 'dmanage', component: dmanage, meta: { keepAlive: true } },
+            { path: 'dmanage', component: dmanage, meta: { keepAlive: true , adminlogin: true} },
             { path: 'drelease', component: drelease, meta: { adminlogin: true } },
-            { path: 'bmanage', component: bmanage, meta: { keepAlive: true } },
+            { path: 'bmanage', component: bmanage, meta: { keepAlive: true , adminlogin: true} },
             { path: 'brelease', component: brelease, meta: { adminlogin: true } },
             // { path: 'nrelease', component: nrelease, meta: { adminlogin: true } },
             // { path: 'nmanage', component: nmanage, meta: { keepAlive: true } },
             { path: "companystyle", component: companystyle, meta: { adminlogin: true } },
             { path: "cmanage", component: cmanage, meta: { adminlogin: true } },
+            { path: "adrelease", component: adrelease, meta: { adminlogin: true } },
+            { path: "admanage", component: admanage, meta: { adminlogin: true } },
         ]
     },
 

@@ -14,10 +14,13 @@
         </div>
         <div class="span-text" @click="toDcjf">
           <a>堆存计费</a>
-        </div>
-        <div class="span-text" @click="toJhjzx">
-          <a>件货集装箱信息</a>
         </div>-->
+        <div class="span-text" @click="toJh">
+          <a>件货综合信息</a>
+        </div> 
+        <div class="span-text" @click="toJzx">
+          <a>集装箱综合信息</a>
+        </div> 
       </div>
     </div>
     <div class="show">
@@ -41,8 +44,11 @@ export default {
     toDcjf() {
       this.$router.push("/query/dcjf");
     },
-    toJhjzx() {
-      this.$router.push("/query/jhjzx");
+    toJh() {
+      this.$router.push("/query/jh");
+    },
+    toJzx() {
+      this.$router.push("/query/jzx");
     },
     toJCKMX(){
       this.$router.push("/query/jckmx");
@@ -69,7 +75,7 @@ export default {
   margin-bottom: 30px;
 }
 .f-contain {
-  width: 1080px;
+  width: 1400px;
   height: 53px;
   /* background: palegreen; */
   margin: 0px auto;
@@ -96,7 +102,7 @@ export default {
   color: #0e68b1;
 }
 .show {
-  width: 1080px;
+  width: 1400px;
   /* height: 600px; */
   /* background: yellow; */
   margin: 0px auto;
