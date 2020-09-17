@@ -76,7 +76,7 @@ export default {
       this.queryNews(val);
     },
     queryTotal() {
-      post(host.host2 + "QueryNews.ashx", { page: 0, LM: "公司要闻" }).then(
+      post(host.host2 + "QueryNews.ashx", { page: 0, LM: "公司要闻" ,clientLX:"web"}).then(
         (res) => {
           // console.log(res);
           if (res.errCode === "SUCCESS") {
@@ -86,7 +86,7 @@ export default {
       );
     },
     queryNews(val) {
-      post(host.host2 + "QueryNews.ashx", { page: val, LM: "公司要闻" }).then(
+      post(host.host2 + "QueryNews.ashx", { page: val, LM: "公司要闻" ,clientLX:"web"}).then(
         (res) => {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;

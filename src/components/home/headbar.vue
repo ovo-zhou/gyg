@@ -109,7 +109,7 @@ export default {
     };
     //host.host1 + "weather.ashx"
     axios.post(host.host1 + "weather.ashx").then((e) => {
-      console.log(e.data);
+      // console.log(e.data);
       this.weatherinfo = e.data;
       var tem2 = document.getElementById("tem2");
       var tem1 = document.getElementById("tem1");

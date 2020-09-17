@@ -2,7 +2,14 @@
   <div class="dynamic">
     <el-table :data="newsdata" style="width: 100%">
       <el-table-column prop="FBSJ" label="发布日期" width="200"></el-table-column>
-      <el-table-column prop="XWBT" label="动态标题" width="400"></el-table-column>
+      <el-table-column prop="XWBT" label="风采标题" width="400"></el-table-column>
+      <el-table-column prop="SHZT" label="审核状态" width="100"></el-table-column>
+      <el-table-column label="审核操作" width="200">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="handlePass(scope.row)">通过</el-button>
+          <el-button size="mini" type="danger" @click="handleNoPass(scope.row)">不通过</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
@@ -32,6 +39,40 @@ export default {
     };
   },
   methods: {
+    handlePass(raw) {
+      // console.log(raw)
+      let data = {
+        ID: raw.ID,
+        SHZT: "SHTG",
+      };
+      post(host.host2 + "updateSHZT.ashx", data).then((res) => {
+        // console.log(res)
+        if (res.errCode == "SUCCESS") {
+          this.$message({
+            message: "更新审核状态成功",
+            type: "success",
+          });
+          raw.SHZT = "通过";
+        }
+      });
+    },
+    handleNoPass(raw) {
+      // console.log(raw)
+      let data = {
+        ID: raw.ID,
+        SHZT: "SHNTG",
+      };
+      post(host.host2 + "updateSHZT.ashx", data).then((res) => {
+        // console.log(res)
+        if (res.errCode == "SUCCESS") {
+          this.$message({
+            message: "更新审核状态成功",
+            type: "success",
+          });
+          raw.SHZT = "不通过";
+        }
+      });
+    },
     querybtn() {
       this.queryTotal();
       this.queryNews(1);
@@ -40,23 +81,38 @@ export default {
       this.queryNews(val);
     },
     queryTotal() {
-      post(host.host2 + "QueryNews.ashx", { page: 0, LM: "直击风采" }).then(
-        (res) => {
-          console.log(res);
-          if (res.errCode === "SUCCESS") {
-            this.total = res.data[0].datanum;
-          }
+      post(host.host2 + "QueryNews.ashx", {
+        page: 0,
+        LM: "直击风采",
+        clientLX: "admin",
+      }).then((res) => {
+        console.log(res);
+        if (res.errCode === "SUCCESS") {
+          this.total = res.data[0].datanum;
         }
-      );
+      });
     },
     queryNews(val) {
-      post(host.host2 + "QueryNews.ashx", { page: val, LM: "直击风采" }).then(
-        (res) => {
-          if (res.errCode === "SUCCESS") {
-            this.newsdata = res.data;
+      post(host.host2 + "QueryNews.ashx", {
+        page: val,
+        LM: "直击风采",
+        clientLX: "admin",
+      }).then((res) => {
+        if (res.errCode === "SUCCESS") {
+          this.newsdata = res.data;
+          for (let i = 0; i < this.newsdata.length; i++) {
+            if (this.newsdata[i].SHZT == "0") {
+              this.newsdata[i].SHZT = "未审核";
+            }
+            if (this.newsdata[i].SHZT == "1") {
+              this.newsdata[i].SHZT = "通过";
+            }
+            if (this.newsdata[i].SHZT == "2") {
+              this.newsdata[i].SHZT = "不通过";
+            }
           }
         }
-      );
+      });
     },
     handleDelete(index, row) {
       // console.log(row.ID)

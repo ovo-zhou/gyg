@@ -76,7 +76,6 @@ import "tinymce/plugins/autosave";
 import "tinymce/plugins/fullpage";
 import "tinymce/plugins/toc";
 //post请求和请求地址
-// import {post} from '../../../service/http'
 import host from "../../../libs/utils";
 import { post } from "../../../service/http";
 export default {

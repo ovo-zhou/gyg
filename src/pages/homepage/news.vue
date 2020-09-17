@@ -31,15 +31,15 @@ import { post } from "../../service/http";
 export default {
   data() {
     return {
-      newsdata: []
+      newsdata: [],
     };
   },
   computed: {
     computedTxt() {
-      return function(val) {
+      return function (val) {
         return this.getText(val);
       };
-    }
+    },
   },
   methods: {
     toAll() {
@@ -51,30 +51,32 @@ export default {
     },
     toDetail(item) {
       this.$router.push({ path: "/details", query: { newdata: item } });
-      document.body.scrollIntoView()
+      document.body.scrollIntoView();
     },
     querynew() {
-      post(host.host2 + "QueryNews.ashx", { page: 1, LM: "公司要闻" }).then(
-        res => {
+      post(host.host2 + "QueryNews.ashx", { page: 1, LM: "公司要闻" ,clientLX:"web"}).then(
+        (res) => {
+          // console.log(res)
           if (res.errCode === "SUCCESS") {
-            this.newsdata = res.data;
+            this.newsdata=res.data;
             this.newsdata = this.newsdata.slice(0, 6);
-            for(let i=0;i<this.newsdata.length;i++){
-              if(this.newsdata[i].COVER_IMG!==""){
-                this.newsdata[i].COVER_IMG=host.baseUrl+ this.newsdata[i].COVER_IMG
+            for (let i = 0; i < this.newsdata.length; i++) {
+              if (this.newsdata[i].COVER_IMG !== "") {
+                this.newsdata[i].COVER_IMG =
+                  host.baseUrl + this.newsdata[i].COVER_IMG;
               }
             }
             console.log(this.newsdata);
-          }else{
-            console.log(res.errCode)
+          } else {
+            // console.log(res.errCode)
           }
         }
       );
-    }
+    },
   },
   created() {
     this.querynew();
-  }
+  },
 };
 </script>
 <style scoped>
@@ -125,29 +127,16 @@ export default {
 .news_list {
   width: 100%;
   height: 716px;
-  /* background: blueviolet; */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  /* background: blueviolet;  */
   margin-top: 10px;
 }
-.first {
-  width: 307px;
-  height: 358px;
-  /* background: tomato; */
-  border-top: 3px solid #1367aa;
+.news_list >:nth-child(2){
+  margin-left: 79px;
+  margin-right: 79px;
 }
-.first img {
-  width: 307px;
-  height: 194px;
-}
-.first p {
-  font-size: 16px;
-}
-.first span {
-  font-size: 12px;
-  color: #1367aa;
+.news_list >:nth-child(5){
+  margin-left: 79px;
+  margin-right: 79px;
 }
 .other {
   width: 307px;
@@ -155,6 +144,7 @@ export default {
   /* background: tomato; */
   border-top: 3px solid #1367aa;
   cursor: pointer;
+  float: left;
 }
 .other img {
   width: 307px;
@@ -176,6 +166,8 @@ export default {
   overflow: hidden;
   width: 100%;
   height: 65px;
+  text-indent: 2em;
+  /* background: aqua; */
 }
 .other span {
   font-size: 12px;

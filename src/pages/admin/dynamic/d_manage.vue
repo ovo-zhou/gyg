@@ -2,7 +2,7 @@
   <div class="dynamic">
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item label="类型">
-          <el-cascader v-model="LM" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
+        <el-cascader v-model="LM" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="querybtn">查询</el-button>
@@ -11,6 +11,13 @@
     <el-table :data="newsdata" style="width: 100%">
       <el-table-column prop="FBSJ" label="发布日期" width="200"></el-table-column>
       <el-table-column prop="XWBT" label="动态标题" width="400"></el-table-column>
+      <el-table-column prop="SHZT" label="审核状态" width="100"></el-table-column>
+      <el-table-column label="审核操作" width="200">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="handlePass(scope.row)">通过</el-button>
+          <el-button size="mini" type="danger" @click="handleNoPass(scope.row)">不通过</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
@@ -45,22 +52,25 @@ export default {
         {
           value: "通知公告",
           label: "通知公告",
-          children:[
+          children: [
             {
-              value: '对内公告',
-              label: '对内公告'
-            }, {
-              value: '对外公告',
-              label: '对外公告'
-            },{
-              value: '公开公告',
-              label: '公开公告'
-            }
-          ]
-        },{
+              value: "对内公告",
+              label: "对内公告",
+            },
+            {
+              value: "对外公告",
+              label: "对外公告",
+            },
+            {
+              value: "公开公告",
+              label: "公开公告",
+            },
+          ],
+        },
+        {
           value: "党群动态",
           label: "党群动态",
-        }
+        },
       ],
       LM: ["公司要闻"],
       total: 0,
@@ -68,6 +78,40 @@ export default {
     };
   },
   methods: {
+    handlePass(raw) {
+      // console.log(raw)
+      let data = {
+        ID: raw.ID,
+        SHZT: "SHTG",
+      };
+      post(host.host2 + "updateSHZT.ashx", data).then((res) => {
+        // console.log(res)
+        if (res.errCode == "SUCCESS") {
+          this.$message({
+            message: "更新审核状态成功",
+            type: "success",
+          });
+          raw.SHZT = "通过";
+        }
+      });
+    },
+    handleNoPass(raw) {
+      // console.log(raw)
+      let data = {
+        ID: raw.ID,
+        SHZT: "SHNTG",
+      };
+      post(host.host2 + "updateSHZT.ashx", data).then((res) => {
+        // console.log(res)
+        if (res.errCode == "SUCCESS") {
+          this.$message({
+            message: "更新审核状态成功",
+            type: "success",
+          });
+          raw.SHZT = "不通过";
+        }
+      });
+    },
     querybtn() {
       this.queryTotal();
       this.queryNews(1);
@@ -76,23 +120,39 @@ export default {
       this.queryNews(val);
     },
     queryTotal() {
-      post(host.host2 + "QueryNews.ashx", { page: 0, LM: this.LM[this.LM.length-1] }).then(
-        (res) => {
-          console.log(res);
-          if (res.errCode === "SUCCESS") {
-            this.total = res.data[0].datanum;
-          }
+      post(host.host2 + "QueryNews.ashx", {
+        page: 0,
+        LM: this.LM[this.LM.length - 1],
+        clientLX:"admin"
+      }).then((res) => {
+        // console.log(res);
+        if (res.errCode === "SUCCESS") {
+          this.total = res.data[0].datanum;
         }
-      );
+      });
     },
     queryNews(val) {
-      post(host.host2 + "QueryNews.ashx", { page: val, LM: this.LM[this.LM.length-1] }).then(
-        (res) => {
-          if (res.errCode === "SUCCESS") {
-            this.newsdata = res.data;
+      post(host.host2 + "QueryNews.ashx", {
+        page: val,
+        LM: this.LM[this.LM.length - 1],
+        clientLX:"admin"
+      }).then((res) => {
+        if (res.errCode === "SUCCESS") {
+          this.newsdata = res.data;
+          for (let i = 0; i < this.newsdata.length; i++) {
+            if (this.newsdata[i].SHZT == "0") {
+              this.newsdata[i].SHZT = "未审核";
+            }
+            if (this.newsdata[i].SHZT == "1") {
+              this.newsdata[i].SHZT = "通过";
+            }
+            if (this.newsdata[i].SHZT == "2") {
+              this.newsdata[i].SHZT = "不通过";
+            }
           }
+          // console.log(this.newsdata.length)
         }
-      );
+      });
     },
     handleLook(row) {
       // console.log(row);

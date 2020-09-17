@@ -22,7 +22,6 @@
   </div>
 </template>
 <script>
-import { baseurl } from "../../../libs/config";
 import host from "../../../libs/utils";
 import { post } from "../../../service/http";
 export default {
@@ -41,7 +40,7 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res) {
-    //   console.log(res);
+      //   console.log(res);
       this.imgurl = res.url;
       this.form.img = host.baseUrl + res.url;
     },
@@ -65,11 +64,11 @@ export default {
             message: "上传成功！",
             type: "success",
           });
-          this.form.img=""
-          this.form.url=""
-          this.imgurl=""
-        }else{
-        this.$message.error("请上传失败，联系技术人员！");
+          this.form.img = "";
+          this.form.url = "";
+          this.imgurl = "";
+        } else {
+          this.$message.error("请上传失败，联系技术人员！");
         }
       });
     },

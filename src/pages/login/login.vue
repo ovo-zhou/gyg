@@ -123,16 +123,22 @@ export default {
           }
           sessionStorage.setItem("user", JSON.stringify(user));
           sessionStorage.setItem("isLogin", "true");
-
+          console.log(user)
           if (
             JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
               "系统管理员"
+            ) >= 0||
+            JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+              "新闻发布"
+            ) >= 0||
+            JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+              "新闻审核"
             ) >= 0
           ) {
             this.$router.push({ path: "/admin" });
             return;
           } else {
-            this.$message.error("不是系统管理员");
+            this.$message.error("没有操作权限！");
             return;
           }
         } else if (res.errCode === "FAIL") {

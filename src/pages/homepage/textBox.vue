@@ -24,11 +24,15 @@ export default {
     };
   },
   mounted(){
-     post(host.host2 + "QueryNotice.ashx", { page: 1, LM: "对外公告" }).then(e=>{
-       console.log(e)
-       this.data=e.data
+     post(host.host2 + "QueryNotice.ashx", { page: 1, LM: "对外公告" ,clientLX:"web"}).then(res=>{
+      //  console.log(e)
+      for (let k = 0; k < res.data.length; k++) {
+              if (res.data[k].SHZT == "1") {
+                this.data.push(res.data[k]);
+              }
+            }
        this.data=this.data.slice(0,3)
-       console.log(this.data)
+      //  console.log(this.data)
      })
   },
   methods:{
