@@ -110,7 +110,7 @@ export default {
         title: "",
         LM: ["公司要闻"],
       },
-      tinymceHtml: "",
+      tinymceHtml: "为了保证页面显示效果，请使用1.75倍行距",
       imageUrl: "",
       imgUpLoadUrl: "",
       path: "",
