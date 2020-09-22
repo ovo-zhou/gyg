@@ -242,7 +242,7 @@ export default {
   text-align: left;
     margin-left: 20px;
 
-  margin-top: -30px;
+  margin-top: -20px;
 }
 .table-style1 {
   margin-top: 30px;

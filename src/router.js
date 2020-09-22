@@ -25,6 +25,7 @@ import XHCLYY from './pages/vehicleReservation/XHCLYYQuery'
 import LSJGCL from './pages/vehicleReservation/LSJGCLQuery'
 import appointmentEdit from './pages/vehicleReservation/AppointmentEdit'
 import InboundVehicleList from './pages/vehicleReservation/InboundVehicleList'
+import adDetail from './components/advertisement/adDetail'
 //后台管理页面
 import adminhome from './pages/admin/adminhome'
 import dmanage from "./pages/admin/dynamic/d_manage";
@@ -47,10 +48,10 @@ const routes = [
             { path: "profile", component: profile },
             { path: "contactus", component: contactus, },
             { path: "business", component: business, meta: { keepAlive: true } },
-            { path: "details", component: details },
+            { path: "details", component: details},
             { path: 'dynamic', component: dynamic, meta: { keepAlive: true } },
             {
-                path: 'query', component: query, redirect: '/query/dckc', meta: { keepAlive: true },
+                path: 'query', component: query, redirect: '/query/dckc', meta: { keepAlive: false},
                 children: [
                     { path: 'dckc', component: dckc, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'zxfjf', component: zxfjf, meta: { keepAlive: true, clientlogin: true } },
@@ -87,10 +88,10 @@ const routes = [
             { path: "companystyle", component: companystyle, meta: { adminlogin: true } },
             { path: "cmanage", component: cmanage, meta: { adminlogin: true } },
             { path: "adrelease", component: adrelease, meta: { adminlogin: true } },
-            { path: "admanage", component: admanage, meta: { adminlogin: true } },
+            { path: "admanage", component: admanage, meta: { keepAlive: true,adminlogin: true } },
         ]
     },
-
+    { path: '/adDetail', component: adDetail }
 ]
 const router = new VueRouter({
     routes
@@ -110,7 +111,13 @@ router.beforeEach((to, from, next) => {
         if (
             JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
                 "系统管理员"
-            ) >= 0
+              ) >= 0 ||
+              JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+                "新闻发布"
+              ) >= 0 ||
+              JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+                "新闻审核"
+              ) >= 0
         ) {
             next()
         } else {

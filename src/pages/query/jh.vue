@@ -17,12 +17,13 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="table" stripe style="width: 100%">
+      
+    <el-table :data="table"  style="width: 100%" border highlight-current-row :header-cell-style="{background:'#F5F5F5'}">
       <el-table-column prop="JGHTYDBH" label="合同运单编号（进港）" width="160"></el-table-column>
       <el-table-column prop="CGHTYDBH" label="合同运单编号（出港）" width="200"></el-table-column>
       <el-table-column prop="BQH" label="标签号" width="135"></el-table-column>
       <el-table-column prop="ZGZT" label="在港状态" width="50"></el-table-column>
-      <el-table-column prop="ZL" label="重量" width="50"></el-table-column>
+      <el-table-column prop="ZL" label="重量" width="60"></el-table-column>
       <el-table-column prop="JXS" label="件箱数" width="70"></el-table-column>
       <el-table-column prop="JHGG" label="件货规格" width="80"></el-table-column>
       <el-table-column prop="ZGHZ" label="货主" width="90"></el-table-column>
@@ -63,7 +64,7 @@ export default {
       resulttable: [],
     };
   },
-  mounted() {
+  created() {
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
@@ -75,11 +76,11 @@ export default {
       day = "0" + day;
     }
     this.time = year + "/" + month + "/" + day;
-    this.onSubmit()
+    this.onSubmit();
   },
   methods: {
     onSubmit() {
-      this.table=[];
+      this.table = [];
       var url = host.host5 + "QueJHBQ.ashx";
       var data = {
         HZ: JSON.parse(sessionStorage.getItem("clientUser")).YHBH,
@@ -87,17 +88,21 @@ export default {
         GBRQ: this.time,
         ZGZT: this.ZGZT,
       };
+      if (data.GBRQ == null || data.GBRQ == "") {
+        this.open("日期不能为空！");
+        return;
+      }
       // console.log(data);
       var promise = post(url, data);
       promise.then((v) => {
         // console.log(v);
         if (v.errCode == "SUCCESS") {
-          this.resulttable = this.selectZGZT(v.data,this.ZGZT);
-          this.total=this.resulttable.length;
-          if(this.total=="0"){
-            this.open("此工班日期内没有数据！")
-          }else{
-          this.table=this.resulttable.slice(0,10)
+          this.resulttable = this.selectZGZT(v.data, this.ZGZT);
+          this.total = this.resulttable.length;
+          if (this.total == "0") {
+            // this.open("此工班日期内没有数据！");
+          } else {
+            this.table = this.resulttable.slice(0, 10);
           }
         } else {
           this.open("出了点错误请联系技术人员");
@@ -107,7 +112,7 @@ export default {
     handleCurrentChange(val) {
       this.table = this.resulttable.slice(10 * (val - 1), 10 * val);
     },
-    open(val) {
+     open(val) {
       this.$confirm(val, "提示", {
         confirmButtonText: "确定",
         type: "warning",
@@ -118,22 +123,22 @@ export default {
         return data;
       }
       if (ZGZT == "1") {
-        for(let i=0;i<data.length;i++){
-          if(data[i].ZGZT=="离港"){
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].ZGZT == "离港") {
             data.splice(i, 1);
             --i;
           }
         }
-        return data
+        return data;
       }
-       if (ZGZT == "2") {
-        for(let i=0;i<data.length;i++){
-          if(data[i].ZGZT=="在港"){
+      if (ZGZT == "2") {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].ZGZT == "在港") {
             data.splice(i, 1);
             --i;
           }
         }
-        return data
+        return data;
       }
     },
   },

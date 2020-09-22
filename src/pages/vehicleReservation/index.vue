@@ -1,54 +1,72 @@
 <template>
   <div class="query">
-    <img src="../../assets/clyy.png" alt="">
+    <img src="../../assets/clyy.png" alt />
     <div class="function">
       <div class="f-contain">
-        <div class="span-text" @click="toZH">
-          <a class="span-link">装货车辆预约</a>
+        <div class="span-text" :class="{text:check=='ZH'}" @click="toZH">
+          <a class="span-link" :class="{link:check=='ZH'}">装货车辆预约</a>
         </div>
-        <div class="span-text" @click="toXH">
-          <a class="span-link">卸货车辆预约</a>
+        <div class="span-text" :class="{text:check=='XH'}" @click="toXH">
+          <a class="span-link" :class="{link:check=='XH'}">卸货车辆预约</a>
         </div>
-        <div class="span-text" @click="toLSJGCL">
-          <a class="span-link">历史进港车辆</a>
+        <div class="span-text" :class="{text:check=='LSJG'}" @click="toLSJGCL">
+          <a class="span-link" :class="{link:check=='LSJG'}">历史进港车辆</a>
         </div>
       </div>
     </div>
     <div class="show">
       <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    methods:{
-        toZH(){
-            this.$router.push("/vehicle/ZHCLYY")
-        },
-        toXH(){
-            this.$router.push("/vehicle/XHCLYY")
-        },
-        toLSJGCL(){
-            this.$router.push("/vehicle/LSJGCL")
-        }
-    }
+  data(){
+return{
+  check:'ZH'
+}
+  },
+  methods: {
+    toZH() {
+      this.check="ZH"
+      this.$router.push("/vehicle/ZHCLYY");
+    },
+    toXH() {
+      this.check="XH"
+
+      this.$router.push("/vehicle/XHCLYY");
+    },
+    toLSJGCL() {
+      this.check="LSJG"
+
+      this.$router.push("/vehicle/LSJGCL");
+    },
+  },
 };
 </script>
 
 <style scoped>
-.query{
+.text{
+ /* border-bottom: 4px solid #409EFF;
+ cursor: pointer; */
+}
+.link{
+  color: #409EFF !important;
+}
+.query {
   background: #fbfbfb;
 }
-.query img{
+.query img {
   width: 100%;
 }
-@media screen and (max-width: 1000px)
-{
-.query img{ width:1080px; }
+@media screen and (max-width: 1000px) {
+  .query img {
+    width: 1080px;
+  }
 }
 .function {
   width: 100%;
@@ -57,16 +75,16 @@ export default {
   margin-bottom: 30px;
 }
 .f-contain {
-  width: 1080px;
+  width: 1250px;
   height: 53px;
   /* background: palegreen; */
   margin: 0px auto;
   display: flex;
   flex-direction: row;
 }
-.span-text{
-    /* border-bottom: 2px solid #0e68b1; */
-    margin-left: 10px;
+.span-text {
+  /* border-bottom: 2px solid #0e68b1; */
+  margin-left: 10px;
   margin-right: 10px;
 }
 .span-text a {
@@ -80,13 +98,11 @@ export default {
   border-bottom: 4px solid #0e68b1;
   cursor: pointer;
 }
-.span-text:hover .span-link{
+.span-text:hover .span-link {
   color: #0e68b1;
 }
 .show {
   width: 1250px;
-  /* height: 600px; */
-  /* background: yellow; */
   margin: 0px auto;
 }
 </style>

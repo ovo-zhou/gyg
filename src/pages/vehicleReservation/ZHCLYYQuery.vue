@@ -5,19 +5,20 @@
         :data="body_data"
         highlight-current-row
         border
-        style="width: 100%;font-size:15px;"
-        :height="tableHeight"
         :header-cell-style="{background:'#F5F5F5'}"
         fit
       >
-        <el-table-column prop="TYDBH" label="提运单编号" width="260" align="left" ></el-table-column>
-        <el-table-column prop="QDRQ" label="签订日期" width="120" align="left"></el-table-column>
-        <el-table-column prop="SFZF" label="是否直放" width="100" align="left"></el-table-column>
+      <!-- 
+        style="width: 100%;font-size:15px;"
+        :height="tableHeight" -->
+        <el-table-column prop="TYDBH" label="提运单编号" width="280" align="left" ></el-table-column>
+        <el-table-column prop="QDRQ" label="签订日期" width="110" align="left"></el-table-column>
+        <el-table-column prop="SFZF" label="是否直放" width="60" align="left"></el-table-column>
         <el-table-column prop="JGCM" label="进港船名" width="120" align="left"></el-table-column>
-        <el-table-column prop="JHTHD" label="计划提货吨" width="100" align="left"></el-table-column>
-        <el-table-column prop="HZ" label="货主" width="100" align="left"></el-table-column>
-        <el-table-column prop="HL" label="货类" width="100" align="left"></el-table-column>
-        <el-table-column prop="HWGG" label="规格型号" width="100" align="left"></el-table-column>
+        <el-table-column prop="JHTHD" label="计划提货吨" width="120" align="left"></el-table-column>
+        <el-table-column prop="HZ" label="货主" width="169" align="left"></el-table-column>
+        <el-table-column prop="HL" label="货类" width="70" align="left"></el-table-column>
+        <el-table-column prop="HWGG" label="规格型号" width="90" align="left"></el-table-column>
         <el-table-column prop="JGRQ" label="进港日期" width="100" align="left"></el-table-column>
         <el-table-column label="操作" width="120" align="center">
           <template slot-scope="scope">
@@ -57,7 +58,7 @@ export default {
   name: "ZHCLYYQuery",
   data() {
     return {
-      tableHeight:window.innerHeight-250,
+      // tableHeight:window.innerHeight-250,
       count: 0,
       pagesize: 10,
       currentPage:0,

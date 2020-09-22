@@ -43,7 +43,6 @@
 import tinymce from "tinymce/tinymce";
 import "tinymce/themes/silver/theme";
 import Editor from "@tinymce/tinymce-vue";
-// import "tinymce/icons/default/icons.min.js";
 import "tinymce/icons/default";
 //插件
 import "../../../assets/tinymce/plugins/lineheight/plugin";
@@ -181,7 +180,7 @@ export default {
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = true;
       this.btnMessage = "确认修改";
-      console.log(this.form.LM)
+      // console.log(this.form.LM)
     }
   },
   components: {

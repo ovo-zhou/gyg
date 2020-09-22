@@ -2,7 +2,7 @@
   <div class="textBox">
     <div class="content">
       <el-carousel height="200px" direction="vertical" :autoplay="true" :loop="true">
-        <el-carousel-item v-for="item in data" :key="item">
+        <el-carousel-item v-for="(item,index) in data" :key="index">
           <div @click="toDetail(item)">
             <img src="../../assets/公告 .png" alt />
             <span>[置顶公告]</span>

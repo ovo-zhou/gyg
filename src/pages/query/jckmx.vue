@@ -19,7 +19,7 @@
         <el-button type="primary" @click="query">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="tableData" stripe style="width: 100%">
+    <el-table :data="tableData"  style="width: 100%" border highlight-current-row :header-cell-style="{background:'#F5F5F5'}">
       <el-table-column prop="GBRQ" label="工班日期" width="110"></el-table-column>
       <el-table-column prop="BCMC" label="班次" width="60"></el-table-column>
       <el-table-column prop="ZYSJ" label="作业时间" width="160"></el-table-column>

@@ -39,10 +39,10 @@ export default {
         Account: "",
         PassWord: "",
         DLFS: "后台管理",
-        YZM: ""
+        YZM: "",
       },
       imgData: "",
-      nowtime: ""
+      nowtime: "",
     };
   },
   mounted() {
@@ -51,7 +51,7 @@ export default {
     var url = host.host1 + "updateVerifyCode.ashx";
     var data = { SESSIONID: this.nowtime };
     var promise = post(url, data);
-    promise.then(v => {
+    promise.then((v) => {
       console.log("v.errStr", v.errStr);
       if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
         // console.log(v.errStr);
@@ -64,7 +64,7 @@ export default {
       var url = host.host1 + "updateVerifyCode.ashx";
       var data = { SESSIONID: this.nowtime };
       var promise = post(url, data);
-      promise.then(v => {
+      promise.then((v) => {
         if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
           // console.log(v.errStr);
           this.imgData = "data:image/jpg;base64," + v.errStr;
@@ -102,17 +102,17 @@ export default {
         Account: this.userform.Account,
         PassWord: this.userform.PassWord,
         YZM: this.userform.YZM,
-        SESSIONID: this.nowtime
+        SESSIONID: this.nowtime,
       };
-      post(url, data).then(res => {
+      post(url, data).then((res) => {
         if (res.errCode === "SUCCESS") {
-          console.log(res);
+          // console.log(res);
           let user = {
             DeptId: "",
             DeptName: "",
             Yhbh: "",
             XM: "",
-            UserIdentity: []
+            UserIdentity: [],
           };
           user.DeptId = res.data[0]["DeptId"];
           user.DeptName = res.data[0]["DeptName"];
@@ -123,19 +123,20 @@ export default {
           }
           sessionStorage.setItem("user", JSON.stringify(user));
           sessionStorage.setItem("isLogin", "true");
-          console.log(user)
+          // console.log(user);
           if (
             JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
               "系统管理员"
-            ) >= 0||
+            ) >= 0 ||
             JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
               "新闻发布"
-            ) >= 0||
+            ) >= 0 ||
             JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
               "新闻审核"
             ) >= 0
           ) {
-            this.$router.push({ path: "/admin" });
+            this.$router.push("/admin");
+            // alert("登录")
             return;
           } else {
             this.$message.error("没有操作权限！");
@@ -145,8 +146,8 @@ export default {
           this.$message.error(res.errStr);
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

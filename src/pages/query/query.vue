@@ -4,10 +4,10 @@
     <div class="function">
       <div class="f-contain">
         <div class="span-text" @click="toDckc">
-          <a class="span-link">堆场库存</a>
+          <a class="span-link" :class="{link:check=='DCKC'}">堆场库存</a>
         </div>
         <div class="span-text" @click="toJCKMX">
-          <a class="span-link">进出库明细</a>
+          <a class="span-link" :class="{link:check=='JCKMX'}">进出库明细</a>
         </div>
         <!-- <div class="span-text" @click="toZxfjf">
           <a>装卸费计费</a>
@@ -16,11 +16,11 @@
           <a>堆存计费</a>
         </div>-->
         <div class="span-text" @click="toJh">
-          <a>件货综合信息</a>
-        </div> 
+          <a class="span-link" :class="{link:check=='JH'}">件货综合信息</a>
+        </div>
         <div class="span-text" @click="toJzx">
-          <a>集装箱综合信息</a>
-        </div> 
+          <a class="span-link" :class="{link:check=='JZX'}">集装箱综合信息</a>
+        </div>
       </div>
     </div>
     <div class="show">
@@ -34,39 +34,58 @@
 
 <script>
 export default {
+  data() {
+    return {
+      check: "DCKC",
+    };
+  },
   methods: {
     toDckc() {
+      this.check = "DCKC";
       this.$router.push("/query/dckc");
     },
+    //下面的两个功能已经弃用
     toZxfjf() {
+      this.check = "DCKC";
       this.$router.push("/query/zxfjf");
     },
     toDcjf() {
+      this.check = "DCKC";
       this.$router.push("/query/dcjf");
     },
     toJh() {
+      this.check = "JH";
+
       this.$router.push("/query/jh");
     },
     toJzx() {
+      this.check = "JZX";
+
       this.$router.push("/query/jzx");
     },
-    toJCKMX(){
+    toJCKMX() {
+      this.check = "JCKMX";
+
       this.$router.push("/query/jckmx");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.link {
+  color: #409eff !important;
+}
 .query {
   background: #fbfbfb;
 }
 .query img {
   width: 100%;
 }
-@media screen and (max-width: 1000px)
-{
-.query img{ width:1080px; }
+@media screen and (max-width: 1000px) {
+  .query img {
+    width: 1080px;
+  }
 }
 .function {
   width: 100%;
@@ -98,7 +117,7 @@ export default {
   border-bottom: 4px solid #0e68b1;
   cursor: pointer;
 }
-.span-text:hover .span-link{
+.span-text:hover .span-link {
   color: #0e68b1;
 }
 .show {

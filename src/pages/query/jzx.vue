@@ -18,12 +18,12 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="table" stripe style="width: 100%">
+    <el-table :data="table"  style="width: 100%" border highlight-current-row :header-cell-style="{background:'#F5F5F5'}">
       <el-table-column prop="JGHTYDBH" label="合同运单编号（进港）" width="150"></el-table-column>
       <el-table-column prop="CGHTYDBH" label="合同运单编号（出港）" width="210"></el-table-column>
       <el-table-column prop="XH" label="箱号" width="140"></el-table-column>
       <el-table-column prop="ZGZT" label="在港状态" width="50"></el-table-column>
-      <el-table-column prop="ZL" label="重量" width="50"></el-table-column>
+      <el-table-column prop="ZL" label="重量" width="60"></el-table-column>
       <el-table-column prop="JXS" label="件箱数" width="50"></el-table-column>
       <el-table-column prop="GG" label="集装箱规格" width="80"></el-table-column>
       <el-table-column prop="ZGHZ" label="货主" width="80"></el-table-column>
@@ -60,7 +60,7 @@ export default {
       resulttable: [],
     };
   },
-  mounted() {
+  created() {
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
@@ -83,9 +83,11 @@ export default {
         LX: "JZX",
         GBRQ: this.time,
         ZGZT: this.ZGZT,
-        // CPH: this.CPH,
-        // PageIndex: "1",
       };
+      if(data.GBRQ==null||data.GBRQ==""){
+        this.open("日期不能为空！")
+        return;
+      }
       // console.log(data);
       var promise = post(url, data);
       promise.then((v) => {
@@ -94,7 +96,7 @@ export default {
           this.resulttable = this.selectZGZT(v.data,this.ZGZT);
           this.total=this.resulttable.length;
           if(this.total=="0"){
-            this.open("此工班日期内没有数据！")
+            // this.open("此工班日期内没有数据！")
           }else{
           this.table=this.resulttable.slice(0,10)
           }

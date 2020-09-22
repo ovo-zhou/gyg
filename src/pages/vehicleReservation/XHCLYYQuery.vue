@@ -15,10 +15,10 @@
       <el-table-column prop="SFJK" label="是否进库" width="100" align="left"></el-table-column>
       <el-table-column prop="JGCM" label="进港船名" width="120" align="left"></el-table-column>
       <el-table-column prop="YJZD" label="预计总吨" width="100" align="left"></el-table-column>
-      <el-table-column prop="HZ" label="货主" width="100" align="left"></el-table-column>
-      <el-table-column prop="HL" label="货类" width="100" align="left"></el-table-column>
+      <el-table-column prop="HZ" label="货主" width="120" align="left"></el-table-column>
+      <el-table-column prop="HL" label="货类" width="119" align="left"></el-table-column>
       <el-table-column prop="HWGG" label="规格型号" width="100" align="left"></el-table-column>
-      <el-table-column prop="JGRQ" label="进港日期" width="100" align="left"></el-table-column>
+      <el-table-column prop="JGRQ" label="进港日期" width="110" align="left"></el-table-column>
       <el-table-column label="操作" width="120" align="center">
         <template slot-scope="scope">
           <el-link
