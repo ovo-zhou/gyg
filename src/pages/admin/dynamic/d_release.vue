@@ -5,15 +5,17 @@
         <el-form-item label="标题">
           <el-input v-model="form.title"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="类型">
-          <el-select v-model="form.LM" placeholder="请选择">
-            <el-option label="公司要闻" value="公司要闻"></el-option>
-            <el-option label="通知公告" value="通知公告"></el-option>
-            <el-option label="党群动态" value="党群动态"></el-option>
-          </el-select>
-        </el-form-item>-->
         <el-form-item label="类型">
           <el-cascader v-model="form.LM" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
+        </el-form-item>
+        <el-form-item label="发布时间">
+          <el-date-picker
+            v-model="time"
+            type="datetime"
+            placeholder="选择日期时间"
+            default-time="12:00:00"
+            value-format="yyyy/MM/dd HH:mm:ss"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="封面图">
           <el-upload
@@ -88,34 +90,38 @@ export default {
         {
           value: "通知公告",
           label: "通知公告",
-          children:[
+          children: [
             {
-              value: '对内公告',
-              label: '对内公告'
-            }, {
-              value: '对外公告',
-              label: '对外公告'
-            },{
-              value: '公开公告',
-              label: '公开公告'
-            }
-          ]
-        },{
+              value: "对内公告",
+              label: "对内公告",
+            },
+            {
+              value: "对外公告",
+              label: "对外公告",
+            },
+            {
+              value: "公开公告",
+              label: "公开公告",
+            },
+          ],
+        },
+        {
           value: "党群动态",
           label: "党群动态",
-        }
+        },
       ],
       form: {
         title: "",
         LM: ["公司要闻"],
       },
-      tinymceHtml: "为了保证页面显示效果，请使用1.75倍行距",
+      tinymceHtml: "",
       imageUrl: "",
       imgUpLoadUrl: "",
       path: "",
       show: true,
       btnMessage: "发布",
       flag: "发布",
+      time: "",
       init: {
         language_url: "/tinymce/langs/zh_CN.js",
         language: "zh_CN",
@@ -153,14 +159,15 @@ export default {
     if (this.$route.query.flag === "查看") {
       this.flag = "查看";
       this.form.title = this.$route.query.new.XWBT;
-      let arr=new  Array();
-      let lm=this.$route.query.new.LM;
-      if(lm==="对内公告"||lm=="对外公告"||lm=="公开公告"){
-        arr.push("通知公告",lm)
-      }else{
+      let arr = new Array();
+      let lm = this.$route.query.new.LM;
+      if (lm === "对内公告" || lm == "对外公告" || lm == "公开公告") {
+        arr.push("通知公告", lm);
+      } else {
         arr.push(lm);
       }
       this.form.LM = arr;
+      this.time=this.$route.query.new.FBSJ;
       this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = false;
@@ -168,14 +175,15 @@ export default {
     if (this.$route.query.flag === "编辑") {
       this.flag = "编辑";
       this.form.title = this.$route.query.new.XWBT;
-      let arr=new  Array();
-      let lm=this.$route.query.new.LM;
-      if(lm==="对内公告"||lm=="对外公告"||lm=="公开公告"){
-        arr.push("通知公告",lm)
-      }else{
+      let arr = new Array();
+      let lm = this.$route.query.new.LM;
+      if (lm === "对内公告" || lm == "对外公告" || lm == "公开公告") {
+        arr.push("通知公告", lm);
+      } else {
         arr.push(lm);
       }
       this.form.LM = arr;
+      this.time=this.$route.query.new.FBSJ;
       this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = true;
@@ -212,9 +220,14 @@ export default {
         this.$message.error("标题过长");
         return;
       }
+      if(this.time==""||this.time==null){
+        this.$message.error("请选择发布时间！");
+        return
+      }
       let data = {
         ID: "",
         LM: "",
+        FBSJ:'',
         XWBT: "",
         XWNR: "",
         FBRBH: "",
@@ -224,7 +237,8 @@ export default {
         COVER_IMG: "",
       };
       data.ID = this.$route.query.new.ID;
-      data.LM = this.form.LM[this.form.LM.length-1];
+      data.LM = this.form.LM[this.form.LM.length - 1];
+      data.FBSJ=this.time;
       data.XWBT = this.form.title;
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
@@ -244,6 +258,7 @@ export default {
                 this.form.title = "";
                 this.imageUrl = "";
                 this.tinymceHtml = "";
+                this.time=""
                 this.$router.push("/admin/dmanage");
               } else {
                 this.$message.error("出现了一点问题，请联系技术人员");
@@ -266,8 +281,13 @@ export default {
         this.$message.error("标题过长");
         return;
       }
+      if(this.time==""||this.time==null){
+        this.$message.error("请选择发布时间！");
+        return
+      }
       let data = {
         LM: "",
+        FBSJ:"",
         XWBT: "",
         XWNR: "",
         FBRBH: "",
@@ -276,7 +296,8 @@ export default {
         SHRXM: "",
         COVER_IMG: "",
       };
-      data.LM = this.form.LM[this.form.LM.length-1];
+      data.LM = this.form.LM[this.form.LM.length - 1];
+      data.FBSJ=this.time;
       data.XWBT = this.form.title;
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
@@ -297,6 +318,7 @@ export default {
                 this.form.title = "";
                 this.imageUrl = "";
                 this.tinymceHtml = "";
+                this.time="";
               } else {
                 this.$message.error("出现了一点问题，请联系技术人员");
               }

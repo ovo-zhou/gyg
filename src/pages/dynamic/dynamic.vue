@@ -106,7 +106,7 @@ export default {
 <style scoped>
 .dynamic {
   width: 100%;
-  /* background: yellowgreen; */
+  /* background: #f5f5f6; */
 }
 .dynamic img {
   width: 100%;

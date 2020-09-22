@@ -37,7 +37,7 @@ export default {
         if (res.errCode === "SUCCESS") {
           this.news = res.data;
           this.news = this.news.slice(0, 7);
-          console.log(this.newsdata);
+          // console.log(this.news);
         }
       }
     );

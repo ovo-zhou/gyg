@@ -5,7 +5,7 @@
         <h1>业务推广</h1>
       </div>
       <div class="imglist">
-        <el-carousel :interval="4000" type="card" height="150px">
+        <el-carousel :interval="4000" height="150px">
           <el-carousel-item v-for="(item,index) in data" :key="index">
             <img :src="item.IMGURL" alt @click="toAd(item)" />
           </el-carousel-item>
@@ -69,13 +69,14 @@ export default {
   color: rgba(103, 103, 103);
 }
 .imglist {
-  width: 700px;
-  margin-left: 350px;
+  width: 830px;
+  margin-left: 250px;
   height: 150px;
   /* background: aqua; */
 }
 img {
-  width: 300px;
+  width: 830px;
   height: 150px;
+  cursor: pointer;
 }
 </style>

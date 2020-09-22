@@ -8,5 +8,5 @@ var host4 = baseUrl + "/Handler/WebSpace/Home/";
 var host5 = baseUrl + "/Handler/WebSpace/GKYW/";
 var host6 = baseUrl + "/Handler/WebSpace/Advertisement/";
 
-export default { baseUrl,host1, host2, host3, host4, host5,host6}
+export default {baseUrl,host1, host2, host3, host4, host5,host6}
 

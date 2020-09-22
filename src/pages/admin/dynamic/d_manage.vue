@@ -123,11 +123,14 @@ export default {
       post(host.host2 + "QueryNews.ashx", {
         page: 0,
         LM: this.LM[this.LM.length - 1],
-        clientLX:"admin"
+        clientLX: "admin",
       }).then((res) => {
-        // console.log(res);
+        console.log(res);
         if (res.errCode === "SUCCESS") {
           this.total = res.data[0].datanum;
+          if(this.total==0){
+            this,this.newsdata=[];
+          }
         }
       });
     },
@@ -135,9 +138,10 @@ export default {
       post(host.host2 + "QueryNews.ashx", {
         page: val,
         LM: this.LM[this.LM.length - 1],
-        clientLX:"admin"
+        clientLX: "admin",
       }).then((res) => {
         if (res.errCode === "SUCCESS") {
+          console.log(res)
           this.newsdata = res.data;
           for (let i = 0; i < this.newsdata.length; i++) {
             if (this.newsdata[i].SHZT == "0") {
@@ -150,7 +154,6 @@ export default {
               this.newsdata[i].SHZT = "不通过";
             }
           }
-          // console.log(this.newsdata.length)
         }
       });
     },

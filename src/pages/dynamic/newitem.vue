@@ -2,7 +2,8 @@
   <div class="item" @click="toDetail">
     <h1>{{newdata.XWBT}}</h1>
     <h3>{{newdata.FBSJ}}</h3>
-    <p v-html="computedTxt(newdata.XWNR)"></p>
+    <!-- <p v-html="computedTxt(newdata.XWNR)"></p> -->
+    <p>{{stripHtml(newdata.XWNR)}}</p>
   </div>
 </template>
 <script>
@@ -13,17 +14,17 @@ export default {
       required: true
     }
   },
-  computed: {
-    computedTxt() {
-      return function(val) {
-        return this.getText(val);
-      };
-    }
-  },
   methods: {
-    getText(val) {
-      var pattern = /<img[^>]+>|<\s*\/>/gi;
-      return val.replace(pattern, "");
+    stripHtml(content) {
+      if (content != null && content != "") {
+        content = content.replace(/<\/?[^>]*>/g, ""); //去除HTML tag
+        content= content.replace(/&nbsp;/ig,'');//去掉空格
+        content= content.replace(/&ldquo;/ig,'');//去掉上引号
+        content= content.replace(/&rdquo;/ig,'');//去掉下引号
+        content= content.replace(/&middot;/ig,'');//去掉下引号
+        content= content.trim();
+      }
+      return content;
     },
     toDetail() {
       this.$router.push({ path: "/details", query: { newdata: this.newdata } });
@@ -54,11 +55,12 @@ export default {
   line-height: 30px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   width: 100%;
-  height: 85px;
+  height: 60px;
   overflow: hidden;
+  text-indent: 2em;
 }
 img {
   display: none;

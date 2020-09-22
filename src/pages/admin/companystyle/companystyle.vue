@@ -1,41 +1,50 @@
 <template>
   <div>
-          <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="标题">
-              <el-input v-model="form.title"></el-input>
-            </el-form-item>
-            <el-form-item label="视频封面">
-              <el-upload
-                :action="imgUploadUrl"
-                list-type="picture-card"
-                :on-preview="handlePictureCardPreview"
-                :on-success="handleSuccess1"
-                accept="image/jpeg, image/jpg, image/png"
-                :file-list="imgList"
-              >
-                <i class="el-icon-plus"></i>
-              </el-upload>
-              <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt />
-              </el-dialog>
-            </el-form-item>
-            <el-form-item label="视频上传">
-              <el-upload
-                class="upload-demo"
-                :action="videoUploadUrl"
-                :on-success="handleSuccess2"
-                accept="video/mp4"
-                :limit="1"
-              >
-                <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传mp4文件</div>
-              </el-upload>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="onSubmit">发布</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="标题">
+        <el-input v-model="form.title"></el-input>
+      </el-form-item>
+      <el-form-item label="发布时间">
+        <el-date-picker
+          v-model="time"
+          type="datetime"
+          placeholder="选择日期时间"
+          default-time="12:00:00"
+          value-format="yyyy/MM/dd HH:mm:ss"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item label="视频封面">
+        <el-upload
+          :action="imgUploadUrl"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :on-success="handleSuccess1"
+          accept="image/jpeg, image/jpg, image/png"
+          :file-list="imgList"
+        >
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt />
+        </el-dialog>
+      </el-form-item>
+      <el-form-item label="视频上传">
+        <el-upload
+          class="upload-demo"
+          :action="videoUploadUrl"
+          :on-success="handleSuccess2"
+          accept="video/mp4"
+          :limit="1"
+        >
+          <el-button size="small" type="primary">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传mp4文件</div>
+        </el-upload>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">发布</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 <script>
 import host from "../../../libs/utils";
@@ -43,7 +52,7 @@ import { post } from "../../../service/http";
 export default {
   data() {
     return {
-        data:[],
+      data: [],
       imgUploadUrl: "",
       videoUploadUrl: "",
       dialogImageUrl: "",
@@ -54,12 +63,12 @@ export default {
       form: {
         title: "",
       },
+      time:""
     };
   },
   mounted() {
     this.videoUploadUrl = host.host3 + "UpLoadVideo.ashx";
     this.imgUploadUrl = host.host3 + "UpLoadImg.ashx";
-    
   },
   methods: {
     handlePictureCardPreview(file) {
@@ -87,9 +96,13 @@ export default {
         this.$message.error("请上传视频");
         return;
       }
-
+      if(this.time==""||this.time==null){
+        this.$message.error("请选择发布时间！");
+        return
+      }
       let data = {
         LM: "直击风采",
+        FBSJ:'',
         XWBT: "",
         XWNR: "",
         FBRBH: "",
@@ -98,6 +111,7 @@ export default {
         SHRXM: "",
         COVER_IMG: "",
       };
+      data.FBSJ=this.time;
       data.XWBT = this.form.title;
       data.XWNR = this.videofile;
       data.COVER_IMG = this.imgfile;

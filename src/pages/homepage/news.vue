@@ -17,7 +17,7 @@
               <img :src="item.COVER_IMG" alt />
             </template>
             <p class="p1">{{item.XWBT}}</p>
-            <p class="p2" v-html="computedTxt(item.XWNR)"></p>
+            <p class="p2">{{stripHtml(item.XWNR)}}</p>
             <span>{{item.FBSJ}}</span>
           </div>
         </template>
@@ -34,44 +34,46 @@ export default {
       newsdata: [],
     };
   },
-  computed: {
-    computedTxt() {
-      return function (val) {
-        return this.getText(val);
-      };
-    },
-  },
   methods: {
     toAll() {
       this.$router.push("/dynamic");
     },
-    getText(val) {
-      var pattern = /<img[^>]+>|<\s*\/>/gi;
-      return val.replace(pattern, "");
+    stripHtml(content) {
+      if (content != null && content != "") {
+        content = content.replace(/<\/?[^>]*>/g, ""); //去除HTML tag
+        content= content.replace(/&nbsp;/ig,'');//去掉空格
+        content= content.replace(/&ldquo;/ig,'');//去掉上引号
+        content= content.replace(/&rdquo;/ig,'');//去掉下引号
+        content= content.replace(/&middot;/ig,'');//去掉下引号
+        content= content.trim();
+      }
+      return content;
     },
     toDetail(item) {
       this.$router.push({ path: "/details", query: { newdata: item } });
       document.body.scrollIntoView();
     },
     querynew() {
-      post(host.host2 + "QueryNews.ashx", { page: 1, LM: "公司要闻" ,clientLX:"web"}).then(
-        (res) => {
-          // console.log(res)
-          if (res.errCode === "SUCCESS") {
-            this.newsdata=res.data;
-            this.newsdata = this.newsdata.slice(0, 6);
-            for (let i = 0; i < this.newsdata.length; i++) {
-              if (this.newsdata[i].COVER_IMG !== "") {
-                this.newsdata[i].COVER_IMG =
-                  host.baseUrl + this.newsdata[i].COVER_IMG;
-              }
+      post(host.host2 + "QueryNews.ashx", {
+        page: 1,
+        LM: "公司要闻",
+        clientLX: "web",
+      }).then((res) => {
+        // console.log(res)
+        if (res.errCode === "SUCCESS") {
+          this.newsdata = res.data;
+          this.newsdata = this.newsdata.slice(0, 6);
+          for (let i = 0; i < this.newsdata.length; i++) {
+            if (this.newsdata[i].COVER_IMG !== "") {
+              this.newsdata[i].COVER_IMG =
+                host.baseUrl + this.newsdata[i].COVER_IMG;
             }
-            console.log(this.newsdata);
-          } else {
-            // console.log(res.errCode)
           }
+          console.log(this.newsdata);
+        } else {
+          // console.log(res.errCode)
         }
-      );
+      });
     },
   },
   created() {
@@ -130,11 +132,11 @@ export default {
   /* background: blueviolet;  */
   margin-top: 10px;
 }
-.news_list >:nth-child(2){
+.news_list > :nth-child(2) {
   margin-left: 79px;
   margin-right: 79px;
 }
-.news_list >:nth-child(5){
+.news_list > :nth-child(5) {
   margin-left: 79px;
   margin-right: 79px;
 }
@@ -165,7 +167,7 @@ export default {
   -webkit-line-clamp: 3;
   overflow: hidden;
   width: 100%;
-  height: 65px;
+  height: 70px;
   text-indent: 2em;
   /* background: aqua; */
 }

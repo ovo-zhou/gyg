@@ -11,12 +11,12 @@
       router
     >
       <el-menu-item index="/admin/adminhome">
-        <i class="el-icon-phone"></i>
+        <i class="el-icon-s-unfold"></i>
         <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu index="1">
         <template slot="title">
-          <i class="el-icon-s-claim"></i>
+          <i class="el-icon-tickets"></i>
           <span>新闻聚焦</span>
         </template>
         <el-menu-item-group>
@@ -28,7 +28,7 @@
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">
-          <i class="el-icon-s-claim"></i>
+          <i class="el-icon-monitor"></i>
           <span>业务流程</span>
         </template>
         <el-menu-item-group>
@@ -38,7 +38,7 @@
       </el-submenu>
       <el-submenu index="2">
         <template slot="title">
-          <i class="el-icon-s-claim"></i>
+          <i class="el-icon-link"></i>
           <span>业务推广</span>
         </template>
         <el-menu-item-group>
