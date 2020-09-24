@@ -55,6 +55,7 @@
 <script>
 import host from "../../../libs/utils";
 import { post } from "../../../service/http";
+import {dateToString1} from '../../../assets/vehicleResJs/common'
 export default {
   data() {
     return {
@@ -87,6 +88,7 @@ export default {
     };
   },
   mounted() {
+    this.time=dateToString1(new Date())
     this.imgUpLoadUrl = host.host2 + "upload.ashx";
   },
   created() {
