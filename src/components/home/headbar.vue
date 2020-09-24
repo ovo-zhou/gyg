@@ -174,7 +174,7 @@ export default {
       document.body.scrollIntoView();
     },
     toDynamic() {
-      this.$router.push("/dynamic");
+      this.$router.push("/new");
       document.body.scrollIntoView();
     },
     toQuery() {

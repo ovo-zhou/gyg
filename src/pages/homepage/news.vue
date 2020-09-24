@@ -3,11 +3,11 @@
     <div class="news_contain">
       <div class="post_head">
         <p>
-          <span class="post_title">公司要闻</span>
+          <span class="post_title">行业动态</span>
           <span class="more" @click="toAll">全部动态</span>
         </p>
         <p>
-          <span class="En_title">News information</span>
+          <span class="En_title">Industry News</span>
         </p>
       </div>
       <div class="news_list">
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     toAll() {
-      this.$router.push("/dynamic");
+      this.$router.push("/new/dynamic");
     },
     stripHtml(content) {
       if (content != null && content != "") {
@@ -56,7 +56,7 @@ export default {
     querynew() {
       post(host.host2 + "QueryNews.ashx", {
         page: 1,
-        LM: "公司要闻",
+        LM: "行业动态",
         clientLX: "web",
       }).then((res) => {
         // console.log(res)

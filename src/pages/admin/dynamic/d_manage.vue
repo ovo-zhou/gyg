@@ -2,7 +2,13 @@
   <div class="dynamic">
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item label="类型">
-        <el-cascader v-model="LM" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
+        <el-select v-model="LM" placeholder="请选择">
+          <el-option label="行业动态(外)" value="行业动态"></el-option>
+          <el-option label="公司要闻(内)" value="公司要闻"></el-option>
+          <el-option label="对外公告(外)" value="对外公告"></el-option>
+          <el-option label="对内公告(内)" value="对内公告"></el-option>
+          <el-option label="党群动态" value="党群动态"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="querybtn">查询</el-button>
@@ -30,7 +36,7 @@
       <el-pagination
         background
         @current-change="handleCurrentChange"
-        :page-size="10"
+        :page-size="6"
         layout="total, prev, pager, next,jumper"
         :total="total"
       ></el-pagination>
@@ -44,35 +50,7 @@ import { post } from "../../../service/http";
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "公司要闻",
-          label: "公司要闻",
-        },
-        {
-          value: "通知公告",
-          label: "通知公告",
-          children: [
-            {
-              value: "对内公告",
-              label: "对内公告",
-            },
-            {
-              value: "对外公告",
-              label: "对外公告",
-            },
-            {
-              value: "公开公告",
-              label: "公开公告",
-            },
-          ],
-        },
-        {
-          value: "党群动态",
-          label: "党群动态",
-        },
-      ],
-      LM: ["公司要闻"],
+      LM: "公司要闻",
       total: 0,
       newsdata: [],
     };
@@ -122,14 +100,14 @@ export default {
     queryTotal() {
       post(host.host2 + "QueryNews.ashx", {
         page: 0,
-        LM: this.LM[this.LM.length - 1],
+        LM: this.LM,
         clientLX: "admin",
       }).then((res) => {
         console.log(res);
         if (res.errCode === "SUCCESS") {
           this.total = res.data[0].datanum;
-          if(this.total==0){
-            this,this.newsdata=[];
+          if (this.total == 0) {
+           this.newsdata = [];
           }
         }
       });
@@ -137,11 +115,11 @@ export default {
     queryNews(val) {
       post(host.host2 + "QueryNews.ashx", {
         page: val,
-        LM: this.LM[this.LM.length - 1],
+        LM: this.LM,
         clientLX: "admin",
       }).then((res) => {
         if (res.errCode === "SUCCESS") {
-          console.log(res)
+          console.log(res);
           this.newsdata = res.data;
           for (let i = 0; i < this.newsdata.length; i++) {
             if (this.newsdata[i].SHZT == "0") {

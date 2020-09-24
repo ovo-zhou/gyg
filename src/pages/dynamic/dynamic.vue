@@ -1,6 +1,5 @@
 <template>
   <div class="dynamic">
-    <img src="../../assets/hydt.png" alt />
     <div class="d-contain">
       <div class="c-left">
         <template v-for="(item,index) in newsdata">
@@ -10,7 +9,7 @@
         <el-pagination
           background
           @current-change="handleCurrentChange"
-          :page-size="10"
+          :page-size="6"
           layout="total,prev, pager, next, jumper"
           :total="total"
           v-if="isShow"
@@ -56,7 +55,7 @@ export default {
       // console.log(data);
       post(host.host2 + "QueryNewsByDate.ashx", {
         date: data,
-        LM: "公司要闻",
+        LM: "行业动态",
       }).then((res) => {
         if (res.errCode == "SUCCESS") {
           if (res.data == null) {
@@ -76,7 +75,7 @@ export default {
       this.queryNews(val);
     },
     queryTotal() {
-      post(host.host2 + "QueryNews.ashx", { page: 0, LM: "公司要闻" ,clientLX:"web"}).then(
+      post(host.host2 + "QueryNews.ashx", { page: 0, LM: "行业动态" ,clientLX:"web"}).then(
         (res) => {
           // console.log(res);
           if (res.errCode === "SUCCESS") {
@@ -86,7 +85,7 @@ export default {
       );
     },
     queryNews(val) {
-      post(host.host2 + "QueryNews.ashx", { page: val, LM: "公司要闻" ,clientLX:"web"}).then(
+      post(host.host2 + "QueryNews.ashx", { page: val, LM: "行业动态" ,clientLX:"web"}).then(
         (res) => {
           if (res.errCode === "SUCCESS") {
             this.newsdata = res.data;

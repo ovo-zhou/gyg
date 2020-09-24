@@ -6,7 +6,13 @@
           <el-input v-model="form.title"></el-input>
         </el-form-item>
         <el-form-item label="类型">
-          <el-cascader v-model="form.LM" :options="options" :props="{ expandTrigger: 'hover' }"></el-cascader>
+          <el-select v-model="form.LM" placeholder="请选择">
+            <el-option label="行业动态(外)" value="行业动态"></el-option>
+            <el-option label="公司要闻(内)" value="公司要闻"></el-option>
+            <el-option label="对外公告(外)" value="对外公告"></el-option>
+            <el-option label="对内公告(内)" value="对内公告"></el-option>
+            <el-option label="党群动态" value="党群动态"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="发布时间">
           <el-date-picker
@@ -31,88 +37,30 @@
         </el-form-item>
       </el-form>
     </div>
+    <div style="width:800px">
 
-    <Editor id="tinymce" v-model="tinymceHtml" :init="init"></Editor>
+   <vue-tinymce v-model="tinymceHtml" :setting="setting" />
+
+    </div>
     <template v-if="show">
       <div class="btn">
-        <el-button type="primary" @click="handleClick">{{btnMessage}}</el-button>
+        <el-button type="primary" @click="handleClick">{{
+          btnMessage
+        }}</el-button>
       </div>
     </template>
   </div>
 </template>
 
 <script>
-import tinymce from "tinymce/tinymce";
-import "tinymce/themes/silver/theme";
-import Editor from "@tinymce/tinymce-vue";
-import "tinymce/icons/default";
-//插件
-import "../../../assets/tinymce/plugins/lineheight/plugin";
-import "tinymce/plugins/image"; // 插入上传图片插件
-import "tinymce/plugins/media"; // 插入视频插件
-import "tinymce/plugins/table"; // 插入表格插件
-import "tinymce/plugins/link"; //超链接插件
-import "tinymce/plugins/code"; //代码块插件
-import "tinymce/plugins/lists"; // 列表插件
-import "tinymce/plugins/contextmenu"; //右键菜单插件
-import "tinymce/plugins/wordcount"; // 字数统计插件
-import "tinymce/plugins/colorpicker"; //选择颜色插件
-import "tinymce/plugins/textcolor"; //文本颜色插件
-import "tinymce/plugins/fullscreen"; //全屏
-import "tinymce/plugins/help";
-import "tinymce/plugins/charmap";
-import "tinymce/plugins/paste";
-import "tinymce/plugins/print";
-import "tinymce/plugins/preview";
-import "tinymce/plugins/hr";
-import "tinymce/plugins/anchor";
-import "tinymce/plugins/pagebreak";
-import "tinymce/plugins/spellchecker";
-import "tinymce/plugins/searchreplace";
-import "tinymce/plugins/visualblocks";
-import "tinymce/plugins/visualchars";
-import "tinymce/plugins/insertdatetime";
-import "tinymce/plugins/nonbreaking";
-import "tinymce/plugins/autosave";
-import "tinymce/plugins/fullpage";
-import "tinymce/plugins/toc";
-//post请求和请求地址
 import host from "../../../libs/utils";
 import { post } from "../../../service/http";
 export default {
   data() {
     return {
-      options: [
-        {
-          value: "公司要闻",
-          label: "公司要闻",
-        },
-        {
-          value: "通知公告",
-          label: "通知公告",
-          children: [
-            {
-              value: "对内公告",
-              label: "对内公告",
-            },
-            {
-              value: "对外公告",
-              label: "对外公告",
-            },
-            {
-              value: "公开公告",
-              label: "公开公告",
-            },
-          ],
-        },
-        {
-          value: "党群动态",
-          label: "党群动态",
-        },
-      ],
       form: {
         title: "",
-        LM: ["公司要闻"],
+        LM: "公司要闻",
       },
       tinymceHtml: "",
       imageUrl: "",
@@ -122,52 +70,31 @@ export default {
       btnMessage: "发布",
       flag: "发布",
       time: "",
-      init: {
-        language_url: "/tinymce/langs/zh_CN.js",
-        language: "zh_CN",
-        skin_url: "/tinymce/skins/ui/oxide",
+      setting: {
+        menubar: false,
+        toolbar:
+          "undo redo | fullscreen | formatselect alignleft aligncenter alignright alignjustify indent2em| link unlink | numlist bullist | image media table | fontselect fontsizeselect forecolor backcolor lineheight| bold italic underline strikethrough | indent outdent | superscript subscript | removeformat |",
+        toolbar_drawer: "false",
+        quickbars_selection_toolbar:
+          "removeformat | bold italic underline strikethrough | fontsizeselect forecolor backcolor",
         plugins:
-          "lineheight lists image media table wordcount code fullscreen help  toc fullpage autosave nonbreaking insertdatetime visualchars visualblocks searchreplace spellchecker pagebreak link charmap paste print preview hr anchor",
-
-        toolbar: [
-          "newdocument undo redo | formatselect visualaid|cut copy paste selectall| bold italic underline strikethrough lineheight|codeformat blockformats| superscript subscript  | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent |  removeformat ",
-
-          "code  bullist numlist | lists image media table link |fullscreen help toc fullpage restoredraft nonbreaking insertdatetime visualchars visualblocks searchreplace spellchecker pagebreak anchor charmap  pastetext print preview hr",
-        ],
-        branding: false,
-        height: 630,
-        images_upload_handler: function (blobInfo, success) {
-          let xhr = new XMLHttpRequest();
-          xhr.withCredentials = false;
-          xhr.open("POST", host.host2 + "upload.ashx");
-          xhr.onload = function () {
-            let url = host.baseUrl + JSON.parse(xhr.responseText).url;
-            success(url);
-          };
-          let formData = new FormData();
-          formData.append("file", blobInfo.blob(), blobInfo.filename());
-          xhr.send(formData);
-        },
+          "link image media table lists fullscreen indent2em lineheight",
+        language: "zh_CN",
+        height: 1200,
+        images_upload_url: host.host2 + "upload.ashx",
+        images_upload_base_path: host.baseUrl,
       },
     };
   },
   mounted() {
-    tinymce.init({});
     this.imgUpLoadUrl = host.host2 + "upload.ashx";
   },
   created() {
     if (this.$route.query.flag === "查看") {
       this.flag = "查看";
       this.form.title = this.$route.query.new.XWBT;
-      let arr = new Array();
-      let lm = this.$route.query.new.LM;
-      if (lm === "对内公告" || lm == "对外公告" || lm == "公开公告") {
-        arr.push("通知公告", lm);
-      } else {
-        arr.push(lm);
-      }
-      this.form.LM = arr;
-      this.time=this.$route.query.new.FBSJ;
+      this.form.LM = this.$route.query.new.LM;
+      this.time = this.$route.query.new.FBSJ;
       this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = false;
@@ -175,15 +102,8 @@ export default {
     if (this.$route.query.flag === "编辑") {
       this.flag = "编辑";
       this.form.title = this.$route.query.new.XWBT;
-      let arr = new Array();
-      let lm = this.$route.query.new.LM;
-      if (lm === "对内公告" || lm == "对外公告" || lm == "公开公告") {
-        arr.push("通知公告", lm);
-      } else {
-        arr.push(lm);
-      }
-      this.form.LM = arr;
-      this.time=this.$route.query.new.FBSJ;
+      this.form.LM = this.$route.query.new.LM;
+      this.time = this.$route.query.new.FBSJ;
       this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = true;
@@ -192,13 +112,13 @@ export default {
     }
   },
   components: {
-    Editor,
+    tinymce,
   },
   methods: {
     handleAvatarSuccess(res) {
       // console.log(res);
-      this.path = res.url;
-      this.imageUrl = host.baseUrl + res.url;
+      this.path = res.location;
+      this.imageUrl = host.baseUrl + res.location;
     },
     handleClick() {
       if (this.flag === "发布") {
@@ -220,14 +140,14 @@ export default {
         this.$message.error("标题过长");
         return;
       }
-      if(this.time==""||this.time==null){
+      if (this.time == "" || this.time == null) {
         this.$message.error("请选择发布时间！");
-        return
+        return;
       }
       let data = {
         ID: "",
         LM: "",
-        FBSJ:'',
+        FBSJ: "",
         XWBT: "",
         XWNR: "",
         FBRBH: "",
@@ -237,8 +157,8 @@ export default {
         COVER_IMG: "",
       };
       data.ID = this.$route.query.new.ID;
-      data.LM = this.form.LM[this.form.LM.length - 1];
-      data.FBSJ=this.time;
+      data.LM = this.form.LM;
+      data.FBSJ = this.time;
       data.XWBT = this.form.title;
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
@@ -258,7 +178,7 @@ export default {
                 this.form.title = "";
                 this.imageUrl = "";
                 this.tinymceHtml = "";
-                this.time=""
+                this.time = "";
                 this.$router.push("/admin/dmanage");
               } else {
                 this.$message.error("出现了一点问题，请联系技术人员");
@@ -281,13 +201,13 @@ export default {
         this.$message.error("标题过长");
         return;
       }
-      if(this.time==""||this.time==null){
+      if (this.time == "" || this.time == null) {
         this.$message.error("请选择发布时间！");
-        return
+        return;
       }
       let data = {
         LM: "",
-        FBSJ:"",
+        FBSJ: "",
         XWBT: "",
         XWNR: "",
         FBRBH: "",
@@ -296,8 +216,8 @@ export default {
         SHRXM: "",
         COVER_IMG: "",
       };
-      data.LM = this.form.LM[this.form.LM.length - 1];
-      data.FBSJ=this.time;
+      data.LM = this.form.LM;
+      data.FBSJ = this.time;
       data.XWBT = this.form.title;
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
@@ -318,7 +238,7 @@ export default {
                 this.form.title = "";
                 this.imageUrl = "";
                 this.tinymceHtml = "";
-                this.time="";
+                this.time = "";
               } else {
                 this.$message.error("出现了一点问题，请联系技术人员");
               }
@@ -372,5 +292,10 @@ export default {
 }
 .btn {
   margin-top: 10px;
+}
+.look{
+  width: 100%;
+  min-height: 1200;
+  background: white;
 }
 </style>

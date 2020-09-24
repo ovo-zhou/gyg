@@ -28,7 +28,7 @@
 export default {
   data() {
     return {
-      tag: "on",
+      tag: "off",
     };
   },
   created() {},
@@ -81,6 +81,7 @@ export default {
 .content {
   width: 100%;
   margin-top: 20px;
+  display: none;
 }
 .lc_img {
   width: 500px;

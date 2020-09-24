@@ -3,14 +3,16 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 //前端页面
 import home from './layout/home/home'
-import homepage from './pages/homepage/homepage';
+import homepage from './pages/homepage/homepage'
 import login from './pages/login/login'
 import admin from './layout/admin/admin'
 import profile from './pages/profile/profile'
 import contactus from './pages/contactus/contactInfo'
 import business from './pages/business/business'
 import details from './components/dynamic/details'
+import New from './pages/new/new'
 import dynamic from './pages/dynamic/dynamic'
+import notice from './pages/notice/notice'
 import query from './pages/query/query'
 import dckc from './pages/query/dckc'
 import zxfjf from './pages/query/zxfjf'
@@ -20,7 +22,7 @@ import jzx from './pages/query/jzx'
 import jckmx from './pages/query/jckmx'
 import clientlogin from './pages/query/login'
 import vehicle from './pages/vehicleReservation/index'
-import ZHCLYY from "./pages/vehicleReservation/ZHCLYYQuery";
+import ZHCLYY from "./pages/vehicleReservation/ZHCLYYQuery"
 import XHCLYY from './pages/vehicleReservation/XHCLYYQuery'
 import LSJGCL from './pages/vehicleReservation/LSJGCLQuery'
 import appointmentEdit from './pages/vehicleReservation/AppointmentEdit'
@@ -69,6 +71,13 @@ const routes = [
                     { path: 'LSJGCL', component: LSJGCL, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'appointmentEdit', component: appointmentEdit, meta: { clientlogin: true } },
                     { path: 'InboundVehicleList', component: InboundVehicleList, meta: { clientlogin: true } },
+                ]
+            },
+            {
+                path: 'new', component: New, redirect: '/new/dynamic', meta: { keepAlive: true },
+                children: [
+                    { path: 'dynamic', component: dynamic, meta: { keepAlive: true} },
+                    { path: 'notice', component: notice, meta: { keepAlive: true} },
                 ]
             },
             { path: 'clientlogin', component: clientlogin }
