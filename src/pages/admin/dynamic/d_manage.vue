@@ -3,10 +3,12 @@
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item label="类型">
         <el-select v-model="LM" placeholder="请选择">
-          <el-option label="行业动态(外)" value="行业动态"></el-option>
-          <el-option label="公司要闻(内)" value="公司要闻"></el-option>
-          <el-option label="对外公告(外)" value="对外公告"></el-option>
-          <el-option label="对内公告(内)" value="对内公告"></el-option>
+          <el-option label="行业动态(外网)" value="行业动态"></el-option>
+          <el-option label="公司要闻(内网)" value="公司要闻"></el-option>
+          <el-option label="公开新闻(内外网)" value="公开新闻"></el-option>
+          <el-option label="对外公告(外网)" value="对外公告"></el-option>
+          <el-option label="对内公告(内网)" value="对内公告"></el-option>
+          <el-option label="公开公告(内外网)" value="公开公告"></el-option>
           <el-option label="党群动态" value="党群动态"></el-option>
         </el-select>
       </el-form-item>
@@ -15,20 +17,43 @@
       </el-form-item>
     </el-form>
     <el-table :data="newsdata" style="width: 100%">
-      <el-table-column prop="FBSJ" label="发布日期" width="200"></el-table-column>
-      <el-table-column prop="XWBT" label="动态标题" width="400"></el-table-column>
-      <el-table-column prop="SHZT" label="审核状态" width="100"></el-table-column>
+      <el-table-column
+        prop="FBSJ"
+        label="发布日期"
+        width="200"
+      ></el-table-column>
+      <el-table-column
+        prop="XWBT"
+        label="动态标题"
+        width="400"
+      ></el-table-column>
+      <el-table-column
+        prop="SHZT"
+        label="审核状态"
+        width="100"
+      ></el-table-column>
       <el-table-column label="审核操作" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handlePass(scope.row)">通过</el-button>
-          <el-button size="mini" type="danger" @click="handleNoPass(scope.row)">不通过</el-button>
+          <el-button size="mini" type="primary" @click="handlePass(scope.row)"
+            >通过</el-button
+          >
+          <el-button size="mini" type="danger" @click="handleNoPass(scope.row)"
+            >不通过</el-button
+          >
         </template>
       </el-table-column>
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleLook(scope.row)">查看</el-button>
+          <el-button size="mini" type="primary" @click="handleLook(scope.row)"
+            >查看</el-button
+          >
           <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -50,7 +75,7 @@ import { post } from "../../../service/http";
 export default {
   data() {
     return {
-      LM: "公司要闻",
+      LM: "行业动态",
       total: 0,
       newsdata: [],
     };
@@ -107,7 +132,7 @@ export default {
         if (res.errCode === "SUCCESS") {
           this.total = res.data[0].datanum;
           if (this.total == 0) {
-           this.newsdata = [];
+            this.newsdata = [];
           }
         }
       });
@@ -147,6 +172,13 @@ export default {
     },
     handleEdit(row) {
       // console.log(row);
+      if (row.SHZT == "通过") {
+        this.$message({
+          message: "审核通过的新闻，不能修改哦！",
+          type: "success",
+        });
+        return;
+      }
       this.$router.push({
         path: "/admin/drelease",
         query: {

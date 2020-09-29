@@ -78,7 +78,7 @@ export default {
       this.queryNews(val);
     },
     queryTotal() {
-      post(host.host2 + "QueryNews.ashx", { page: 0, LM: "对外公告" ,clientLX:"web"}).then(
+      post(host.host2 + "QueryNotice.ashx", { page: 0, LM: "对外公告" ,clientLX:"web"}).then(
         res => {
           if (res.errCode === "SUCCESS") {
             this.total = res.data[0].datanum;
@@ -87,7 +87,7 @@ export default {
       );
     },
     queryNews(val) {
-      post(host.host2 + "QueryNews.ashx", { page: val, LM: "对外公告" ,clientLX:"web"}).then(
+      post(host.host2 + "QueryNotice.ashx", { page: val, LM: "对外公告" ,clientLX:"web"}).then(
         res => {
           if (res.errCode === "SUCCESS") {
             this.noticedata = res.data;

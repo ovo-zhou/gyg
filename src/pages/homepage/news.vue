@@ -54,7 +54,7 @@ export default {
       document.body.scrollIntoView();
     },
     querynew() {
-      post(host.host2 + "QueryNews.ashx", {
+      post(host.host2 + "QueryNotice.ashx", {
         page: 1,
         LM: "行业动态",
         clientLX: "web",

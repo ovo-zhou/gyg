@@ -26,7 +26,7 @@ export default {
     };
   },
   mounted() {
-    post(host.host2 + "QueryNews.ashx", {
+    post(host.host2 + "QueryNotice.ashx", {
       page: 1,
       LM: "对外公告",
       clientLX: "web",

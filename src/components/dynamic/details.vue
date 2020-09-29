@@ -32,7 +32,7 @@ export default {
   },
   created() {
     this.curnew=this.$route.query.newdata
-    post(host.host2 + "QueryNews.ashx", { page: 1, LM: "行业动态" ,clientLX:"web"}).then(
+    post(host.host2 + "QueryNotice.ashx", { page: 1, LM: "行业动态" ,clientLX:"web"}).then(
       res => {
         if (res.errCode === "SUCCESS") {
           this.news = res.data;
@@ -73,6 +73,8 @@ export default {
 .text h1 {
   font-size: 24px;
   margin-bottom: 10px;
+  text-align: center;
+  /* background: chartreuse; */
 }
 .releasedate {
   margin-bottom: 20px;

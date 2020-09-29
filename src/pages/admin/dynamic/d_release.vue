@@ -7,10 +7,12 @@
         </el-form-item>
         <el-form-item label="类型">
           <el-select v-model="form.LM" placeholder="请选择">
-            <el-option label="行业动态(外)" value="行业动态"></el-option>
-            <el-option label="公司要闻(内)" value="公司要闻"></el-option>
-            <el-option label="对外公告(外)" value="对外公告"></el-option>
-            <el-option label="对内公告(内)" value="对内公告"></el-option>
+            <el-option label="行业动态(外网)" value="行业动态"></el-option>
+            <el-option label="公司要闻(内网)" value="公司要闻"></el-option>
+            <el-option label="公开新闻(内外网)" value="公开新闻"></el-option>
+            <el-option label="对外公告(外网)" value="对外公告"></el-option>
+            <el-option label="对内公告(内网)" value="对内公告"></el-option>
+            <el-option label="公开公告(内外网)" value="公开公告"></el-option>
             <el-option label="党群动态" value="党群动态"></el-option>
           </el-select>
         </el-form-item>
@@ -34,13 +36,12 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
+          <span style="color:red">图片比例大致为300：150,宽高略微不一致也行，没有封面图可以不用上传</span>
         </el-form-item>
       </el-form>
     </div>
-    <div style="width:800px">
-
-   <vue-tinymce v-model="tinymceHtml" :setting="setting" />
-
+    <div style="width: 800px">
+      <vue-tinymce v-model="tinymceHtml" :setting="setting" />
     </div>
     <template v-if="show">
       <div class="btn">
@@ -55,13 +56,13 @@
 <script>
 import host from "../../../libs/utils";
 import { post } from "../../../service/http";
-import {dateToString1} from '../../../assets/vehicleResJs/common'
+import { dateToString1 } from "../../../assets/vehicleResJs/common";
 export default {
   data() {
     return {
       form: {
         title: "",
-        LM: "公司要闻",
+        LM: "行业动态",
       },
       tinymceHtml: "",
       imageUrl: "",
@@ -74,12 +75,10 @@ export default {
       setting: {
         menubar: false,
         toolbar:
-          "undo redo | fullscreen | formatselect alignleft aligncenter alignright alignjustify indent2em| link unlink | numlist bullist | image media table | fontselect fontsizeselect forecolor backcolor lineheight| bold italic underline strikethrough | indent outdent | superscript subscript | removeformat |",
+          "preview| fullscreen | formatselect alignleft aligncenter alignright alignjustify indent2em| link unlink | numlist bullist | image media table | fontselect fontsizeselect forecolor backcolor lineheight| bold italic underline strikethrough | indent outdent | superscript subscript | removeformat | cut copy paste pastetext ",
         toolbar_drawer: "false",
-        quickbars_selection_toolbar:
-          "removeformat | bold italic underline strikethrough | fontsizeselect forecolor backcolor",
         plugins:
-          "link image media table lists fullscreen indent2em lineheight",
+          "link image media table lists fullscreen indent2em lineheight preview",
         language: "zh_CN",
         height: 1200,
         images_upload_url: host.host2 + "upload.ashx",
@@ -88,7 +87,7 @@ export default {
     };
   },
   mounted() {
-    this.time=dateToString1(new Date())
+    this.time = dateToString1(new Date());
     this.imgUpLoadUrl = host.host2 + "upload.ashx";
   },
   created() {
@@ -295,7 +294,7 @@ export default {
 .btn {
   margin-top: 10px;
 }
-.look{
+.look {
   width: 100%;
   min-height: 1200;
   background: white;
