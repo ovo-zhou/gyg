@@ -15,7 +15,7 @@
       <el-table-column label="视频" width="200">
         <template slot-scope="scope">
           <template v-for="(item,index)  in scope.row.SP">
-            <p class="videoName" :key="index" @click="play(item,scope.row)">{{scope.row.YWMC}}.mp4</p>
+            <p class="videoName" :key="index" @click="play(item)">{{scope.row.YWMC}}.mp4</p>
           </template>
         </template>
       </el-table-column>
@@ -26,12 +26,16 @@
         </template>
       </el-table-column>
     </el-table>
+
+
     <el-dialog title="视频预览" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
       <video id="play" :src="curVideo" width="440" height="240" controls></video>
     </el-dialog>
+
     <el-dialog title="图像预览" :visible.sync="dialogVisible2" width="30%">
       <el-image style="width: 440px; height: 240px" :src="curImg"></el-image>
     </el-dialog>
+
     <el-dialog title="编辑" :visible.sync="dialogVisible1" width="40%" :before-close="handleClose1">
       <el-form ref="form" :model="curRow" label-width="100px">
         <el-form-item label="业务名称">
@@ -124,7 +128,7 @@ export default {
               this.tableData[i].SP[k]=host.baseUrl+ this.tableData[i].SP[k]
             }
           }
-          console.log(JSON.parse(this.tableData));
+          // console.log(JSON.parse(this.tableData));
         }
       });
     },
@@ -166,11 +170,11 @@ export default {
     },
     handleSuccess1(res) {
       this.curRow.LCT.push(host.baseUrl+ res.url);
-      // console.log(this.curRow);
+      console.log(this.curRow.LCT);
     },
     handleSuccess2(res) {
       this.curRow.SP.push(host.baseUrl+ res.url);
-      // console.log(this.curRow);
+      console.log(this.curRow.SP);
     },
     handleModify() {
       this.$alert("确认修改？", "提示", {
@@ -218,6 +222,7 @@ export default {
           if (action === "confirm") {
             let index = this.getIndex(item, this.curRow.LCT);
             this.curRow.LCT.splice(index, 1);
+            // console.log(this.curRow.LCT)
           }
         }
       });
@@ -229,6 +234,7 @@ export default {
           if (action === "confirm") {
             let index = this.getIndex(item, this.curRow.SP);
             this.curRow.SP.splice(index, 1);
+            // console.log(this.curRow.SP)
           }
         }
       });

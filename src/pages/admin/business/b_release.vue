@@ -110,6 +110,8 @@ export default {
                 this.form.name = "";
                 this.imgList = [];
                 this.videoList = [];
+                this.imgfilelist=[];
+                this.videofileList=[];
               }else{
                 this.$message.error("出现了一点问题，请联系技术人员")
               }

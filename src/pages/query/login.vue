@@ -50,7 +50,7 @@ export default {
     var data = { SESSIONID: this.nowtime };
     var promise = post(url, data);
     promise.then((v) => {
-      console.log("v.errStr", v.errStr);
+      // console.log("v.errStr", v.errStr);
       if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
         // console.log(v.errStr);
         this.imgData = "data:image/jpg;base64," + v.errStr;
