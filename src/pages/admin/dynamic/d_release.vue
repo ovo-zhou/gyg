@@ -25,18 +25,8 @@
             value-format="yyyy/MM/dd HH:mm:ss"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="封面图">
-          <el-upload
-            class="avatar-uploader"
-            :action="imgUpLoadUrl"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            accept="image/jpeg, image/jpg, image/png"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-          <span style="color:red">图片比例大致为300：150,宽高略微不一致也行，没有封面图可以不用上传</span>
+         <el-form-item label="封面图">
+          <imgupload ref="imguploadData"></imgupload>
         </el-form-item>
       </el-form>
     </div>
@@ -57,6 +47,7 @@
 import host from "../../../libs/utils";
 import { post } from "../../../service/http";
 import { dateToString1 } from "../../../assets/vehicleResJs/common";
+import imgupload from './imgUpload'
 export default {
   data() {
     return {
@@ -65,7 +56,6 @@ export default {
         LM: "行业动态",
       },
       tinymceHtml: "",
-      imageUrl: "",
       imgUpLoadUrl: "",
       path: "",
       show: true,
@@ -89,14 +79,17 @@ export default {
   mounted() {
     this.time = dateToString1(new Date());
     this.imgUpLoadUrl = host.host2 + "upload.ashx";
-  },
-  created() {
+
     if (this.$route.query.flag === "查看") {
       this.flag = "查看";
       this.form.title = this.$route.query.new.XWBT;
       this.form.LM = this.$route.query.new.LM;
       this.time = this.$route.query.new.FBSJ;
-      this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
+      
+      this.$refs.imguploadData.option.img=host.baseUrl+this.$route.query.new.COVER_IMG;
+      this.$refs.imguploadData.imgUrl=this.$route.query.new.COVER_IMG;
+      this.$refs.imguploadData.fileName=this.$route.query.new.COVER_IMG;
+
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = false;
     }
@@ -105,7 +98,11 @@ export default {
       this.form.title = this.$route.query.new.XWBT;
       this.form.LM = this.$route.query.new.LM;
       this.time = this.$route.query.new.FBSJ;
-      this.imageUrl = host.baseUrl + this.$route.query.new.COVER_IMG;
+
+      this.$refs.imguploadData.option.img=host.baseUrl + this.$route.query.new.COVER_IMG;
+      this.$refs.imguploadData.imgUrl=this.$route.query.new.COVER_IMG;
+      this.$refs.imguploadData.fileName=this.$route.query.new.COVER_IMG;
+
       this.tinymceHtml = this.$route.query.new.XWNR;
       this.show = true;
       this.btnMessage = "确认修改";
@@ -114,13 +111,9 @@ export default {
   },
   components: {
     tinymce,
+    imgupload
   },
   methods: {
-    handleAvatarSuccess(res) {
-      // console.log(res);
-      this.path = res.location;
-      this.imageUrl = host.baseUrl + res.location;
-    },
     handleClick() {
       if (this.flag === "发布") {
         this.handleRelease();
@@ -164,7 +157,7 @@ export default {
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
-      data.COVER_IMG = this.path;
+      data.COVER_IMG = this.$refs.imguploadData.imgUrl;
       // console.log(data);
       this.$alert("确认修改？", "提示", {
         confirmButtonText: "确定",
@@ -177,7 +170,8 @@ export default {
                   type: "success",
                 });
                 this.form.title = "";
-                this.imageUrl = "";
+                this.$refs.imguploadData.imgUrl="";
+                this.$refs.imguploadData.option.img="";
                 this.tinymceHtml = "";
                 this.time = "";
                 this.$router.push("/admin/dmanage");
@@ -223,7 +217,7 @@ export default {
       data.XWNR = this.tinymceHtml;
       data.FBRBH = JSON.parse(sessionStorage.getItem("user")).Yhbh;
       data.FBRXM = JSON.parse(sessionStorage.getItem("user")).XM;
-      data.COVER_IMG = this.path;
+      data.COVER_IMG = this.$refs.imguploadData.imgUrl;
       // console.log(data);
       this.$alert("确认发布？", "提示", {
         confirmButtonText: "确定",
@@ -237,7 +231,8 @@ export default {
                   type: "success",
                 });
                 this.form.title = "";
-                this.imageUrl = "";
+                this.$refs.imguploadData.imgUrl="";
+                this.$refs.imguploadData.option.img="";
                 this.tinymceHtml = "";
                 this.time = "";
               } else {
@@ -254,7 +249,8 @@ export default {
       if (to.query.flag != from.query.flag) {
         this.flag = "发布";
         this.form.title = "";
-        this.imageUrl = "";
+        this.$refs.imguploadData.imgUrl="";
+        this.$refs.imguploadData.option.img="";
         this.tinymceHtml = "";
         this.show = true;
         this.btnMessage = "发布";
