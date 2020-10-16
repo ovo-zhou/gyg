@@ -9,7 +9,9 @@ Vue.use(VueTinymce)
 import router from './router'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
+import store from './store'
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

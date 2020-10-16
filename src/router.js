@@ -20,6 +20,7 @@ import dcjf from './pages/query/dcjf'
 import jh from './pages/query/jh'
 import jzx from './pages/query/jzx'
 import jckmx from './pages/query/jckmx'
+import lwcx from './pages/query/lwcx'
 import clientlogin from './pages/query/login'
 import vehicle from './pages/vehicleReservation/index'
 import ZHCLYY from "./pages/vehicleReservation/ZHCLYYQuery"
@@ -50,10 +51,11 @@ const routes = [
             { path: "profile", component: profile },
             { path: "contactus", component: contactus, },
             { path: "business", component: business, meta: { keepAlive: true } },
-            { path: "details", component: details},
+            { path: "details", component: details },
             { path: 'dynamic', component: dynamic, meta: { keepAlive: true } },
+            { path: 'lwcx', component: lwcx, meta: { keepAlive: true, lwlogin: true } },
             {
-                path: 'query', component: query, redirect: '/query/dckc', meta: { keepAlive: false},
+                path: 'query', component: query, redirect: '/query/dckc', meta: { keepAlive: false },
                 children: [
                     { path: 'dckc', component: dckc, meta: { keepAlive: true, clientlogin: true } },
                     { path: 'zxfjf', component: zxfjf, meta: { keepAlive: true, clientlogin: true } },
@@ -76,8 +78,8 @@ const routes = [
             {
                 path: 'new', component: New, redirect: '/new/dynamic', meta: { keepAlive: true },
                 children: [
-                    { path: 'dynamic', component: dynamic, meta: { keepAlive: true} },
-                    { path: 'notice', component: notice, meta: { keepAlive: true} },
+                    { path: 'dynamic', component: dynamic, meta: { keepAlive: true } },
+                    { path: 'notice', component: notice, meta: { keepAlive: true } },
                 ]
             },
             { path: 'clientlogin', component: clientlogin }
@@ -88,16 +90,16 @@ const routes = [
         path: '/admin', component: admin, redirect: '/admin/adminhome',
         children: [
             { path: 'adminhome', component: adminhome, meta: { adminlogin: true } },
-            { path: 'dmanage', component: dmanage, meta: { keepAlive: true , adminlogin: true} },
+            { path: 'dmanage', component: dmanage, meta: { keepAlive: true, adminlogin: true } },
             { path: 'drelease', component: drelease, meta: { adminlogin: true } },
-            { path: 'bmanage', component: bmanage, meta: { keepAlive: true , adminlogin: true} },
+            { path: 'bmanage', component: bmanage, meta: { keepAlive: true, adminlogin: true } },
             { path: 'brelease', component: brelease, meta: { adminlogin: true } },
             // { path: 'nrelease', component: nrelease, meta: { adminlogin: true } },
             // { path: 'nmanage', component: nmanage, meta: { keepAlive: true } },
             { path: "companystyle", component: companystyle, meta: { adminlogin: true } },
             { path: "cmanage", component: cmanage, meta: { adminlogin: true } },
             { path: "adrelease", component: adrelease, meta: { adminlogin: true } },
-            { path: "admanage", component: admanage, meta: { keepAlive: true,adminlogin: true } },
+            { path: "admanage", component: admanage, meta: { keepAlive: true, adminlogin: true } },
         ]
     },
     { path: '/adDetail', component: adDetail }
@@ -120,19 +122,28 @@ router.beforeEach((to, from, next) => {
         if (
             JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
                 "系统管理员"
-              ) >= 0 ||
-              JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+            ) >= 0 ||
+            JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
                 "新闻发布"
-              ) >= 0 ||
-              JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
+            ) >= 0 ||
+            JSON.parse(sessionStorage.getItem("user")).UserIdentity.indexOf(
                 "新闻审核"
-              ) >= 0
+            ) >= 0
         ) {
             next()
         } else {
             next("/login")
         }
-    } else {
+    } else if (to.meta.lwlogin) {
+        let lw = JSON.parse(sessionStorage.getItem("user"))
+        if (lw == "" || lw == null) {
+            next('/clientlogin')
+        }
+        else {
+            next()
+        }
+    }
+    else {
         next()
     }
 

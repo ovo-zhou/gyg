@@ -65,7 +65,7 @@ export default {
     },
     toJCKMX() {
       this.check = "JCKMX";
-
+      
       this.$router.push("/query/jckmx");
     },
   },

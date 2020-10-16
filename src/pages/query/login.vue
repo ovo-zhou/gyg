@@ -6,7 +6,21 @@
         <el-input type="text" placeholder="请输入账号" v-model="form.Account" />
       </el-form-item>
       <el-form-item label="密码" prop="PassWord">
-        <el-input type="password" placeholder="请输入密码" v-model="form.PassWord" />
+        <el-input
+          type="password"
+          placeholder="请输入密码"
+          v-model="form.PassWord"
+        />
+      </el-form-item>
+      <el-form-item label="登录方式">
+        <el-select
+          v-model="form.loginLX"
+          placeholder="请选择"
+          style="width: 270px"
+        >
+          <el-option label="客户查询" value="客户查询"> </el-option>
+          <el-option label="劳务查询" value="劳务查询"> </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="验证码" prop="YZM">
         <el-row>
@@ -14,10 +28,16 @@
             <el-input placeholder="请输入验证码" v-model="form.YZM" />
           </el-col>
           <el-col :span="10">
-            <img :src="imgData" id="idPic" style="width:110px;height:40px" @click="updateImg" />
+            <img
+              :src="imgData"
+              id="idPic"
+              style="width: 110px; height: 40px"
+              @click="updateImg"
+            />
           </el-col>
         </el-row>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="login">登录</el-button>
         <el-button @click="cancel">取消</el-button>
@@ -30,7 +50,6 @@
 import { post } from "../../service/http";
 import host from "../../libs/utils";
 import { dateToString } from "../../assets/vehicleResJs/common.js";
-import bus from "../../components/admin/bus";
 export default {
   data() {
     return {
@@ -38,6 +57,7 @@ export default {
         Account: "",
         PassWord: "",
         YZM: "",
+        loginLX: "客户查询",
       },
       imgData: "",
       nowtime: "",
@@ -73,6 +93,56 @@ export default {
       });
     },
     login() {
+      if (this.form.loginLX == "客户查询") {
+        this.loginClient();
+      } else {
+        this.loginWork();
+      }
+    },
+    loginWork() {
+      if (this.form.Account === "" || this.form.PassWord === "") {
+        this.$message.error("用户名或密码不能为空");
+        return;
+      }
+      if (this.form.YZM === "") {
+        this.$message.error("验证码不能为空");
+        return;
+      }
+      let url = host.host1 + "login.ashx";
+      var data = {
+        Account: this.form.Account,
+        PassWord: this.form.PassWord,
+        YZM: this.form.YZM,
+        SESSIONID: this.nowtime,
+      };
+      post(url, data).then((res) => {
+        if (res.errCode === "SUCCESS") {
+          // console.log(res);
+          if (res.data[0]["DeptId"] < 81 || res.data[0]["DeptId"] > 99) {
+            this.$message.error("非劳务公司账号！");
+            return;
+          }
+          let user = {
+            DeptId: "",
+            DeptName: "",
+            Yhbh: "",
+            XM: "",
+          };
+          user.DeptId = res.data[0]["DeptId"];
+          user.DeptName = res.data[0]["DeptName"];
+          user.Yhbh = res.data[0]["Yhbh"];
+          user.XM = res.data[0]["XM"];
+          sessionStorage.removeItem("clientUser");
+          sessionStorage.setItem("user", JSON.stringify(user));
+          // console.log(user);
+          this.$store.commit("changeMessage", "欢迎 " + user.XM);
+          this.$router.push("/lwcx");
+        } else if (res.errCode === "FAIL") {
+          this.$message.error(res.errStr);
+        }
+      });
+    },
+    loginClient() {
       if (this.form.Account === "" || this.form.PassWord === "") {
         this.$message.error("用户名或密码不能为空");
         return;
@@ -91,7 +161,7 @@ export default {
       };
       var promise = post(url, data);
       promise.then((v) => {
-        console.log("客户登录", v);
+        // console.log("客户登录", v);
         if (v.errCode === "SUCCESS") {
           let KHQC = v.data[0]["KHQC"];
           let YHBH = v.data[0]["Yhbh"];
@@ -104,8 +174,9 @@ export default {
           clientuser.KHQC = KHQC;
           clientuser.YHBH = YHBH;
           clientuser.LOGINTIME = LOGINTIME;
+          sessionStorage.removeItem("user");
           sessionStorage.setItem("clientUser", JSON.stringify(clientuser));
-          bus.$emit("message", KHQC);
+          this.$store.commit("changeMessage", "欢迎 " + KHQC);
           if (typeof this.$route.query.tourl == "undefined") {
             this.$router.push("/homepage");
           } else {

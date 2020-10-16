@@ -4,25 +4,27 @@
       <div class="top_contain">
         <div>
           <span class="span1">
-            {{getDate+"\xa0\xa0\xa0\xa0"+this.weatherinfo.city+"\xa0\xa0\xa0\xa0"+this.weatherinfo.wea+" "}}
-            <font
-              size="3"
-              id="tem2"
-            >{{this.weatherinfo.tem2+"℃"}}</font>
-            {{"~"}}
-            <font size="3" id="tem1">{{this.weatherinfo.tem1+"℃"}}</font>
-            {{"\xa0\xa0\xa0\xa0"+this.weatherinfo.week}}
+            {{
+              getDate +
+              "\xa0\xa0\xa0\xa0" +
+              this.weatherinfo.city +
+              "\xa0\xa0\xa0\xa0" +
+              this.weatherinfo.wea +
+              " "
+            }}
+            <font size="3" id="tem2">{{ this.weatherinfo.tem2 + "℃" }}</font>
+            {{ "~" }}
+            <font size="3" id="tem1">{{ this.weatherinfo.tem1 + "℃" }}</font>
+            {{ "\xa0\xa0\xa0\xa0" + this.weatherinfo.week }}
           </span>
         </div>
         <div class="contain_right">
-          <!-- <div class="tel">
-            <img class="icon1" src="../../assets/2.png" />
-            <span class="span2">023-60350627</span>
-          </div>-->
           <div>
-            <!-- <img class="icon2" src="../../assets/1.png" /> -->
             <span class="span3" @click="stafflogin">内网首页</span>
-            <span class="span3" @click="login">{{message}}</span>
+
+            <span class="span3" @click="login">{{
+              this.$store.state.loginMessage
+            }}</span>
             <span class="span3">
               <a href="http://222.178.229.150:59300/#/login">员工登录</a>
             </span>
@@ -35,7 +37,7 @@
         <div>
           <img class="icon3" src="../../assets/newlogo1.png" />
           <div class="companyName">
-            <p style="margin-left: 20px;">重庆果园港埠有限公司</p>
+            <p style="margin-left: 20px">重庆果园港埠有限公司</p>
             <p>重庆果园件散货码头有限公司</p>
           </div>
         </div>
@@ -78,26 +80,16 @@
   </div>
 </template>
 <script>
-import bus from "../admin/bus";
 import axios from "axios";
 import host from "../../libs/utils";
 export default {
   data() {
     return {
-      message: "客户登录",
       weatherinfo: "",
     };
   },
   mounted() {
-    let user=JSON.parse(sessionStorage.getItem("clientUser"))
-    if(user!=null){
-      this.message = "欢迎 " + user.KHQC;
-    }
-
-    bus.$on("message", (message) => {
-      this.message = "欢迎 " + message;
-    });
-
+   
     let mynav = document.getElementById("nav");
     window.onscroll = () => {
       if (document.documentElement.scrollTop > mynav.offsetTop) {
@@ -107,7 +99,6 @@ export default {
         mynav.style.position = "static";
       }
     };
-    //host.host1 + "weather.ashx"
     axios.post(host.host1 + "weather.ashx").then((e) => {
       // console.log(e.data);
       this.weatherinfo = e.data;
@@ -148,7 +139,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.message === "客户登录") {
+      if (this.$store.state.loginMessage == "客户登录") {
         this.$router.push("/clientlogin");
         return;
       }
@@ -178,7 +169,13 @@ export default {
       document.body.scrollIntoView();
     },
     toQuery() {
-      this.$router.push("/query");
+      if (sessionStorage.getItem("user") != null) {
+        this.$router.push("/lwcx");
+      } else if (sessionStorage.getItem("clientUser") != null) {
+        this.$router.push("/query");
+      } else {
+        this.$router.push("/clientlogin");
+      }
       document.body.scrollIntoView();
     },
     toVehicle() {
@@ -279,10 +276,10 @@ export default {
 }
 .icon3 {
   margin-top: 25px;
-  width: 70PX;
+  width: 70px;
   height: 40px;
 }
-.companyName{
+.companyName {
   position: relative;
   left: 80px;
   top: -45px;
