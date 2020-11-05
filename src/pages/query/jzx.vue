@@ -41,6 +41,7 @@
       layout="total, prev, pager, next, jumper"
       :total="total"
     ></el-pagination>
+    <p style="color:red;font-size:20px">由于统计时间和审核时间的不同，本数据仅做参考，实际数据以业务部数据为准。</p>
   </div>
 </template>
 
