@@ -56,6 +56,11 @@
           >
         </template>
       </el-table-column>
+      <el-table-column label="公众号置顶" width="100">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="handleTop(scope.row)">置顶</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="block">
       <el-pagination
@@ -208,6 +213,26 @@ export default {
         },
       });
     },
+    handleTop(row){
+      if(row.LM==="公司要闻"||row.LM==="对内公告"){
+        this.$message.error("内网新闻和公告不能在公众号置顶哦ovo");
+        return
+      }
+      let data={
+        LM:row.LM,
+        ID:row.ID
+      }
+      console.log(data)
+      post(host.host2+"SetNewTop.ashx",data).then(res=>{
+        console.log(res)
+        if(res.errCode==="SUCCESS"){
+           this.$message({
+                  message: "置顶成功",
+                  type: "success",
+                });
+        }
+      })
+    }
   },
   mounted() {
     this.queryTotal();
