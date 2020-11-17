@@ -11,10 +11,12 @@
             <el-option label="在港" value="1"></el-option>
             <el-option label="离港" value="2"></el-option>
           </el-select>
-          <!-- <el-input v-model="CPH" placeholder="车牌号"></el-input> -->
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+         <el-form-item>
+          <el-button type="primary" @click="queryALL">查询全部在港</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -76,8 +78,32 @@ export default {
     this.onSubmit()
   },
   methods: {
+    queryALL(){
+      this.table=[];
+     this.currentPage=0
+      var url = host.host5 + "QueryAllJHBQ.ashx";
+      var data = {
+        HZ: JSON.parse(sessionStorage.getItem("clientUser")).YHBH,
+        LX: "JZX"
+      };
+      post(url,data).then(v=>{
+        console.log(v)
+        if (v.errCode == "SUCCESS") {
+          this.resulttable = this.selectZGZT(v.data,this.ZGZT);
+          this.total=this.resulttable.length;
+          if(this.total=="0"){
+            // this.open("此工班日期内没有数据！")
+          }else{
+          this.table=this.resulttable.slice(0,10)
+          }
+        } else {
+          this.open("出了点错误请联系技术人员");
+        }
+      })
+    },
     onSubmit() {
       this.table=[];
+     this.currentPage=0
       var url = host.host5 + "QueJHBQ.ashx";
       var data = {
         HZ: JSON.parse(sessionStorage.getItem("clientUser")).YHBH,
@@ -94,7 +120,7 @@ export default {
       promise.then((v) => {
         // console.log(v);
        if (v.errCode == "SUCCESS") {
-          this.resulttable = this.selectZGZT(v.data,this.ZGZT);
+          this.resulttable = v.data
           this.total=this.resulttable.length;
           if(this.total=="0"){
             // this.open("此工班日期内没有数据！")

@@ -17,7 +17,7 @@
       </el-table-column>
       <el-table-column label="公众号置顶" width="100">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleTop(scope.row)">置顶</el-button>
+          <el-button size="mini" type="primary" @click="handleTop(scope.row)">{{getTopText(scope.row.TOP)}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,6 +42,18 @@ export default {
       total: 0,
       newsdata: [],
     };
+  },
+  computed:{
+    getTopText() {
+        return (top) => {
+            if(top==='1')
+            {
+              return "已置顶"
+            }else{
+              return "置顶"
+            }
+        }
+      },
   },
   methods: {
     handlePass(raw) {
@@ -91,7 +103,6 @@ export default {
         LM: "直击风采",
         clientLX: "admin",
       }).then((res) => {
-        console.log(res);
         if (res.errCode === "SUCCESS") {
           this.total = res.data[0].datanum;
         }
@@ -103,6 +114,7 @@ export default {
         LM: "直击风采",
         clientLX: "admin",
       }).then((res) => {
+        console.log(res);
         if (res.errCode === "SUCCESS") {
           this.newsdata = res.data;
           for (let i = 0; i < this.newsdata.length; i++) {
@@ -157,6 +169,7 @@ export default {
                   message: "置顶成功",
                   type: "success",
                 });
+                this.querybtn()
         }
       })
     }
