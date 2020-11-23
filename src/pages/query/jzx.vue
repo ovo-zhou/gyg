@@ -23,6 +23,7 @@
     <el-table :data="table"  style="width: 100%" border highlight-current-row :header-cell-style="{background:'#F5F5F5'}">
       <el-table-column prop="JGHTYDBH" label="合同运单编号（进港）" width="150"></el-table-column>
       <el-table-column prop="CGHTYDBH" label="合同运单编号（出港）" width="210"></el-table-column>
+      <el-table-column prop="GBRQ" label="工班日期" width="160"></el-table-column>
       <el-table-column prop="XH" label="箱号" width="140"></el-table-column>
       <el-table-column prop="ZGZT" label="在港状态" width="50"></el-table-column>
       <el-table-column prop="ZL" label="重量" width="60"></el-table-column>

@@ -10,8 +10,10 @@
   "dependencies": {
     "@packy-tang/vue-tinymce": "^1.1.0",
     "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
+    "es6-promise": "^4.2.8",
     "tinymce": "^5.4.2",
     "vue": "^2.6.11",
     "vue-calendar-component": "^2.8.2",
