@@ -19,6 +19,15 @@
   </noscript>
   <div id="app"></div>
   <!-- built files will be auto injected -->
+  <script>
+    if (!!window.ActiveXObject || "ActiveXObject" in window) {
+      window.location = "./err.html"
+    }
+    else {
+
+    }
+
+  </script>
   <script src="./tinymce/tinymce.min.js"></script><!-- tinymce -->
   <script src="./tinymce/langs/zh_CN.js"></script><!-- 本地化 -->
 </body>

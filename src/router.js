@@ -112,7 +112,6 @@ router.beforeEach((to, from, next) => {
     if (to.meta.clientlogin) {
         let clientUser = JSON.parse(sessionStorage.getItem("clientUser"))
         if (clientUser === "" || clientUser === null) {
-            // next('/clientlogin')
             next({ path: '/clientlogin', query: { tourl: to.path } })
         } else {
             next()
@@ -135,7 +134,7 @@ router.beforeEach((to, from, next) => {
             next("/login")
         }
     } else if (to.meta.lwlogin) {
-        let lw = JSON.parse(sessionStorage.getItem("user"))
+        let lw = JSON.parse(sessionStorage.getItem("lwuser"))
         if (lw == "" || lw == null) {
             next('/clientlogin')
         }

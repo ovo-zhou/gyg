@@ -8,15 +8,14 @@
     <div class="header-right">
       <div class="header-user-con">
         <!-- 用户名下拉菜单 -->
-        <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+        <el-dropdown class="user-name" @command="handleCommand">
           <span class="el-dropdown-link">
-            当前用户：{{username}}
-            <!-- <i class="el-icon-caret-bottom"></i> -->
+            当前用户：{{ username }}
+            <i class="el-icon-caret-bottom"></i>
           </span>
-          <!-- <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>用户信息</el-dropdown-item>
-            <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
-          </el-dropdown-menu> -->
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>退出登录</el-dropdown-item>
+          </el-dropdown-menu>
         </el-dropdown>
       </div>
     </div>
@@ -28,21 +27,26 @@ export default {
   data() {
     return {
       collapse: false,
-      username:''
+      username: "",
     };
   },
-mounted(){
-  this.username=JSON.parse(sessionStorage.getItem("user")).XM
-},
-  methods: { 
+  mounted() {
+    this.username = JSON.parse(sessionStorage.getItem("user")).XM;
+  },
+  methods: {
     collapseChage() {
       this.collapse = !this.collapse;
       bus.$emit("collapse", this.collapse);
     },
-    toHome(){
-      this.$router.push('/')
-    }
-  }
+    toHome() {
+      this.$router.push("/");
+    },
+    handleCommand() {
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("isLogin");
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 <style scoped>
@@ -122,7 +126,7 @@ mounted(){
 .el-dropdown-menu__item {
   text-align: center;
 }
-.collapse-btn:hover{
-  background-color: #009688!important;
+.collapse-btn:hover {
+  background-color: #009688 !important;
 }
 </style>

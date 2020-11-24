@@ -64,15 +64,13 @@ export default {
     };
   },
   mounted() {
+    //初始化验证码
     this.nowtime = new Date().getTime() * 1000;
-    // console.log("nowtime", this.nowtime);
     var url = host.host1 + "updateVerifyCode.ashx";
     var data = { SESSIONID: this.nowtime };
     var promise = post(url, data);
     promise.then((v) => {
-      // console.log("v.errStr", v.errStr);
       if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
-        // console.log(v.errStr);
         this.imgData = "data:image/jpg;base64," + v.errStr;
       }
     });
@@ -81,13 +79,13 @@ export default {
     cancel() {
       this.$router.push("/homepage");
     },
+    //点击更新验证码
     updateImg() {
       var url = host.host1 + "updateVerifyCode.ashx";
       var data = { SESSIONID: this.nowtime };
       var promise = post(url, data);
       promise.then((v) => {
         if (v.errCode === "FAIL" || v.errCode === "SUCCESS") {
-          // console.log(v.errStr);
           this.imgData = "data:image/jpg;base64," + v.errStr;
         }
       });
@@ -99,6 +97,7 @@ export default {
         this.loginWork();
       }
     },
+    //劳务公司登录
     loginWork() {
       if (this.form.Account === "" || this.form.PassWord === "") {
         this.$message.error("用户名或密码不能为空");
@@ -117,7 +116,6 @@ export default {
       };
       post(url, data).then((res) => {
         if (res.errCode === "SUCCESS") {
-          // console.log(res);
           if (res.data[0]["DeptId"] < 81 || res.data[0]["DeptId"] > 99) {
             this.$message.error("非劳务公司账号！");
             return;
@@ -132,10 +130,10 @@ export default {
           user.DeptName = res.data[0]["DeptName"];
           user.Yhbh = res.data[0]["Yhbh"];
           user.XM = res.data[0]["XM"];
-          sessionStorage.removeItem("clientUser");
-          sessionStorage.setItem("user", JSON.stringify(user));
-          // console.log(user);
-          this.$store.commit("changeMessage", "欢迎 " + user.XM);
+          sessionStorage.removeItem("clientUser");//清除客户登录信息
+          sessionStorage.setItem("lwuser", JSON.stringify(user));
+          this.$store.commit("changeMessage", "欢迎 " + user.XM);//更改vuex中的登录信息
+          this.$store.commit("changeState",true);//改变登录状态
           this.$router.push("/lwcx");
         } else if (res.errCode === "FAIL") {
           this.$message.error(res.errStr);
@@ -174,9 +172,10 @@ export default {
           clientuser.KHQC = KHQC;
           clientuser.YHBH = YHBH;
           clientuser.LOGINTIME = LOGINTIME;
-          sessionStorage.removeItem("user");
+          sessionStorage.removeItem("lwuser");
           sessionStorage.setItem("clientUser", JSON.stringify(clientuser));
           this.$store.commit("changeMessage", "欢迎 " + KHQC);
+          this.$store.commit("changeState",true);//改变登录状态
           if (typeof this.$route.query.tourl == "undefined") {
             this.$router.push("/homepage");
           } else {

@@ -22,9 +22,17 @@
           <div>
             <span class="span3" @click="stafflogin">内网首页</span>
 
-            <span class="span3" @click="login">{{
-              this.$store.state.loginMessage
-            }}</span>
+            <span
+              class="span3"
+              @click="login"
+              v-if="!this.$store.state.loginstate"
+              >{{ this.$store.state.loginMessage }}</span
+            >
+
+            <span class="span3 dropdown" v-else
+              >{{ this.$store.state.loginMessage }}
+              <p class="dropdown-content" @click="exitlogin">退出登录</p>
+            </span>
             <span class="span3">
               <a href="http://222.178.229.150:59300/#/login">员工登录</a>
             </span>
@@ -89,7 +97,6 @@ export default {
     };
   },
   mounted() {
-   
     let mynav = document.getElementById("nav");
     window.onscroll = () => {
       if (document.documentElement.scrollTop > mynav.offsetTop) {
@@ -144,6 +151,13 @@ export default {
         return;
       }
     },
+    exitlogin() {
+      sessionStorage.removeItem("clientUser");
+      sessionStorage.removeItem("lwuser");
+      this.$store.commit("changeMessage", "客户登录");
+      this.$store.commit("changeState", false); //改变登录状态
+      this.$router.push("/clientlogin");
+    },
     toDZSW() {
       window.open("http://222.178.229.150:58080");
       document.body.scrollIntoView();
@@ -169,7 +183,7 @@ export default {
       document.body.scrollIntoView();
     },
     toQuery() {
-      if (sessionStorage.getItem("user") != null) {
+      if (sessionStorage.getItem("lwuser") != null) {
         this.$router.push("/lwcx");
       } else if (sessionStorage.getItem("clientUser") != null) {
         this.$router.push("/query");
@@ -242,10 +256,27 @@ export default {
   color: rgba(0, 64, 110, 1);
   margin-left: 5px;
   cursor: pointer;
+  /* background: khaki; */
+  display: inline-block;
 }
 .span3 a {
   text-decoration: none;
   color: rgba(0, 64, 110, 1);
+}
+.dropdown-content {
+  background: #dcdfe6;
+  display: none;
+  position: absolute;
+  margin-left: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 5px;
+  line-height: 30px;
+  color: black;
+  margin-top: -10px;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 .icon1 {
   display: inline-block;

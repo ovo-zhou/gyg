@@ -119,7 +119,7 @@ export default {
       let data = {
         startDate: this.dateArr[0],
         endDate: this.dateArr[1],
-        gsmc: JSON.parse(sessionStorage.getItem("user")).XM,
+        gsmc: JSON.parse(sessionStorage.getItem("lwuser")).XM,
       };
       console.log(data)
       post(host.host5 + "QueLWGS.ashx",data).then(res=>{

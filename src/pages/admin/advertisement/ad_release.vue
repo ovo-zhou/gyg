@@ -16,7 +16,7 @@
         <el-input v-model="form.url"></el-input>
       </el-form-item>
       <el-form-item label="自定义内容">
-    <vue-tinymce v-model="tinymceHtml" :setting="setting" />
+      <vue-tinymce v-model="tinymceHtml" :setting="setting" />
        
       </el-form-item>
       <el-form-item>
