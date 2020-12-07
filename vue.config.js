@@ -10,5 +10,6 @@ module.exports = {
         externals: {
             "BMap": "BMap"
         }
-    }
+    },
+    transpileDependencies:  ["*"] 
 }

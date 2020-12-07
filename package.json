@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@packy-tang/vue-tinymce": "^1.1.0",
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",

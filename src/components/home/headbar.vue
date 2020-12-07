@@ -264,7 +264,7 @@ export default {
   color: rgba(0, 64, 110, 1);
 }
 .dropdown-content {
-  background: #dcdfe6;
+  background: #ffffff;
   display: none;
   position: absolute;
   margin-left: 30px;
