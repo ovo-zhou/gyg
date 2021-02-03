@@ -41,6 +41,7 @@ import companystyle from './pages/admin/companystyle/companystyle'
 import cmanage from "./pages/admin/companystyle/c_manage"
 import adrelease from './pages/admin/advertisement/ad_release'
 import admanage from './pages/admin/advertisement/ad_manage'
+import newview from './pages/admin/dynamic/newview'
 
 const routes = [
     //这里配置路由
@@ -100,6 +101,7 @@ const routes = [
             { path: "cmanage", component: cmanage, meta: { adminlogin: true } },
             { path: "adrelease", component: adrelease, meta: { adminlogin: true } },
             { path: "admanage", component: admanage, meta: { keepAlive: true, adminlogin: true } },
+            { path: "newview", component: newview, meta: { adminlogin: true } },
         ]
     },
     { path: '/adDetail', component: adDetail }

@@ -16,6 +16,7 @@
         ></el-pagination>
         <div class="backbtn" v-else @click="backDynamic">回到行业动态</div>
       </div>
+      <!-- 行业动态右侧链接和日历 -->
       <div class="c-right">
         <outcon></outcon>
         <div class="date">

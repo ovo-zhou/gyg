@@ -178,12 +178,18 @@ export default {
       });
     },
     handleLook(row) {
-      // console.log(row);
-      this.$router.push({
-        path: "/admin/drelease",
+      console.log(row);
+      // this.$router.push({
+      //   path: "/admin/drelease",
+      //   query: {
+      //     flag: "查看",
+      //     new: row,
+      //   },
+      // });
+       this.$router.push({
+        path: "/admin/newview",
         query: {
-          flag: "查看",
-          new: row,
+          new:row,
         },
       });
     },

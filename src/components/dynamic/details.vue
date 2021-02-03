@@ -3,7 +3,7 @@
     <div class="a-contain">
       <div class="text">
         <h1>{{curnew.XWBT}}</h1>
-        <p class="releasedate">{{curnew.FBSJ}}</p>
+        <p class="releasedate">{{curnew.FBSJ}}{{" "}}{{getdepartment(curnew.FBRBH)}}{{" "}}{{curnew.FBRXM}}</p>
         <p v-html="curnew.XWNR"></p>
       </div>
       <div class="top">
@@ -27,7 +27,8 @@ export default {
   data() {
     return {
       news: [],
-      curnew:""
+      curnew:"",
+      bmmc:""
     };
   },
   created() {
@@ -46,6 +47,12 @@ export default {
     Calendar
   },
   methods:{
+    getdepartment(bh){
+      post(host.host2+"QueryDepartByBh.ashx",{BH:bh}).then(res=>{
+        this.bmmc= res[0].BMMC
+      })
+      return this.bmmc
+    },
     toDetail(index){
       this.curnew=this.news[index]
     }
@@ -119,6 +126,7 @@ export default {
   top: 300px;
   /* background: blue; */
 }
+
 /*一下是日历样式*/
 .wh_container >>> .wh_content_all {
   background-color: #ffffff !important;

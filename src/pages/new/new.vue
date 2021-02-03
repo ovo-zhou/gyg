@@ -3,11 +3,11 @@
     <img src="../../assets/hydt.png" alt />
     <div class="function">
       <div class="f-contain">
-        <div class="span-text" @click="toDynamic">
-          <a class="span-link" :class="{link:check=='1'}">行业动态</a>
+         <div class="span-text" @click="toDynamic">
+          <router-link to="/new/dynamic">行业动态</router-link>
         </div>
         <div class="span-text" @click="toNotice">
-          <a class="span-link" :class="{link:check=='2'}">通知公告</a>
+          <router-link  to="/new/notice">通知公告</router-link>
         </div>
       </div>
     </div>
@@ -21,27 +21,17 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      check: "1",
-    };
-  },
   methods: {
     toDynamic() {
-      this.check = "1";
       this.$router.push("/new/dynamic");
     },
     toNotice() {
-      this.check = "2";
       this.$router.push("/new/notice");
     }
   },
 };
 </script>
 <style scoped>
-.link {
-  color: #409eff !important;
-}
 .focus {
   width: 100%;
 }
@@ -84,7 +74,7 @@ export default {
   border-bottom: 4px solid #0e68b1;
   cursor: pointer;
 }
-.span-text:hover .span-link {
-  color: #0e68b1;
+.span-text a.router-link-exact-active {
+  color:  #409eff;
 }
 </style>

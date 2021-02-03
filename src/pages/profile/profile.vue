@@ -21,7 +21,7 @@
     <div class="framework" id="jiagou"> 
       <div class="f-contain">
         <h1>企业架构</h1>
-        <img src="../../assets/jiagou.jpg" alt="">
+        <img src="../../assets/jiagou.png" alt="">
       </div>
     </div> 
   </div>
